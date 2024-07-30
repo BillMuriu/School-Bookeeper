@@ -43,7 +43,7 @@ export const HeaderProvider = ({ children }) => {
   );
 };
 
-export const useHeaderContext = () => {
+export const useHeaderContex = () => {
   return useContext(HeaderContext);
 };
 ;
