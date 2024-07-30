@@ -1,7 +1,19 @@
-import { Inter } from "next/font/google";
+import { ThemeProviderNext } from "@/contexts/theme-provider";
+import { HeaderProvider } from "@/contexts/header-context";
+import QueryProvider from "@/contexts/query-provider";
 import "./globals.css";
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
+import Header from "@/components/header";
+import { HeaderMobile } from "@/components/header-mobile";
+import SideNav from "@/components/side-nav";
+import PageWrapper from "@/components/page-wrapper";
+import MarginWidthWrapper from "@/components/margin-width-wrapper";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +23,34 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <ThemeProviderNext
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProvider>
+            <HeaderProvider>
+              <div className="flex">
+                <SideNav />
+                <main className="flex-1">
+                  <MarginWidthWrapper>
+                    <Header />
+                    <HeaderMobile />
+                    <PageWrapper>{children}</PageWrapper>
+                  </MarginWidthWrapper>
+                </main>
+              </div>
+            </HeaderProvider>
+          </QueryProvider>
+        </ThemeProviderNext>
+      </body>
     </html>
   );
 }
