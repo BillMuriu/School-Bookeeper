@@ -9,6 +9,7 @@ import { HeaderMobile } from "@/components/header-mobile";
 import SideNav from "@/components/side-nav";
 import PageWrapper from "@/components/page-wrapper";
 import MarginWidthWrapper from "@/components/margin-width-wrapper";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
                     <PageWrapper>{children}</PageWrapper>
                   </MarginWidthWrapper>
                 </main>
+                <Toaster />
               </div>
             </HeaderProvider>
           </QueryProvider>

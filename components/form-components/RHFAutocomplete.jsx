@@ -17,7 +17,7 @@ export function RHFAutocomplete({ name, options = [], label }) {
       render={({ field: { value, onChange, ref }, fieldState: { error } }) => (
         <Autocomplete
           options={options || []}
-          value={value.map((id) => options?.find((item) => item.id === id))}
+          value={value?.map((id) => options?.find((item) => item.id === id))}
           getOptionLabel={(option) =>
             options?.find((item) => item.id === option.id)?.label ?? ""
           }

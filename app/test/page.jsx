@@ -1,56 +1,29 @@
 "use client";
 
-import React from "react";
-import { TextField, Stack } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import React, { useEffect, useState } from "react";
 import { RhfProvider } from "@/contexts/rhf-provider";
-import { schema1, defaultValues1 } from "./types/schema";
-
-import { RHFAutocomplete } from "../operations/components/form-components/RHFAutocomplete";
-import { RHFToggleButtonGroup } from "../operations/components/form-components/RHFToggleButtonGroup";
-import { RHFRadioGroup } from "../operations/components/form-components/RHFRadioGroup";
-import { useStates } from "./services/queries";
-import { useLanguages } from "./services/queries";
-import { useGenders } from "./services/queries";
-
-const TestForm = () => {
-  const statesQuery = useStates();
-  const languagesQuery = useLanguages();
-  const gendersQuery = useGenders();
-
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
-  return (
-    <Stack sx={{ gap: 2 }}>
-      <TextField
-        {...register("name")}
-        label="Name"
-        error={!!errors.name}
-        helperText={errors.name?.message}
-      />
-      <TextField
-        {...register("email")}
-        label="Email"
-        error={!!errors.email}
-        helperText={errors.email?.message}
-      />
-      <RHFAutocomplete
-        name="states"
-        label="States"
-        options={statesQuery.data}
-      />
-      <RHFToggleButtonGroup
-        name="languagesSpoken"
-        options={languagesQuery.data}
-      />
-      <RHFRadioGroup name="gender" options={gendersQuery.data} label="Gender" />
-    </Stack>
-  );
-};
+import { schema1 } from "./types/schema";
+import { useUser } from "./services/queries";
+import TestForm from "./TestForm";
 
 const TestFormWrapper = () => {
+  const { data: user, isLoading, error } = useUser(1);
+  const [defaultValues1, setDefaultValues1] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      setDefaultValues1({
+        email: user.email,
+        name: user.name,
+        states: user.states,
+      });
+    }
+  }, [user]);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading user data.</p>;
+  if (!defaultValues1) return <p>Loading default values...</p>;
+
   return (
     <RhfProvider schema={schema1} defaultValues={defaultValues1}>
       <TestForm />

@@ -45,3 +45,13 @@ export function useUsers() {
       ),
   });
 }
+
+export function useUser(id) {
+  return useQuery({
+    queryKey: ["user", { id }],
+    queryFn: async () => {
+      const response = await axios.get(`http://localhost:8080/users/${id}`);
+      return response.data; // Return the data from the response
+    },
+  });
+}

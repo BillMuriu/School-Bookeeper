@@ -1,8 +1,15 @@
-'use client'
+"use client";
 
-import React, { createContext, useRef, useState, useContext, useCallback, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import { SIDENAV_ITEMS } from '@/constants';
+import React, {
+  createContext,
+  useRef,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
+import { usePathname } from "next/navigation";
+import { SIDENAV_ITEMS } from "@/constants";
 
 export const HeaderContext = createContext();
 
@@ -10,7 +17,9 @@ export const HeaderProvider = ({ children }) => {
   const pathname = usePathname();
   const sheetCloseRef = useRef(null);
   const sheetOpenRef = useRef(null); // Add this line
-  const [subMenuOpen, setSubMenuOpen] = useState(Array(SIDENAV_ITEMS.length).fill(false));
+  const [subMenuOpen, setSubMenuOpen] = useState(
+    Array(SIDENAV_ITEMS.length).fill(false)
+  );
 
   const toggleSubMenu = useCallback((index) => {
     setSubMenuOpen((prevState) =>
@@ -20,7 +29,9 @@ export const HeaderProvider = ({ children }) => {
 
   useEffect(() => {
     setSubMenuOpen((prevState) =>
-      prevState.map((isOpen, idx) => (pathname.includes(SIDENAV_ITEMS[idx].path) ? isOpen : false))
+      prevState.map((isOpen, idx) =>
+        pathname.includes(SIDENAV_ITEMS[idx].path) ? isOpen : false
+      )
     );
   }, [pathname]);
 
@@ -30,20 +41,29 @@ export const HeaderProvider = ({ children }) => {
     }
   };
 
-  const handleOpen = () => { // Add this function
+  const handleOpen = () => {
+    // Add this function
     if (sheetOpenRef.current) {
       sheetOpenRef.current.click();
     }
   };
 
   return (
-    <HeaderContext.Provider value={{ handleClick, sheetCloseRef, sheetOpenRef, handleOpen, toggleSubMenu, subMenuOpen }}>
+    <HeaderContext.Provider
+      value={{
+        handleClick,
+        sheetCloseRef,
+        sheetOpenRef,
+        handleOpen,
+        toggleSubMenu,
+        subMenuOpen,
+      }}
+    >
       {children}
     </HeaderContext.Provider>
   );
 };
 
-export const useHeaderContex = () => {
+export const useHeaderContext = () => {
   return useContext(HeaderContext);
 };
-;

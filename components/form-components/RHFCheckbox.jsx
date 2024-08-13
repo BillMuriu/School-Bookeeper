@@ -23,7 +23,7 @@ export function RHFCheckbox({ name, options, label }) {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={value.includes(option.id)}
+                    checked={value?.includes(option.id)}
                     onChange={() => {
                       if (value.includes(option.id)) {
                         onChange(value.filter((item) => item !== option.id));
