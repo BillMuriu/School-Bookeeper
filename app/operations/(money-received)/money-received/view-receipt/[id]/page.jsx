@@ -2,8 +2,9 @@
 
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { operationReceiptSchema } from "../../schema";
-import EditReceiptForm from "../../components/edit-operation-receipt-form";
-import { useOperationsReceipt } from "../../services/queries";
+import EditReceiptForm from "../../_components/edit-operation-receipt-form";
+import { useOperationsReceipt } from "../../_services/queries";
+import SkeletonLoader from "@/components/skeleton-loader";
 
 // Function to format date to mm/dd/yy
 const formatDate = (dateString) => {
@@ -20,7 +21,7 @@ const TestFormWrapper = ({ params }) => {
   // Use the query to fetch receipt data
   const { data: receipt, isLoading, error } = useOperationsReceipt(receiptId);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <SkeletonLoader />;
   if (error) return <p>Error: {error.message}</p>;
   if (!receipt) return <p>No receipt data found</p>;
 
@@ -28,13 +29,13 @@ const TestFormWrapper = ({ params }) => {
     <RhfProvider
       schema={operationReceiptSchema}
       defaultValues={{
-        account: receipt.account || "Default Account",
-        receivedFrom: receipt.receivedFrom || "Default Source",
+        account: receipt.account || "",
+        receivedFrom: receipt.receivedFrom || "",
         cashBank: receipt.cashBank || "bank",
         totalAmount: receipt.totalAmount ?? null,
         rmiFund: receipt.rmiFund ?? null,
         otherVotheads: receipt.otherVotheads ?? null,
-        date: receipt.date ? formatDate(receipt.date) : "08/01/24",
+        date: receipt.date ? new Date(receipt.date) : new Date("2024-08-01"),
       }}
     >
       <EditReceiptForm receiptId={receiptId} />

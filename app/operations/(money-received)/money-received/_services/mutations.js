@@ -23,7 +23,7 @@ export function useCreateOperationReceipt() {
 
       toast("Receipt created!", {
         description: "The new receipt has been successfully created.",
-        duration: 1000,
+        duration: 3000,
       });
     },
 
@@ -46,37 +46,43 @@ export function useEditOperationReceipt() {
       await queryClient.invalidateQueries({ queryKey: ["receipts"] });
       toast("Receipt Edited Successfully!", {
         description: "The new receipt has been successfully edited.",
-        duration: 1000,
+        duration: 3000,
       });
     },
     onError: (error) => {
       toast("Oops", {
         description: `Error deleting receipt: ${error.message}`,
+        duration: 3000,
       });
     },
   });
 }
 
-export function useDeleteOperationReceipt() {
+export function useDeleteOperationReceipts() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
-    mutationFn: async (id) => {
-      await axios.delete(`http://localhost:8080/operationalReceipts/${id}`);
+    mutationFn: async (ids) => {
+      // Delete receipts in parallel
+      await Promise.all(
+        ids.map((id) =>
+          axios.delete(`http://localhost:8080/operationalReceipts/${id}`)
+        )
+      );
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["receipts"] });
-      toast("Receipt Deleted Successfully!", {
-        description: "The receipt has been successfully deleted.",
-        duration: 1000,
+      toast("Receipts Deleted Successfully!", {
+        description: "The receipts have been successfully deleted.",
+        duration: 3000,
       });
       // Redirect after deletion
-      router.push("/operations/money-received");
+      router.push("/operations/money-received/view-receipt");
     },
     onError: (error) => {
       toast("Oops", {
-        description: `Error deleting receipt: ${error.message}`,
+        description: `Error deleting receipts: ${error.message}`,
       });
     },
   });

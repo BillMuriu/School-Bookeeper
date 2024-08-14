@@ -1,13 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useCreateOperationReceipt } from "../services/mutations";
+import { useCreateOperationReceipt } from "../_services/mutations";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
 import { RHFNativeSelect } from "@/components/form-components/RHFNativeSelect";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
+import SkeletonLoader from "@/components/skeleton-loader";
 
 const ReceiptForm = () => {
   const {
@@ -17,10 +18,21 @@ const ReceiptForm = () => {
   } = useFormContext();
 
   const createOperationsReceiptMutation = useCreateOperationReceipt();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    createOperationsReceiptMutation.mutate(data);
+    console.log("Data submitted");
+    setIsLoading(true);
+    createOperationsReceiptMutation.mutate(data, {
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    });
   };
+
+  if (isLoading) {
+    return <SkeletonLoader />;
+  }
 
   return (
     <Container
@@ -77,7 +89,7 @@ const ReceiptForm = () => {
           min={0}
         />
         <RHFDatePicker name="date" label="Date Received" />
-        <Button>Submit</Button>
+        <Button type="submit">Submit</Button>
       </Stack>
     </Container>
   );

@@ -13,12 +13,18 @@ export function useOperationsReceipt(id) {
   });
 }
 
-export function useOperationsReceipts() {
+export function useOperationsReceipts({ minAmount, maxAmount } = {}) {
   return useQuery({
-    queryKey: ["operationsReceipts"],
+    queryKey: ["operationsReceipts", { minAmount, maxAmount }],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:8080/operationalReceipts"
+        "http://localhost:8080/operationalReceipts",
+        {
+          params: {
+            ...(minAmount !== undefined && { minAmount }),
+            ...(maxAmount !== undefined && { maxAmount }),
+          },
+        }
       );
       return response.data;
     },
