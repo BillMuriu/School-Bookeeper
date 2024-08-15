@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
-    'accounts.operations.operation_receipts',
+    'accounts.operations.operations_paymentvouchers',
+    'accounts.operations.operations_receipts',
 ]
 
 MIDDLEWARE = [
