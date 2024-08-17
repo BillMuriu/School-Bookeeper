@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteOperationReceipts } from "../_services/mutations";
+import { useDeleteOperationReceipts } from "../../_services/mutations";
 import { useRouter } from "next/navigation";
 
 const ActionsCell = ({ receipt }) => {

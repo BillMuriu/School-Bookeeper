@@ -6,15 +6,6 @@ import EditReceiptForm from "../../_components/edit-operation-receipt-form";
 import { useOperationsReceipt } from "../../_services/queries";
 import SkeletonLoader from "@/components/skeleton-loader";
 
-// Function to format date to mm/dd/yy
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const year = String(date.getFullYear()).slice(-2);
-  return `${month}/${day}/${year}`;
-};
-
 const TestFormWrapper = ({ params }) => {
   const receiptId = params?.id;
 

@@ -7,21 +7,27 @@ import { useRouter } from "next/navigation";
 export function useCreateOperationReceipt() {
   const queryClient = useQueryClient();
   const router = useRouter();
+
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://localhost:8080/operationalReceipts",
-        data
+        "http://127.0.0.1:8000/api/operation-receipts/create/",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries({ queryKey: ["receipts"] });
+      await queryClient.invalidateQueries(["receipts"]);
       const receiptId = data.id;
       router.push(`/operations/money-received/view-receipt/${receiptId}`);
 
-      toast("Receipt created!", {
+      toast.success("Receipt created!", {
         description: "The new receipt has been successfully created.",
         duration: 3000,
       });
@@ -40,19 +46,21 @@ export function useEditOperationReceipt() {
 
   return useMutation({
     mutationFn: async ({ id, data }) => {
-      await axios.put(`http://localhost:8080/operationalReceipts/${id}`, data);
+      await axios.put(
+        `http://localhost:8000/api/operation-receipts/${id}/update/`,
+        data
+      );
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["receipts"] });
       toast("Receipt Edited Successfully!", {
-        description: "The new receipt has been successfully edited.",
+        description: "The receipt has been successfully edited.",
         duration: 3000,
       });
     },
     onError: (error) => {
-      toast("Oops", {
-        description: `Error deleting receipt: ${error.message}`,
-        duration: 3000,
+      toast.error(`Error editing receipt: ${error.message}`, {
+        description: "Please try again later.",
       });
     },
   });
@@ -67,7 +75,9 @@ export function useDeleteOperationReceipts() {
       // Delete receipts in parallel
       await Promise.all(
         ids.map((id) =>
-          axios.delete(`http://localhost:8080/operationalReceipts/${id}`)
+          axios.delete(
+            `http://localhost:8000/api/operation-receipts/${id}/delete/`
+          )
         )
       );
     },
@@ -81,8 +91,8 @@ export function useDeleteOperationReceipts() {
       router.push("/operations/money-received/view-receipt");
     },
     onError: (error) => {
-      toast("Oops", {
-        description: `Error deleting receipts: ${error.message}`,
+      toast.error(`Error deleting receipts: ${error.message}`, {
+        description: "Please try again later.",
       });
     },
   });

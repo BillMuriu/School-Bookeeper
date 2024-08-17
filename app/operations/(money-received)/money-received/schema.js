@@ -35,5 +35,5 @@ export const defaultOperationReceipt = {
   totalAmount: null,
   rmiFund: null,
   otherVotheads: null,
-  date: "2024-08-01T00:00:00Z",
+  date: new Date(),
 };

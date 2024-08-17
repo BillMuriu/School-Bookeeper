@@ -1,20 +1,30 @@
-import React from 'react';
+"use client";
 
-const WebDesignPage = () => {
+import React from "react";
+import { DataTable } from "@/components/tables/operations-paymentvoucher-table";
+import { columns } from "./_components/payment-voucher-columns";
+import { useOperationsPaymentVouchers } from "./_services/queries";
+import DataTableSkeleton from "@/components/datatable-seleton-loader";
+
+const PaymentVouchersPage = () => {
+  const {
+    data: paymentVouchers,
+    isLoading,
+    error,
+  } = useOperationsPaymentVouchers();
+
+  if (isLoading) return <DataTableSkeleton />;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!paymentVouchers) return <p>No payment vouchers found</p>;
+
+  console.log(paymentVouchers);
+
   return (
-    <>
-      <span className="font-bold w-full text-center text-xl">Payment Vouchers - Operations</span>
-
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-    </>
+    <div>
+      <h1>All Payment Vouchers</h1>
+      <DataTable columns={columns} data={paymentVouchers} />
+    </div>
   );
 };
 
-export default WebDesignPage;
+export default PaymentVouchersPage;
