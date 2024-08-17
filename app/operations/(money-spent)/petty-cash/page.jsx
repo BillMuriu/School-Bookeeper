@@ -1,14 +1,26 @@
-import React from 'react';
+"use client";
 
-const WebDesignPage = () => {
+import React from "react";
+import { PettyCashTable } from "@/components/tables/operations-pettycash-table";
+import { columns } from "./_components/operations-pettycash-columns";
+import { useOperationsPettyCashs } from "./_services/queries";
+import DataTableSkeleton from "@/components/datatable-seleton-loader";
+
+const PettyCashPage = () => {
+  const { data: pettyCash, isLoading, error } = useOperationsPettyCashs(); // Adjust the query hook if necessary
+
+  if (isLoading) return <DataTableSkeleton />;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!pettyCash) return <p>No petty cash records found</p>;
+
+  console.log(pettyCash);
+
   return (
-    <>
-      <span className="font-bold w-full text-center text-xl">Petty Cash - Operations</span>
-
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
-      <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>
-    </>
+    <div>
+      <h1>All Petty Cash Records</h1>
+      <PettyCashTable columns={columns} data={pettyCash} />
+    </div>
   );
 };
 
-export default WebDesignPage;
+export default PettyCashPage;
