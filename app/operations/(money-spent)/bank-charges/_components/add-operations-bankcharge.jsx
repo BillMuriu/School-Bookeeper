@@ -42,7 +42,7 @@ const AddBankChargeForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Stack sx={{ gap: 2 }}>
-        <RHFTextField name="account" label="Account" />
+        <RHFTextField name="account" label="Account" disabled={true} />
         <RHFNumberInput name="amount" label="Amount" min={0} />
         <RHFDatePicker name="chargeDate" label="Charge Date" />
         <RHFTextField
