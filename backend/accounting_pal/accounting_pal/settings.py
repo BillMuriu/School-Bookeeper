@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'accounts.operations.operations_paymentvouchers',
+    'accounts.operations.operations_pettycash',
     'accounts.operations.operations_receipts',
+    'accounts.operations.operations_bankcharges',
+    'accounts.operations.operations_balances',
 ]
 
 MIDDLEWARE = [
