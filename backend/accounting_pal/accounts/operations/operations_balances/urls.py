@@ -1,7 +1,9 @@
 from django.urls import path
 from .views import (
     OpeningBalanceListCreateView, OpeningBalanceRetrieveUpdateDestroyView,
-    ClosingBalanceListCreateView, ClosingBalanceRetrieveUpdateDestroyView
+    ClosingBalanceListCreateView, ClosingBalanceRetrieveUpdateDestroyView,
+    BalanceCarriedForwardView
+    
 )
 
 urlpatterns = [
@@ -12,4 +14,6 @@ urlpatterns = [
     # Closing Balance URLs
     path('closing-balances/', ClosingBalanceListCreateView.as_view(), name='closing-balance-list-create'),
     path('closing-balances/<int:pk>/', ClosingBalanceRetrieveUpdateDestroyView.as_view(), name='closing-balance-detail'),
+
+    path('balances-carried-forward/', BalanceCarriedForwardView.as_view(), name='balance-carried-forward'),
 ]
