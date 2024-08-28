@@ -27,4 +27,8 @@ urlpatterns = [
 
 # student urls
     path('api/students/', include('students.urls')),
+
+# term_periods urls
+    path('api/term_periods/', include('other_apps.term_periods.urls')),
+
 ]
