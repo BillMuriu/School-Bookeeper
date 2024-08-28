@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     OpeningBalanceListCreateView, OpeningBalanceRetrieveUpdateDestroyView,
     ClosingBalanceListCreateView, ClosingBalanceRetrieveUpdateDestroyView,
-    BalanceCarriedForwardView
+    BalanceCarriedForwardView, RunningBalanceView
     
 )
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('closing-balances/<int:pk>/', ClosingBalanceRetrieveUpdateDestroyView.as_view(), name='closing-balance-detail'),
 
     path('balances-carried-forward/', BalanceCarriedForwardView.as_view(), name='balance-carried-forward'),
+    path('running-balance/', RunningBalanceView.as_view(), name='running-balance'),
 ]

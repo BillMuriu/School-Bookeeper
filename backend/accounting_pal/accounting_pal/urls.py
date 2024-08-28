@@ -24,4 +24,7 @@ urlpatterns = [
     path('api/operations-pettycash/', include('accounts.operations.operations_pettycash.urls')),
     path('api/operations-charges/', include('accounts.operations.operations_bankcharges.urls')),
     path('api/operations-balances/', include('accounts.operations.operations_balances.urls')),
+
+# student urls
+    path('api/students/', include('students.urls')),
 ]

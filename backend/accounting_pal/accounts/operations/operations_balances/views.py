@@ -1,10 +1,25 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from .models import OpeningBalance, ClosingBalance
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.utils import timezone
 from datetime import timedelta
-from .serializers import OpeningBalanceSerializer, ClosingBalanceSerializer, BalanceCarriedForwardSerializer
+from .serializers import OpeningBalanceSerializer, ClosingBalanceSerializer, BalanceCarriedForwardSerializer, RunningBalanceSerializer
+from .utils import calculate_running_balance
 
+class RunningBalanceView(APIView):
+    def get(self, request, *args, **kwargs):
+        account = request.query_params.get('account', 'operations')  # Default to 'operations' if not provided
+
+        # Calculate running balance
+        try:
+            running_balance = calculate_running_balance(account)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Serialize and return the response
+        serializer = RunningBalanceSerializer(running_balance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # balance carried forward
 class BalanceCarriedForwardView(generics.GenericAPIView):

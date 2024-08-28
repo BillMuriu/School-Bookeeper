@@ -40,3 +40,9 @@ class BalanceCarriedForwardSerializer(serializers.Serializer):
         if data['date'] != today.replace(day=1):
             raise serializers.ValidationError("Date must be the first of the current month.")
         return data
+
+class RunningBalanceSerializer(serializers.Serializer):
+    account = serializers.CharField(max_length=255)
+    date = serializers.DateField()
+    bankAmount = serializers.DecimalField(max_digits=10, decimal_places=2)
+    cashAmount = serializers.DecimalField(max_digits=10, decimal_places=2)
