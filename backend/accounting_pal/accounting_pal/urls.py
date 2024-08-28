@@ -26,7 +26,8 @@ urlpatterns = [
     path('api/operations-balances/', include('accounts.operations.operations_balances.urls')),
 
 # student urls
-    path('api/students/', include('students.urls')),
+    path('api/students/', include('students.students.urls')),
+    path('api/students_opening_balances/', include('students.students_opening_balances.urls')),
 
 # term_periods urls
     path('api/term_periods/', include('other_apps.term_periods.urls')),
