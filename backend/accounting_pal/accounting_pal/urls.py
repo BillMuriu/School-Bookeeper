@@ -32,6 +32,7 @@ urlpatterns = [
 # term_periods urls
     path('api/term_periods/', include('other_apps.term_periods.urls')),
 
-# school fund receipts
+# school fund urls
     path('api/school_fund_receipts/', include('accounts.school_fund.school_fund_receipts.urls')),
+    path('api/school-fund-petty-cash/', include('accounts.school_fund.school_fund_pettycash.urls')),
 ]
