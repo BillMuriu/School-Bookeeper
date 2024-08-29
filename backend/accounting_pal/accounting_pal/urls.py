@@ -35,4 +35,5 @@ urlpatterns = [
 # school fund urls
     path('api/school_fund_receipts/', include('accounts.school_fund.school_fund_receipts.urls')),
     path('api/school-fund-petty-cash/', include('accounts.school_fund.school_fund_pettycash.urls')),
+    path('api/school-fund-payment-vouchers/', include('accounts.school_fund.school_fund_paymentvouchers.urls')),
 ]

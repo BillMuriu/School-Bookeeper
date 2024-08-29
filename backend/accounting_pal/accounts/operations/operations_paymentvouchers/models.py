@@ -6,7 +6,7 @@ class PaymentVoucher(models.Model):
         ('bank', 'Bank'),
     ]
 
-    account = models.CharField(max_length=255, default='default_account')
+    account = models.CharField(max_length=255, default='operations_account')
 
     voucher_no = models.PositiveIntegerField()  # Change voucher_no to a numeric field
     payee_name = models.CharField(max_length=255)
