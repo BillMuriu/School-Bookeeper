@@ -3,5 +3,5 @@ from .views import SchoolFundPettyCashListCreateView, SchoolFundPettyCashRetriev
 
 urlpatterns = [
     path('', SchoolFundPettyCashListCreateView.as_view(), name='schoolfundpettycash-list-create'),
-    path('<int:id>/', SchoolFundPettyCashRetrieveUpdateDestroyView.as_view(), name='schoolfundpettycash-detail'),
+    path('<int:pk>/', SchoolFundPettyCashRetrieveUpdateDestroyView.as_view(), name='schoolfundpettycash-detail'),
 ]

@@ -1,5 +1,8 @@
 from django.db import models
 from students.students.models import Student
+from accounts.school_fund.school_fund_pettycash.models import SchoolFundPettyCash
+
+
 class SchoolFundReceipt(models.Model):
     SCHOOL_FUND_ACCOUNT = 'school_fund_account'
     
@@ -20,7 +23,7 @@ class SchoolFundReceipt(models.Model):
     cash_bank = models.CharField(max_length=4, choices=CASH_BANK_CHOICES)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, help_text="Total amount received")
     date = models.DateTimeField(help_text="Date of receipt")
-    # petty_cash = models.OneToOneField(PettyCash, on_delete=models.SET_NULL, null=True, blank=True, related_name='school_fund_receipt', help_text="Associated petty cash, if any")
+    petty_cash = models.OneToOneField(SchoolFundPettyCash, on_delete=models.SET_NULL, null=True, blank=True, related_name='school_fund_receipt', help_text="Associated petty cash, if any")
 
     def __str__(self):
         return f"Receipt from {self.received_from} on {self.date} (Total: {self.total_amount})"
