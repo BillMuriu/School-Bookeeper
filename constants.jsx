@@ -28,4 +28,14 @@ export const SIDENAV_ITEMS = [
       { title: "Privacy", path: "/settings/privacy" },
     ],
   },
+  {
+    title: "Students",
+    path: "/students",
+    icon: <HomeIcon width="20" height="20" />,
+    submenu: true,
+    subMenuItems: [
+      { title: "All students", path: "/students" },
+      { title: "Opening balances", path: "/students/opening-balances" },
+    ],
+  },
 ];
