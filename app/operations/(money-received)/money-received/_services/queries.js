@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api/operation-receipts/";
+const BASE_URL = "http://127.0.0.1:8000/api/operations-receipts/";
 
 export function useOperationsReceipt(id) {
   return useQuery({
