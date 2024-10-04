@@ -17,3 +17,10 @@ class RunningBalanceSerializer(serializers.Serializer):
     date = serializers.DateField()
     bankAmount = serializers.DecimalField(max_digits=10, decimal_places=2)
     cashAmount = serializers.DecimalField(max_digits=10, decimal_places=2)
+    
+
+class BalanceCarriedForwardSerializer(serializers.Serializer):
+    account = serializers.CharField()
+    date = serializers.DateField()
+    bankAmount = serializers.DecimalField(max_digits=12, decimal_places=2)
+    cashAmount = serializers.DecimalField(max_digits=12, decimal_places=2)

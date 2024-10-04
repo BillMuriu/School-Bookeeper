@@ -67,44 +67,44 @@ def calculate_balance_carried_forward(account, year, month):
     # Define the first day of the specified month and year
     start_date = datetime(year, month, 1).date()
 
-    # Calculate the opening balance for the account as of the first day of the specified month
+    # Calculate the opening balance for the account as of the first day of the specified year
     opening_balance = get_opening_balance_for_year(account, start_date.year)
 
-    # Total bank receipts up to the specified date
+    # Total bank receipts up to the day before the specified date
     total_bank_receipts = OperationReceipt.objects.filter(
-        date__lte=start_date,
+        date__lt=start_date,
         cash_bank='bank'
     ).aggregate(total=Sum('total_amount'))['total'] or 0
 
-    # Total cash receipts up to the specified date
+    # Total cash receipts up to the day before the specified date
     total_cash_receipts = OperationReceipt.objects.filter(
-        date__lte=start_date,
+        date__lt=start_date,
         cash_bank='cash'
     ).aggregate(total=Sum('total_amount'))['total'] or 0
 
-    # Total bank charges up to the specified date
+    # Total bank charges up to the day before the specified date
     total_bank_charges = BankCharges.objects.filter(
-        charge_date__lte=start_date
+        charge_date__lt=start_date
     ).aggregate(total=Sum('amount'))['total'] or 0
 
-    # Total petty cash issued up to the specified date
+    # Total petty cash issued up to the day before the specified date
     total_petty_cash = PettyCash.objects.filter(
-        date_issued__lte=start_date
+        date_issued__lt=start_date
     ).aggregate(total=Sum('amount'))['total'] or 0
 
-    # Total bank payment vouchers up to the specified date
+    # Total bank payment vouchers up to the day before the specified date
     total_bank_payment_vouchers = PaymentVoucher.objects.filter(
-        date__lte=start_date,
+        date__lt=start_date,
         payment_mode='bank'
     ).aggregate(total=Sum('amount_shs'))['total'] or 0
 
-    # Total cash payment vouchers up to the specified date
+    # Total cash payment vouchers up to the day before the specified date
     total_cash_payment_vouchers = PaymentVoucher.objects.filter(
-        date__lte=start_date,
+        date__lt=start_date,
         payment_mode='cash'
     ).aggregate(total=Sum('amount_shs'))['total'] or 0
 
-    # Calculate bank and cash amounts as of the start date
+    # Calculate bank and cash amounts as of the start date (excluding the first day of the month)
     bank_amount = (opening_balance['bank_amount'] + total_bank_receipts) - (
         total_bank_charges + total_petty_cash + total_bank_payment_vouchers
     )

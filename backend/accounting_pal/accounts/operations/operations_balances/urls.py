@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    OpeningBalanceListCreateView, OpeningBalanceRetrieveUpdateDestroyView, RunningBalanceView    
+    OpeningBalanceListCreateView, OpeningBalanceRetrieveUpdateDestroyView, RunningBalanceView, BalanceCarriedForwardView   
 )
 
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
 
 
     path('running-balance/', RunningBalanceView.as_view(), name='running-balance'),
+    path('balance-carried-forward/', BalanceCarriedForwardView.as_view(), name='balance-carried-forward'),
 ]
