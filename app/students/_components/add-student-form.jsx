@@ -8,20 +8,25 @@ import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
 import { RHFNativeSelect } from "@/components/form-components/RHFNativeSelect";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 import SkeletonLoader from "@/components/skeleton-loader";
+import { useCreateStudent } from "../_services/mutations";
 
-const StudentForm = () => {
+const AddStudentForm = () => {
   const {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
 
+  const createStudentMutation = useCreateStudent(); // Hook for creating a student
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("Data submitted", data);
+    console.log("Data submitted:", JSON.stringify(data, null, 2));
     setIsLoading(true);
-    // Replace with your mutation logic (if needed)
-    setTimeout(() => setIsLoading(false), 1000); // Simulated loading
+    createStudentMutation.mutate(data, {
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    });
   };
 
   if (isLoading) {
@@ -100,4 +105,4 @@ const StudentForm = () => {
   );
 };
 
-export default StudentForm;
+export default AddStudentForm;

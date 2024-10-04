@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const studentSchema = z.object({
+export const form1StudentSchema = z.object({
   admissionNumber: z
     .string()
     .max(20, { message: "Admission number must not exceed 20 characters." })
@@ -44,7 +44,7 @@ export const studentSchema = z.object({
     .nonempty({ message: "Guardian's phone number is required." }),
 });
 
-export const defaultStudent = {
+export const defaultForm1Student = {
   admissionNumber: "",
   firstName: "",
   lastName: "",
