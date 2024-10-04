@@ -1,4 +1,3 @@
-# serializers.py
 from rest_framework import serializers
 from .models import Student
 from students.students_opening_balances.models import StudentOpeningBalance
@@ -7,6 +6,17 @@ from other_apps.term_periods.models import TermPeriod
 from django.db.models import Sum
 
 class StudentSerializer(serializers.ModelSerializer):
+    admissionNumber = serializers.CharField(source='admission_number')
+    firstName = serializers.CharField(source='first_name')
+    lastName = serializers.CharField(source='last_name')
+    dateOfBirth = serializers.DateTimeField(source='date_of_birth', input_formats=["%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%dT%H:%M:%SZ"])
+    admissionDate = serializers.DateTimeField(source='admission_date', input_formats=["%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%dT%H:%M:%SZ"])
+    gradeClassLevel = serializers.CharField(source='grade_class_level')
+    guardiansName = serializers.CharField(source='guardians_name')
+    guardiansPhoneNumber = serializers.CharField(source='guardians_phone_number')
+    gender = serializers.ChoiceField(choices=Student.GENDER_CHOICES)  # Add the gender field
+
+    # Change the names to match the method names
     opening_balance = serializers.SerializerMethodField()
     total_fees = serializers.SerializerMethodField()
     total_receipts = serializers.SerializerMethodField()
@@ -15,10 +25,20 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = [
-            'id', 'admission_number', 'first_name', 'last_name', 'date_of_birth', 
-            'gender', 'admission_date', 'grade_class_level', 
-            'guardians_name', 'guardians_phone_number', 
-            'opening_balance', 'total_fees', 'total_receipts', 'balance'
+            'id', 
+            'admissionNumber', 
+            'firstName', 
+            'lastName', 
+            'dateOfBirth', 
+            'gender',  # Include gender in fields
+            'admissionDate', 
+            'gradeClassLevel', 
+            'guardiansName', 
+            'guardiansPhoneNumber', 
+            'opening_balance', 
+            'total_fees', 
+            'total_receipts', 
+            'balance'
         ]
 
     def get_opening_balance(self, obj):

@@ -16,9 +16,9 @@ class Student(models.Model):
     admission_number = models.CharField(max_length=20, unique=True, help_text="Unique admission number for each student")
     first_name = models.CharField(max_length=50, help_text="Student's first name")
     last_name = models.CharField(max_length=50, help_text="Student's last name")
-    date_of_birth = models.DateField(help_text="Student's date of birth")
+    date_of_birth = models.DateTimeField(help_text="Student's date of birth")
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, help_text="Student's gender")
-    admission_date = models.DateField(auto_now_add=True, help_text="Date the student was admitted")
+    admission_date = models.DateTimeField(auto_now_add=True, help_text="Date the student was admitted")
     grade_class_level = models.CharField(max_length=5, choices=CLASS_CHOICES, help_text="Class level of the student")
 
     # Guardian Information

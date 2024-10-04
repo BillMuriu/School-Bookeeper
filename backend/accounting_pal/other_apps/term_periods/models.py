@@ -19,7 +19,7 @@ class TermPeriod(models.Model):
     fees = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        help_text="The fee amount for the term"
+        help_text="The fee amount for each student for the term"
     )
 
     def __str__(self):

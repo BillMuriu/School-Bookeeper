@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'accounts.school_fund.school_fund_paymentvouchers',
     'accounts.school_fund.school_fund_pettycash',
     'accounts.school_fund.school_fund_balances',
-    # 'accounts.school_fund.school_fund_bankcharges'
+    'accounts.school_fund.school_fund_bankcharge',
 
 
     'students.students',
