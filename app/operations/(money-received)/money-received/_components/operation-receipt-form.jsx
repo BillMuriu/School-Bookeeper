@@ -21,7 +21,7 @@ const ReceiptForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("Data submitted");
+    console.log("Data submitted:", data);
     setIsLoading(true);
     createOperationsReceiptMutation.mutate(data, {
       onSettled: () => {

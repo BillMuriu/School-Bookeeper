@@ -11,7 +11,7 @@ export function useCreateOperationReceipt() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/operation-receipts/create/",
+        "http://127.0.0.1:8000/api/operations-receipts/create/", // Updated URL
         data,
         {
           headers: {

@@ -5,6 +5,7 @@ import { StudentsDataTable } from "@/components/tables/students-datatable";
 import { columns } from "../../_components/student-columns";
 import { useStudents } from "../../_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const StudentsPage = () => {
   const { data: students, isLoading, error } = useStudents();
@@ -18,7 +19,10 @@ const StudentsPage = () => {
   return (
     <div>
       <h1>All Students</h1>
-      <StudentsDataTable columns={columns} data={students} />
+      <ScrollArea className="w-[32rem] whitespace-nowrap rounded-md border">
+        <StudentsDataTable columns={columns} data={students} />
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </div>
   );
 };

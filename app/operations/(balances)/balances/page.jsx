@@ -24,7 +24,6 @@ const OperationsBalancePage = () => {
       <h1>All Operations Balance Records</h1>
       <OperationsBalanceTable columns={columns} data={operationsBalances} />
       <OperationsBalanceTable columns={columns} data={operationsBalances} />
-      <OperationsBalanceTable columns={columns} data={operationsBalances} />
     </div>
   );
 };
