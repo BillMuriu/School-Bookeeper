@@ -32,7 +32,6 @@ class RunningBalanceView(APIView):
     
 class BalanceCarriedForwardView(APIView):
     def get(self, request, *args, **kwargs):
-        account = request.query_params.get('account', 'operations')  # Default to 'operations' if not provided
         date_str = request.query_params.get('date')
 
         if not date_str:
@@ -44,8 +43,8 @@ class BalanceCarriedForwardView(APIView):
             year = date_obj.year
             month = date_obj.month
 
-            # Calculate balance carried forward
-            balance_carried_forward = calculate_balance_carried_forward(account, year, month)
+            # Calculate balance carried forward without account argument
+            balance_carried_forward = calculate_balance_carried_forward(year, month)  # Remove account argument
         except ValueError:
             return Response({"detail": "Invalid date format. Please use YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
@@ -54,6 +53,7 @@ class BalanceCarriedForwardView(APIView):
         # Serialize and return the response
         serializer = BalanceCarriedForwardSerializer(balance_carried_forward)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class OpeningBalanceListCreateView(generics.ListCreateAPIView):
     queryset = OpeningBalance.objects.all()

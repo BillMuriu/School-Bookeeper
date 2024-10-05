@@ -1,5 +1,7 @@
 from datetime import datetime
+from django.utils import timezone
 from django.db.models import Sum
+from decimal import Decimal
 from accounts.operations.operations_bankcharges.models import BankCharges
 from accounts.operations.operations_paymentvouchers.models import PaymentVoucher
 from accounts.operations.operations_pettycash.models import PettyCash
@@ -12,7 +14,7 @@ def calculate_running_balance(account, current_date=None):
         current_date = datetime.now().date()
 
     # Calculate the opening balance for the account for the current year
-    opening_balance = get_opening_balance_for_year(account, current_date.year)
+    opening_balance = get_opening_balance_for_year(current_date.year)
 
     # Total bank receipts for the current year
     total_bank_receipts = OperationReceipt.objects.filter(
@@ -63,46 +65,48 @@ def calculate_running_balance(account, current_date=None):
     }
 
 
-def calculate_balance_carried_forward(account, year, month):
+
+
+def calculate_balance_carried_forward(year, month):
     # Define the first day of the specified month and year
-    start_date = datetime(year, month, 1).date()
+    start_date = timezone.make_aware(datetime(year, month, 1))
 
     # Calculate the opening balance for the account as of the first day of the specified year
-    opening_balance = get_opening_balance_for_year(account, start_date.year)
+    opening_balance = get_opening_balance_for_year(start_date.year)
 
     # Total bank receipts up to the day before the specified date
     total_bank_receipts = OperationReceipt.objects.filter(
         date__lt=start_date,
         cash_bank='bank'
-    ).aggregate(total=Sum('total_amount'))['total'] or 0
+    ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')  # Ensure it’s Decimal
 
     # Total cash receipts up to the day before the specified date
     total_cash_receipts = OperationReceipt.objects.filter(
         date__lt=start_date,
         cash_bank='cash'
-    ).aggregate(total=Sum('total_amount'))['total'] or 0
+    ).aggregate(total=Sum('total_amount'))['total'] or Decimal('0')  # Ensure it’s Decimal
 
     # Total bank charges up to the day before the specified date
     total_bank_charges = BankCharges.objects.filter(
         charge_date__lt=start_date
-    ).aggregate(total=Sum('amount'))['total'] or 0
+    ).aggregate(total=Sum('amount'))['total'] or Decimal('0')  # Ensure it’s Decimal
 
     # Total petty cash issued up to the day before the specified date
     total_petty_cash = PettyCash.objects.filter(
         date_issued__lt=start_date
-    ).aggregate(total=Sum('amount'))['total'] or 0
+    ).aggregate(total=Sum('amount'))['total'] or Decimal('0')  # Ensure it’s Decimal
 
     # Total bank payment vouchers up to the day before the specified date
     total_bank_payment_vouchers = PaymentVoucher.objects.filter(
         date__lt=start_date,
         payment_mode='bank'
-    ).aggregate(total=Sum('amount_shs'))['total'] or 0
+    ).aggregate(total=Sum('amount_shs'))['total'] or Decimal('0')  # Ensure it’s Decimal
 
     # Total cash payment vouchers up to the day before the specified date
     total_cash_payment_vouchers = PaymentVoucher.objects.filter(
         date__lt=start_date,
         payment_mode='cash'
-    ).aggregate(total=Sum('amount_shs'))['total'] or 0
+    ).aggregate(total=Sum('amount_shs'))['total'] or Decimal('0')  # Ensure it’s Decimal
 
     # Calculate bank and cash amounts as of the start date (excluding the first day of the month)
     bank_amount = (opening_balance['bank_amount'] + total_bank_receipts) - (
@@ -112,17 +116,17 @@ def calculate_balance_carried_forward(account, year, month):
 
     # Return the balance carried forward dictionary
     return {
-        "account": account,
+        "account": "operations",
         "date": start_date.isoformat(),
         "bankAmount": bank_amount,
         "cashAmount": cash_amount,
     }
 
-def get_opening_balance_for_year(account, year):
+
+def get_opening_balance_for_year(year):
     # Fetch the opening balance for the specified account and year
     try:
         opening_balance = OpeningBalance.objects.filter(
-            account=account,
             date__year=year
         ).order_by('-date').first()
         if opening_balance:

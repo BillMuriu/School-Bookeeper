@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.utils import timezone
 from django.db.models import Sum
 from accounts.operations.operations_bankcharges.models import BankCharges
 from accounts.operations.operations_paymentvouchers.models import PaymentVoucher
@@ -54,9 +55,9 @@ def get_payments_money_out():
     return {"payments": payments}
 
 
-def get_receipts_money_in(account, year, month):
-    # Get the balance carried forward for the specified account, year, and month
-    balance_info = calculate_balance_carried_forward(account, year, month)
+def get_receipts_money_in(year, month):
+    # Get the balance carried forward for the specified year and month
+    balance_info = calculate_balance_carried_forward(year, month)
 
     # Initialize the data structure with the balance carried forward
     receipts_data = []
@@ -71,35 +72,48 @@ def get_receipts_money_in(account, year, month):
     }
     receipts_data.append(balance_forward)
 
-    # Query Petty Cash Receipts from the Receipts Model
-    petty_cash_entries = OperationReceipt.objects.filter(received_from='pettycash').values('petty_cash__payee_name').annotate(
-        total_amount=Sum('total_amount')  # Ensure you use snake_case for fields here as well
+    # Define the start and end date for the specified month and year
+    start_date = timezone.make_aware(datetime(year, month, 1))
+    end_date = timezone.make_aware(datetime(year, month + 1, 1)) if month < 12 else timezone.make_aware(datetime(year + 1, 1, 1))
+
+    # Query Petty Cash Receipts from the Receipts Model within the specified year and month
+    petty_cash_entries = OperationReceipt.objects.filter(
+        received_from='pettycash',
+        date__gte=start_date,
+        date__lt=end_date
+    ).values('petty_cash__payee_name').annotate(
+        total_amount=Sum('total_amount')  # Use snake_case field names
     )
 
     for entry in petty_cash_entries:
         row = {
-            'from_whom': entry['petty_cash__payee_name'],  # Use the correct field name here
+            'from_whom': 'Petty Cash',  # Set to 'Petty Cash'
             'receipt_no': '-',
-            'cash': f"{entry['total_amount']:,}",
+            'cash': f"{entry['total_amount']:,}",  # Petty cash goes under cash
             'bank': '-',
             'rmi': '-',
             'other_voteheads': '-',
         }
         receipts_data.append(row)
 
-    # Query Operation Receipts (non-petty cash)
-    operation_receipts = OperationReceipt.objects.exclude(received_from='pettycash').values('received_from').annotate(
-        total_amount=Sum('total_amount')  # Use the correct field name
+    # Query Operation Receipts (non-petty cash) within the specified year and month
+    operation_receipts = OperationReceipt.objects.exclude(
+        received_from='pettycash'
+    ).filter(
+        date__gte=start_date,
+        date__lt=end_date
+    ).values(
+        'received_from', 'cash_bank', 'total_amount', 'rmi_fund', 'other_voteheads'
     )
 
     for receipt in operation_receipts:
         row = {
             'from_whom': receipt['received_from'],  # Use the correct field name here
             'receipt_no': '-',
-            'cash': '-',
-            'bank': f"{receipt['total_amount']:,}",
-            'rmi': '-',
-            'other_voteheads': '-',
+            'cash': f"{receipt['total_amount']:,}" if receipt['cash_bank'] == 'cash' else '-',  # Cash amount
+            'bank': f"{receipt['total_amount']:,}" if receipt['cash_bank'] == 'bank' else '-',  # Bank amount
+            'rmi': f"{receipt['rmi_fund']:,}" if receipt['rmi_fund'] > 0 else '-',  # RMI fund
+            'other_voteheads': f"{receipt['other_voteheads']:,}" if receipt['other_voteheads'] > 0 else '-',  # Other voteheads
         }
         receipts_data.append(row)
 
