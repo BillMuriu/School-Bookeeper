@@ -1,5 +1,5 @@
 from django.db import models
-from  accounts.operations.operations_pettycash.models import PettyCash
+from accounts.operations.operations_pettycash.models import PettyCash
 
 class OperationReceipt(models.Model):
     OPERATIONS_ACCOUNT = 'operations_account'
@@ -16,7 +16,7 @@ class OperationReceipt(models.Model):
     rmi_fund = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     other_voteheads = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     date = models.DateTimeField()
-    petty_cash = models.OneToOneField(PettyCash, on_delete=models.SET_NULL, null=True, blank=True, related_name='receipt')
+    petty_cash = models.ForeignKey(PettyCash, on_delete=models.CASCADE, null=True, blank=True, related_name='receipts')
 
     def __str__(self):
         return f"Receipt from {self.received_from} on {self.date}"
