@@ -7,11 +7,15 @@ from accounts.operations.operations_pettycash.models import PettyCash
 from accounts.operations.operations_receipts.models import OperationReceipt
 from accounts.operations.operations_balances.utils import calculate_balance_carried_forward
 
-def get_payments_money_out():
+def get_payments_money_out(year, month):
     payments = []
 
-    # Fetch Bank Charges
-    bank_charges = BankCharges.objects.all()
+    # Define the start and end date for the specified month and year
+    start_date = timezone.make_aware(datetime(year, month, 1))
+    end_date = timezone.make_aware(datetime(year, month + 1, 1)) if month < 12 else timezone.make_aware(datetime(year + 1, 1, 1))
+
+    # Fetch Bank Charges within the specified month and year
+    bank_charges = BankCharges.objects.filter(charge_date__gte=start_date, charge_date__lt=end_date)
     for charge in bank_charges:
         payments.append({
             "type": "bankcharge",
@@ -24,8 +28,8 @@ def get_payments_money_out():
             "date": charge.charge_date
         })
 
-    # Fetch Payment Vouchers
-    payment_vouchers = PaymentVoucher.objects.all()
+    # Fetch Payment Vouchers within the specified month and year
+    payment_vouchers = PaymentVoucher.objects.filter(date__gte=start_date, date__lt=end_date)
     for voucher in payment_vouchers:
         payments.append({
             "type": "paymentvoucher",
@@ -38,8 +42,8 @@ def get_payments_money_out():
             "date": voucher.date
         })
 
-    # Fetch Petty Cash Entries
-    petty_cash_entries = PettyCash.objects.all()
+    # Fetch Petty Cash Entries within the specified month and year
+    petty_cash_entries = PettyCash.objects.filter(date_issued__gte=start_date, date_issued__lt=end_date)
     for petty_cash in petty_cash_entries:
         payments.append({
             "type": "pettycash",
@@ -53,7 +57,6 @@ def get_payments_money_out():
         })
 
     return {"payments": payments}
-
 
 def get_receipts_money_in(year, month):
     # Get the balance carried forward for the specified year and month
