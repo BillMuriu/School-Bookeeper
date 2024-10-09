@@ -121,3 +121,21 @@ def get_receipts_money_in(year, month):
         receipts_data.append(row)
 
     return receipts_data
+
+
+def get_cashbook(year, month):
+    # Initialize a dictionary to store the cashbook data
+    cashbook_data = {
+        "receipts": [],  # For storing money-in data
+        "payments": []   # For storing money-out data
+    }
+
+    # Get Receipts (Money In) using existing function
+    receipts = get_receipts_money_in(year, month)
+    cashbook_data["receipts"].extend(receipts)
+
+    # Get Payments (Money Out) using existing function
+    payments = get_payments_money_out(year, month)
+    cashbook_data["payments"].extend(payments["payments"])
+
+    return cashbook_data

@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'accounts.operations.operations_receipts',
     'accounts.operations.operations_bankcharges',
     'accounts.operations.operations_balances',
-    'accounts.operations.books',
+    'accounts.operations.operations_cashbooks',
 
 
     'accounts.school_fund.school_fund_receipts',
