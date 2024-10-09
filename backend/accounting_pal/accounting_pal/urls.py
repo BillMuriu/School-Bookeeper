@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/operations-balances/', include('accounts.operations.operations_balances.urls')),
     path('api/operations-cashbooks/', include('accounts.operations.operations_cashbooks.urls')),
     path('api/operations-ledgers/', include('accounts.operations.operations_ledgers.urls')),
+    path('api/operations-trialbalances/', include('accounts.operations.operations_trial_balance.urls')),
 
 # student urls
     path('api/students/', include('students.students.urls')),

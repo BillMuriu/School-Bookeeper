@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'accounts.operations.operations_balances',
     'accounts.operations.operations_cashbooks',
     'accounts.operations.operations_ledgers',
+    'accounts.operations.operations_trial_balance',
 
 
 # schoolfund apps
