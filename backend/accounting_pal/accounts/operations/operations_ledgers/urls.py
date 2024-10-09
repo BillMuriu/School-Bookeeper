@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import RMIDebitsView, RMICreditsView, RMILedgerView
+from .views import RMILedgerView, BankChargeLedgerView 
 
 urlpatterns = [
-    path('rmi-debits/', RMIDebitsView.as_view(), name='rmi-debits'),
-    path('rmi-credits/', RMICreditsView.as_view(), name='rmi-credits'),
     path('rmi-ledger/', RMILedgerView.as_view(), name='rmi-ledger'),
+     path('bankcharge-ledger/', BankChargeLedgerView.as_view(), name='bankcharge-ledger'),
 ]
