@@ -13,8 +13,18 @@ def calculate_running_balance(account, current_date=None):
     if current_date is None:
         current_date = datetime.now().date()
 
-    # Calculate the opening balance for the account for the current year
-    opening_balance = get_opening_balance_for_year(current_date.year)
+    # Fetch the opening balance directly from the database
+    try:
+        opening_balance = OpeningBalance.objects.first()
+        if opening_balance:
+            bank_amount = opening_balance.bank_amount
+            cash_amount = opening_balance.cash_amount
+        else:
+            bank_amount = 0.0
+            cash_amount = 0.0
+    except OpeningBalance.DoesNotExist:
+        bank_amount = 0.0
+        cash_amount = 0.0
 
     # Total bank receipts for the current year
     total_bank_receipts = OperationReceipt.objects.filter(
@@ -51,10 +61,10 @@ def calculate_running_balance(account, current_date=None):
     ).aggregate(total=Sum('amount_shs'))['total'] or 0
 
     # Calculate bank and cash amounts
-    bank_amount = (opening_balance['bank_amount'] + total_bank_receipts) - (
+    bank_amount += total_bank_receipts - (
         total_bank_charges + total_petty_cash + total_bank_payment_vouchers
     )
-    cash_amount = (opening_balance['cash_amount'] + total_cash_receipts) - total_cash_payment_vouchers
+    cash_amount += total_cash_receipts - total_cash_payment_vouchers
 
     # Return the running balance dictionary
     return {
@@ -71,8 +81,21 @@ def calculate_balance_carried_forward(year, month):
     # Define the first day of the specified month and year
     start_date = timezone.make_aware(datetime(year, month, 1))
 
-    # Calculate the opening balance for the account as of the first day of the specified year
-    opening_balance = get_opening_balance_for_year(start_date.year)
+    # Fetch the opening balance that is applicable before the start date
+    opening_balance = (
+        OpeningBalance.objects.filter(date__gte=start_date)
+        .order_by('-date')
+        .first()
+    )
+
+    # Initialize bank and cash amounts
+    bank_amount = Decimal('0.0')
+    cash_amount = Decimal('0.0')
+
+    # Only include the opening balance if it is on or after the start date
+    if opening_balance and opening_balance.date >= start_date:
+        bank_amount += opening_balance.bank_amount
+        cash_amount += opening_balance.cash_amount
 
     # Total bank receipts up to the day before the specified date
     total_bank_receipts = OperationReceipt.objects.filter(
@@ -109,10 +132,10 @@ def calculate_balance_carried_forward(year, month):
     ).aggregate(total=Sum('amount_shs'))['total'] or Decimal('0')  # Ensure it’s Decimal
 
     # Calculate bank and cash amounts as of the start date (excluding the first day of the month)
-    bank_amount = (opening_balance['bank_amount'] + total_bank_receipts) - (
+    bank_amount += total_bank_receipts - (
         total_bank_charges + total_petty_cash + total_bank_payment_vouchers
     )
-    cash_amount = (opening_balance['cash_amount'] + total_cash_receipts) - total_cash_payment_vouchers
+    cash_amount += total_cash_receipts - total_cash_payment_vouchers
 
     # Return the balance carried forward dictionary
     return {
@@ -121,28 +144,3 @@ def calculate_balance_carried_forward(year, month):
         "bankAmount": bank_amount,
         "cashAmount": cash_amount,
     }
-
-
-def get_opening_balance_for_year(year):
-    # Fetch the opening balance for the specified account and year
-    try:
-        opening_balance = OpeningBalance.objects.filter(
-            date__year=year
-        ).order_by('-date').first()
-        if opening_balance:
-            return {
-                'bank_amount': opening_balance.bank_amount,
-                'cash_amount': opening_balance.cash_amount
-            }
-        else:
-            # Return default values if no opening balance is found
-            return {
-                'bank_amount': 0.0,
-                'cash_amount': 0.0
-            }
-    except OpeningBalance.DoesNotExist:
-        # Return default values if no record exists
-        return {
-            'bank_amount': 0.0,
-            'cash_amount': 0.0
-        }
