@@ -6,6 +6,13 @@ class PaymentVoucher(models.Model):
         ('bank', 'Bank'),
     ]
 
+    VOTE_HEAD_CHOICES = [
+        ('rmi', 'RMI'),
+        ('school_fund', 'School Fund'),
+        ('tuition', 'Tuition'),
+        ('other_voteheads', 'Other Voteheads'),
+    ]
+
     account = models.CharField(max_length=255, default='operations_account')
 
     voucher_no = models.PositiveIntegerField()  # Change voucher_no to a numeric field
@@ -16,7 +23,10 @@ class PaymentVoucher(models.Model):
     total_amount_in_words = models.CharField(max_length=255)
     prepared_by = models.CharField(max_length=255)
     authorised_by = models.CharField(max_length=255)
-    vote_head = models.CharField(max_length=255)
+    
+    # Adding choices for vote_head
+    vote_head = models.CharField(max_length=50, choices=VOTE_HEAD_CHOICES) 
+    
     vote_details = models.TextField()
     date = models.DateTimeField()
 
