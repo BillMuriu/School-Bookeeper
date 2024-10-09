@@ -41,14 +41,17 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
+# operations app
     'accounts.operations.operations_paymentvouchers',
     'accounts.operations.operations_pettycash',
     'accounts.operations.operations_receipts',
     'accounts.operations.operations_bankcharges',
     'accounts.operations.operations_balances',
     'accounts.operations.operations_cashbooks',
+    'accounts.operations.operations_ledgers',
 
 
+# schoolfund apps
     'accounts.school_fund.school_fund_receipts',
     'accounts.school_fund.school_fund_paymentvouchers',
     'accounts.school_fund.school_fund_pettycash',
@@ -56,6 +59,7 @@ INSTALLED_APPS = [
     'accounts.school_fund.school_fund_bankcharge',
 
 
+# students apps
     'students.students',
     'students.students_opening_balances',
     'other_apps.term_periods',
