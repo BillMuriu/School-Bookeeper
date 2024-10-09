@@ -8,21 +8,16 @@ from .serializers import OpeningBalanceSerializer, RunningBalanceSerializer, Bal
 from .utils import calculate_running_balance, calculate_balance_carried_forward
 
 
-# Come and have a look at this view again. It might need some future edits
 class RunningBalanceView(APIView):
     def get(self, request, *args, **kwargs):
         account = request.query_params.get('account', 'operations')  # Default to 'operations' if not provided
-        date_str = request.query_params.get('date')  # Get the optional 'date' parameter
 
-        # Parse the date if provided, otherwise use the current date
-        try:
-            current_date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else timezone.now().date()
-        except ValueError:
-            return Response({"detail": "Invalid date format. Use 'YYYY-MM-DD'."}, status=status.HTTP_400_BAD_REQUEST)
+        # Set the current date to now
+        current_date = timezone.now().date()
 
         # Calculate running balance
         try:
-            running_balance = calculate_running_balance(account, current_date)
+            running_balance = calculate_running_balance(account)
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
