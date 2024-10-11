@@ -13,8 +13,10 @@ class OperationReceipt(models.Model):
     received_from = models.CharField(max_length=100)
     cash_bank = models.CharField(max_length=4, choices=CASH_BANK_CHOICES)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    rmi_fund = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    other_voteheads = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    
+    rmi_fund = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    other_voteheads = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
     date = models.DateTimeField()
     petty_cash = models.ForeignKey(PettyCash, on_delete=models.CASCADE, null=True, blank=True, related_name='receipts')
 
