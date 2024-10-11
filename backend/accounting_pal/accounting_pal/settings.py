@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'accounts.rmi.rmi_cashbook',
     'accounts.rmi.rmi_balances',
     'accounts.rmi.rmi_bankcharges',
-    'accounts.rmi.rmi_trial_balance'
+    'accounts.rmi.rmi_trial_balance',
 
 # schoolfund apps
     'accounts.school_fund.school_fund_receipts',
