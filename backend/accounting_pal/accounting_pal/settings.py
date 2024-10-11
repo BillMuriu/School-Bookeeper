@@ -50,7 +50,17 @@ INSTALLED_APPS = [
     'accounts.operations.operations_cashbooks',
     'accounts.operations.operations_ledgers',
     'accounts.operations.operations_trial_balance',
+    
 
+# rmi apps
+    'accounts.rmi.rmi_receipts',
+    'accounts.rmi.rmi_pettycash',
+    'accounts.rmi.rmi_paymentvoucher',
+    'accounts.rmi.rmi_ledgers',
+    'accounts.rmi.rmi_cashbook',
+    'accounts.rmi.rmi_balances',
+    'accounts.rmi.rmi_bankcharges',
+    'accounts.rmi.rmi_trial_balance'
 
 # schoolfund apps
     'accounts.school_fund.school_fund_receipts',
@@ -58,6 +68,8 @@ INSTALLED_APPS = [
     'accounts.school_fund.school_fund_pettycash',
     'accounts.school_fund.school_fund_balances',
     'accounts.school_fund.school_fund_bankcharge',
+
+
 
 
 # students apps
