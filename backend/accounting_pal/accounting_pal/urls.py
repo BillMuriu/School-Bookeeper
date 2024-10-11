@@ -32,6 +32,9 @@ urlpatterns = [
 # Rmi urls
     path('api/rmi-receipts/', include('accounts.rmi.rmi_receipts.urls')),
     path('api/rmi-petty-cash/', include('accounts.rmi.rmi_pettycash.urls')),
+    path('api/rmi-payment-vouchers/', include('accounts.rmi.rmi_paymentvoucher.urls')),
+    path('api/rmi-bank-charges/', include('accounts.rmi.rmi_bankcharges.urls')),
+    path('api/rmi-balances/', include('accounts.rmi.rmi_balances.urls')),
 
 # student urls
     path('api/students/', include('students.students.urls')),
