@@ -13,8 +13,6 @@ class SchoolFundReceipt(models.Model):
     
     ACCOUNT_CHOICES = [
         (SCHOOL_FUND_ACCOUNT, 'School Fund Account'),
-        ('operations_account', 'Operations Account'),  # Example of another possible account
-        # Add more account types if needed
     ]
 
     account = models.CharField(max_length=50, choices=ACCOUNT_CHOICES, default=SCHOOL_FUND_ACCOUNT)

@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.school_fund.school_fund_receipts.models import SchoolFundReceipt
 
 class PaymentVoucher(models.Model):
     PAYMENT_MODE_CHOICES = [
@@ -15,20 +16,26 @@ class PaymentVoucher(models.Model):
 
     account = models.CharField(max_length=255, default='operations_account')
 
-    voucher_no = models.PositiveIntegerField()  # Change voucher_no to a numeric field
+    voucher_no = models.PositiveIntegerField()  # Voucher number as a numeric field
     payee_name = models.CharField(max_length=255)
     particulars = models.TextField()
-    amount_shs = models.DecimalField(max_digits=10, decimal_places=2)  # Ensure amount_shs is correctly formatted
-    payment_mode = models.CharField(max_length=50, choices=PAYMENT_MODE_CHOICES)  # Use choices for payment_mode
+    amount_shs = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_mode = models.CharField(max_length=50, choices=PAYMENT_MODE_CHOICES)
     total_amount_in_words = models.CharField(max_length=255)
     prepared_by = models.CharField(max_length=255)
     authorised_by = models.CharField(max_length=255)
-    
-    # Adding choices for vote_head
-    vote_head = models.CharField(max_length=50, choices=VOTE_HEAD_CHOICES) 
-    
+    vote_head = models.CharField(max_length=50, choices=VOTE_HEAD_CHOICES)
     vote_details = models.TextField()
     date = models.DateTimeField()
+
+    # Relationship to SchoolFundReceipt
+    school_fund_receipt = models.OneToOneField(
+        SchoolFundReceipt,  # You can now directly use the imported model
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        related_name='payment_voucher'
+    )
 
     def __str__(self):
         return f"Payment Voucher #{self.voucher_no} - {self.payee_name}"
