@@ -57,7 +57,7 @@ class SchoolFundLedgerView(APIView):
         # Get the ledger data
         ledger = get_school_fund_ledger(start_date, end_date)
 
-        return Response(ledger, status=status.HTTP_200_OK)
+        return Response({"ledger": ledger}, status=status.HTTP_200_OK)
 
 
 class BankChargeLedgerView(APIView):
@@ -109,7 +109,7 @@ class TuitionLedgerView(APIView):
         # Get the ledger data
         ledger = get_tuition_ledger(start_date, end_date)
 
-        return Response(ledger, status=status.HTTP_200_OK)
+        return Response({"ledger": ledger}, status=status.HTTP_200_OK)
     
 
 class OtherVoteheadsLedgerView(APIView):
@@ -137,4 +137,4 @@ class OtherVoteheadsLedgerView(APIView):
         # Get the ledger data
         ledger = get_other_voteheads_ledger(start_date, end_date)
 
-        return Response(ledger, status=status.HTTP_200_OK)
+        return Response({"ledger": ledger}, status=status.HTTP_200_OK)
