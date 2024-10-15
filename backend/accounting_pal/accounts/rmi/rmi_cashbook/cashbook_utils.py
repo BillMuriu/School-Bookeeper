@@ -114,10 +114,7 @@ def get_rmi_receipts_money_in(year, month):
         }
         receipts_data.append(row)
 
-    return receipts_data
-
-
-
+    return {"receipts": receipts_data}
 
 def get_rmi_cashbook(year, month):
     # Initialize a dictionary to store the cashbook data

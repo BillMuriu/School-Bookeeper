@@ -3,7 +3,7 @@ from accounts.rmi.rmi_bankcharges.models import RMIBankCharge
 from accounts.rmi.rmi_paymentvoucher.models import RMIPaymentVoucher
 from accounts.rmi.rmi_receipts.models import RMIReceipt
 
-def get_operations_debits(start_date, end_date):
+def get_other_voteheads_debits(start_date, end_date):
     debits = []
 
     # Ensure the dates are timezone-aware only if they're naive
@@ -12,8 +12,8 @@ def get_operations_debits(start_date, end_date):
     if timezone.is_naive(end_date):
         end_date = timezone.make_aware(end_date)
 
-    # Fetch Payment Vouchers within the specified period
-    payment_vouchers = RMIPaymentVoucher.objects.filter(date__gte=start_date, date__lt=end_date, vote_head='operations')
+    # Fetch Payment Vouchers within the specified period for other voteheads
+    payment_vouchers = RMIPaymentVoucher.objects.filter(date__gte=start_date, date__lt=end_date, vote_head='other_voteheads')
 
     # Loop through the filtered vouchers and create debit entries (date, amount, and cashbook)
     for voucher in payment_vouchers:
@@ -25,7 +25,7 @@ def get_operations_debits(start_date, end_date):
 
     return debits
 
-def get_operations_credits(start_date, end_date):
+def get_other_voteheads_credits(start_date, end_date):
     credits = []
 
     # Ensure the dates are timezone-aware only if they're naive
@@ -34,15 +34,15 @@ def get_operations_credits(start_date, end_date):
     if timezone.is_naive(end_date):
         end_date = timezone.make_aware(end_date)
 
-    # Fetch RMI Receipts within the specified period where received_from is 'operations'
-    operation_receipts = RMIReceipt.objects.filter(
-        received_from='operations',
+    # Fetch RMI Receipts within the specified period where received_from is 'other_voteheads'
+    rmi_receipts = RMIReceipt.objects.filter(
+        received_from='other_voteheads',
         date__gte=start_date,
         date__lt=end_date
     )
 
     # Loop through the filtered receipts and create credit entries (date, amount, and cashbook)
-    for receipt in operation_receipts:
+    for receipt in rmi_receipts:
         credits.append({
             "date": receipt.date,
             "amount": receipt.total_amount,  # Assuming total_amount is the correct field
@@ -51,10 +51,10 @@ def get_operations_credits(start_date, end_date):
 
     return credits
 
-def get_operations_ledger(start_date, end_date):
+def get_other_voteheads_ledger(start_date, end_date):
     # Get debits and credits
-    debits = get_operations_debits(start_date, end_date)
-    credits = get_operations_credits(start_date, end_date)
+    debits = get_other_voteheads_debits(start_date, end_date)
+    credits = get_other_voteheads_credits(start_date, end_date)
 
     # Calculate total debits and credits
     total_debits = sum(debit['amount'] for debit in debits)
