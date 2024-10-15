@@ -62,6 +62,16 @@ INSTALLED_APPS = [
     'accounts.rmi.rmi_bankcharges',
     'accounts.rmi.rmi_trial_balance',
 
+# tuition apps
+    'accounts.tuition.tuition_balances',
+    'accounts.tuition.tuition_bankcharges',
+    'accounts.tuition.tuition_cashbooks',
+    'accounts.tuition.tuition_ledgers',
+    'accounts.tuition.tuition_paymentvouchers',
+    'accounts.tuition.tuition_pettycash',
+    'accounts.tuition.tuition_receipts',
+    'accounts.tuition.tuition_trial_balances',
+
 # schoolfund apps
     'accounts.school_fund.school_fund_receipts',
     'accounts.school_fund.school_fund_paymentvouchers',

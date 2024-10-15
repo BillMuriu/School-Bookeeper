@@ -39,6 +39,13 @@ urlpatterns = [
     path('api/rmi-ledgers/', include('accounts.rmi.rmi_ledgers.urls')),
     path('api/rmi-trialbalances/', include('accounts.rmi.rmi_trial_balance.urls')),
 
+
+# Tuition urls
+    path('api/tuition-receipts/', include('accounts.tuition.tuition_receipts.urls')),
+    path('api/tuition-pettycash/', include('accounts.tuition.tuition_pettycash.urls')),
+
+
+
 # student urls
     path('api/students/', include('students.students.urls')),
     path('api/students_opening_balances/', include('students.students_opening_balances.urls')),
