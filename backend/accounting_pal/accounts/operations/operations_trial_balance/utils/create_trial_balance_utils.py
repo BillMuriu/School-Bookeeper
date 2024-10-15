@@ -1,4 +1,4 @@
-from accounts.operations.operations_ledgers.utils.rmi_ledger_utils import get_rmi_ledger
+from accounts.rmi.rmi_ledgers.utils.rmi_ledger_utils import get_rmi_ledger
 from accounts.operations.operations_ledgers.utils.other_voteheads_ledger_utils import get_other_voteheads_ledger
 from accounts.operations.operations_ledgers.utils.schoolfund_ledger_utils import get_school_fund_ledger
 from accounts.operations.operations_ledgers.utils.tuition_ledger_utils import get_tuition_ledger
