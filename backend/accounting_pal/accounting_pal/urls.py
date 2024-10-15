@@ -46,6 +46,8 @@ urlpatterns = [
     path('api/tuition-payment-vouchers/', include('accounts.tuition.tuition_paymentvouchers.urls')),
     path('api/tuition-bank-charges/', include('accounts.tuition.tuition_bankcharges.urls')),
     path('api/tuition-balances/', include('accounts.tuition.tuition_balances.urls')),
+    path('api/tuition-cashbooks/', include('accounts.tuition.tuition_cashbooks.urls')),
+    path('api/tuition-ledgers/', include('accounts.tuition.tuition_ledgers.urls')),
 
 
 

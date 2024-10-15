@@ -27,6 +27,9 @@ class TuitionPaymentVoucher(models.Model):
     vote_details = models.TextField()
     date = models.DateTimeField()
 
+    # Optional cheque number field
+    cheque_number = models.CharField(max_length=255, null=True, blank=True)
+
     # One-to-One relationship with OperationReceipt
     operation_receipt = models.OneToOneField(
         OperationReceipt,

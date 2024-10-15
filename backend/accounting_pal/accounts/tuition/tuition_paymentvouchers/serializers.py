@@ -11,7 +11,7 @@ class TuitionPaymentVoucherSerializer(serializers.ModelSerializer):
             'id', 'voucher_no', 'payee_name', 'particulars', 
             'amount_shs', 'payment_mode', 'total_amount_in_words', 
             'prepared_by', 'authorised_by', 'vote_head', 
-            'vote_details', 'date', 'operation_receipt'
+            'vote_details', 'date', 'cheque_number', 'operation_receipt'
         ]
 
     # Method to return basic details from the related OperationReceipt
