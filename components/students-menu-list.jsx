@@ -25,7 +25,9 @@ const StudentMenuList = ({ pathname }) => {
 
   return (
     <ul className="grid w-full gap-2 py-5 max-h-screen">
-      <p className="text-xs leading-tight">Students</p>
+      <p className="text-sm leading-tight text-secondary-foreground">
+        Students
+      </p>
       {STUDENTS.map((item, idx) => (
         <MenuItem
           key={idx}

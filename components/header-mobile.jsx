@@ -49,6 +49,7 @@ export const HeaderMobile = () => {
           </SheetHeader>
           <ScrollArea className="h-full w-full rounded-md ">
             <ul className="grid w-full gap-2 py-5 max-h-screen">
+              <p className="text-sm leading-tight">General</p>
               {SIDENAV_ITEMS.map((item, idx) => (
                 <div key={idx}>
                   {item.submenu ? (
@@ -135,7 +136,7 @@ export const HeaderMobile = () => {
             </ul>
 
             <ul className="grid w-full gap-2 py-5 max-h-screen">
-              <p className="text-xs leading-tight">Accounts</p>
+              <p className="text-sm leading-tight">Accounts</p>
               {ACCOUNTS.map((item, idx) => (
                 <div key={idx}>
                   {item.submenu ? (
@@ -222,7 +223,7 @@ export const HeaderMobile = () => {
             </ul>
 
             <ul className="grid w-full gap-2 py-5 max-h-screen">
-              <p className="text-xs leading-tight">Students</p>
+              <p className="text-sm leading-tight">Students</p>
               {STUDENTS.map((item, idx) => (
                 <div key={idx}>
                   {item.submenu ? (
@@ -309,7 +310,7 @@ export const HeaderMobile = () => {
             </ul>
 
             <ul className="grid w-full gap-2 py-5 max-h-screen">
-              <p className="text-xs leading-tight">Extras</p>
+              <p className="text-sm leading-tight">Extras</p>
               {EXTRAS.map((item, idx) => (
                 <div key={idx}>
                   {item.submenu ? (

@@ -25,7 +25,7 @@ const AccountsMenuList = ({ pathname }) => {
 
   return (
     <ul className="grid w-full gap-2 py-5 max-h-screen">
-      <p className="text-xs leading-tight">Accounts</p>
+      <p className="text-sm leading-tight">Accounts</p>
 
       {ACCOUNTS.map((item, idx) => (
         <MenuItem

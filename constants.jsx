@@ -1,11 +1,18 @@
 import { Icon } from "@iconify/react";
-import { HomeIcon } from "@radix-ui/react-icons";
+import {
+  HomeIcon,
+  DashboardIcon,
+  ClipboardIcon,
+  BookmarkIcon,
+  CardStackIcon,
+  BackpackIcon,
+} from "@radix-ui/react-icons";
 
 export const SIDENAV_ITEMS = [
   {
-    title: "Home",
+    title: "Dashboard",
     path: "/",
-    icon: <HomeIcon width="20" height="20" />,
+    icon: <DashboardIcon width="20" height="20" />,
   },
 ];
 
@@ -13,7 +20,7 @@ export const ACCOUNTS = [
   {
     title: "Operations",
     path: "/operations",
-    icon: <HomeIcon width="20" height="20" />,
+    icon: <ClipboardIcon width="20" height="20" />,
     submenu: true,
     subMenuItems: [
       { title: "All Operation Files", path: "/operations" },
@@ -25,7 +32,7 @@ export const ACCOUNTS = [
   {
     title: "RMI",
     path: "/rmi",
-    icon: <HomeIcon width="20" height="20" />,
+    icon: <CardStackIcon width="20" height="20" />,
     submenu: true,
     subMenuItems: [
       { title: "All Operation Files", path: "/rmi" },
@@ -37,7 +44,7 @@ export const ACCOUNTS = [
   {
     title: "Tuition",
     path: "/tuition",
-    icon: <HomeIcon width="20" height="20" />,
+    icon: <BackpackIcon width="20" height="20" />,
     submenu: true,
     subMenuItems: [
       { title: "All Operation Files", path: "/tuition" },
