@@ -10,7 +10,7 @@ const MenuItem = ({ item, isOpen, pathname, toggleSubMenu }) => {
         <>
           <Button
             variant="ghost"
-            className={`flex w-full text-base ${
+            className={`flex w-full text-small ${
               pathname.includes(item.path)
                 ? "font-bold bg-accent text-accent-foreground"
                 : ""
@@ -69,7 +69,7 @@ const MenuItem = ({ item, isOpen, pathname, toggleSubMenu }) => {
         >
           <Button
             variant="ghost"
-            className={`w-full text-base flex items-center justify-start gap-4 ${
+            className={`w-full text-small flex items-center justify-start gap-4 ${
               pathname === item.path
                 ? "font-bold bg-accent text-accent-foreground"
                 : ""
