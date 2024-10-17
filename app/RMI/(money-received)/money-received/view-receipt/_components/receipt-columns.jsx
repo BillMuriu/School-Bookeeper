@@ -31,7 +31,7 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "receivedFrom",
+    accessorKey: "received_from",
     header: "Received From",
   },
   {
@@ -49,7 +49,12 @@ export const columns = [
     },
   },
   {
-    accessorKey: "totalAmount",
+    accessorKey: "cash_bank", // Adding cash_bank column
+    header: "Cash or Bank",
+    cell: ({ getValue }) => (getValue() === "cash" ? "Cash" : "Bank"), // Optionally format the value
+  },
+  {
+    accessorKey: "total_amount",
     header: "Total Amount",
   },
   {

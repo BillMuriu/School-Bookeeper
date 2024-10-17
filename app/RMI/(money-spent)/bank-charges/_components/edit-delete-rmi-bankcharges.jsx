@@ -5,22 +5,22 @@ import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
-  useEditOperationsBankCharges,
-  useDeleteOperationsBankCharges,
+  useEditRmiBankCharge,
+  useDeleteRmiBankCharge,
 } from "../_services/mutations";
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 
-const EditDeleteOperationsBankChargesForm = ({ bankChargeId }) => {
+const EditDeleteRmiBankChargesForm = ({ bankChargeId }) => {
   const {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
   const router = useRouter();
-  const editBankChargesMutation = useEditOperationsBankCharges();
-  const deleteBankChargesMutation = useDeleteOperationsBankCharges();
+  const editBankChargesMutation = useEditRmiBankCharge();
+  const deleteBankChargesMutation = useDeleteRmiBankCharge();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
@@ -83,4 +83,4 @@ const EditDeleteOperationsBankChargesForm = ({ bankChargeId }) => {
   );
 };
 
-export default EditDeleteOperationsBankChargesForm;
+export default EditDeleteRmiBankChargesForm;

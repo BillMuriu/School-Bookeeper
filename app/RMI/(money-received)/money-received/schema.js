@@ -12,11 +12,7 @@ export const rmiReceiptSchema = z.object({
     message: "Cash or Bank is required.",
   }),
 
-  total_amount: z
-    .number() // Change to number
-    .refine((val) => val > 0, {
-      message: "Total Amount must be a positive number.",
-    }),
+  total_amount: z.number().min(0).max(99999999.99).default(0.0),
 
   date: z.date({ required_error: "Date is required." }),
 });

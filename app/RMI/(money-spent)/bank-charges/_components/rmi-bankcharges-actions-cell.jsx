@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteOperationsBankCharges } from "../_services/mutations";
+import { useDeleteRmiBankCharge } from "../_services/mutations";
 import { useRouter } from "next/navigation";
 
-const OperationsBankChargesActionsCell = ({ bankCharge }) => {
-  const deleteBankChargesMutation = useDeleteOperationsBankCharges();
+const RmiBankChargesActionsCell = ({ bankCharge }) => {
+  const deleteBankChargesMutation = useDeleteRmiBankCharge();
   const router = useRouter();
 
   const handleViewBankCharge = (id) => {
@@ -48,4 +48,4 @@ const OperationsBankChargesActionsCell = ({ bankCharge }) => {
   );
 };
 
-export default OperationsBankChargesActionsCell;
+export default RmiBankChargesActionsCell;

@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteOperationReceipts } from "../../_services/mutations";
+import { useDeleteRmiReceipts } from "../../_services/mutations";
 import { useRouter } from "next/navigation";
 
 const ActionsCell = ({ receipt }) => {
-  const deleteOperationsReceiptMutation = useDeleteOperationReceipts();
+  const deleteOperationsReceiptMutation = useDeleteRmiReceipts();
   const router = useRouter();
 
   const handleViewReceipt = (id) => {

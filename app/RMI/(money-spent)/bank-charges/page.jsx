@@ -2,11 +2,11 @@
 
 import React from "react";
 import { BankChargesTable } from "@/components/tables/operations-bankcharges-table";
-import { columns } from "./_components/operations-bankcharges-columns";
-import { useAllOperationsBankCharges } from "./_services/queries";
+import { columns } from "./_components/rmi-bankcharges-columns";
+import { useAllRmiBankCharges } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
 const BankChargesPage = () => {
-  const { data: bankCharges, isLoading, error } = useAllOperationsBankCharges();
+  const { data: bankCharges, isLoading, error } = useAllRmiBankCharges();
 
   if (isLoading) return <DataTableSkeleton />;
   if (error) return <p>Error: {error.message}</p>;

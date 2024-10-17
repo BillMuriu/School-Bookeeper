@@ -35,9 +35,9 @@ const EditRmiReceiptForm = ({ receiptId }) => {
 
     const apiData = {
       account: data.account,
-      received_from: data.sender, // Adjusting for API field name
-      cash_bank: data.cashBank, // Adjusting for API field name
-      total_amount: data.totalAmount.toString(), // Convert to string
+      received_from: data.received_from,
+      cash_bank: data.cash_bank,
+      total_amount: data.total_amount,
       date: data.date,
     };
 
@@ -76,7 +76,7 @@ const EditRmiReceiptForm = ({ receiptId }) => {
           disabled={true}
         />
         <RHFNativeSelect
-          name="sender"
+          name="received_from"
           label="Received From"
           options={[
             { value: "pettycash", label: "Petty Cash" },
@@ -86,7 +86,7 @@ const EditRmiReceiptForm = ({ receiptId }) => {
           defaultValue="operations" // Adjust based on your logic for default value
         />
         <RHFRadioGroup
-          name="cashBank"
+          name="cash_bank"
           label="Cash or Bank"
           options={[
             { value: "cash", label: "Cash" },
@@ -94,8 +94,7 @@ const EditRmiReceiptForm = ({ receiptId }) => {
           ]}
         />
         <RHFNumberInput
-          type="number"
-          name="totalAmount"
+          name="total_amount"
           label="Total Amount Received"
           min={0}
         />

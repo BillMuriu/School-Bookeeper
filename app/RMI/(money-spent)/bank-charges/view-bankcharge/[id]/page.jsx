@@ -2,19 +2,15 @@
 
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { bankChargesSchema } from "../../bankcharges-schema";
-import EditDeleteOperationsBankChargesForm from "../../_components/edit-delete-operations-bankcharges";
-import { useOperationsBankCharge } from "../../_services/queries";
+import EditDeleteOperationsBankChargesForm from "../../_components/edit-delete-rmi-bankcharges";
+import { useRmiBankCharge } from "../../_services/queries";
 import SkeletonLoader from "@/components/skeleton-loader";
 
-const OperationsBankChargesFormWrapper = ({ params }) => {
+const RmiBankChargesFormWrapper = ({ params }) => {
   const bankChargeId = params?.id;
 
   // Use the query to fetch bank charge data
-  const {
-    data: bankCharge,
-    isLoading,
-    error,
-  } = useOperationsBankCharge(bankChargeId);
+  const { data: bankCharge, isLoading, error } = useRmiBankCharge(bankChargeId);
 
   if (isLoading) return <SkeletonLoader />;
   if (error) return <p>Error: {error.message}</p>;
@@ -37,4 +33,4 @@ const OperationsBankChargesFormWrapper = ({ params }) => {
   );
 };
 
-export default OperationsBankChargesFormWrapper;
+export default RmiBankChargesFormWrapper;

@@ -3,11 +3,11 @@
 import React from "react";
 import { DataTable } from "@/components/tables/operations-receipts-table";
 import { columns } from "./_components/receipt-columns";
-import { useOperationsReceipts } from "../_services/queries";
+import { useRmiReceipts } from "../_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
 
 const ReceiptsTable = () => {
-  const { data: receipts, isLoading, error } = useOperationsReceipts();
+  const { data: receipts, isLoading, error } = useRmiReceipts();
 
   if (isLoading) return <DataTableSkeleton />;
   if (error) return <p>Error: {error.message}</p>;

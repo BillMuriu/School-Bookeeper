@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useCreateOperationsBankCharge } from "../_services/mutations";
+import { useCreateRmiBankCharge } from "../_services/mutations";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
@@ -17,7 +17,7 @@ const AddBankChargeForm = () => {
     handleSubmit,
   } = useFormContext();
 
-  const createBankChargeMutation = useCreateOperationsBankCharge();
+  const createBankChargeMutation = useCreateRmiBankCharge();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {

@@ -24,11 +24,13 @@ const RmiReceiptForm = () => {
     // Map the form data to match the API structure
     const apiData = {
       account: data.account,
-      received_from: data.receivedFrom,
-      cash_bank: data.cashBank,
-      total_amount: data.totalAmount,
+      received_from: data.received_from,
+      cash_bank: data.cash_bank,
+      total_amount: data.total_amount,
       date: data.date.toISOString(), // Convert to ISO string
     };
+
+    console.log(apiData);
 
     console.log("Data submitted:", apiData);
     setIsLoading(true);
@@ -65,7 +67,7 @@ const RmiReceiptForm = () => {
           disabled
         />
         <RHFNativeSelect
-          name="receivedFrom"
+          name="received_from"
           label="Received From"
           options={[
             { value: "pettycash", label: "Petty Cash" },
@@ -76,7 +78,7 @@ const RmiReceiptForm = () => {
         />
 
         <RHFRadioGroup
-          name="cashBank"
+          name="cash_bank"
           label="Cash or Bank"
           options={[
             { value: "cash", label: "Cash" },
@@ -85,8 +87,7 @@ const RmiReceiptForm = () => {
         />
 
         <RHFNumberInput
-          type="number"
-          name="totalAmount"
+          name="total_amount"
           label="Total Amount Received"
           min={0}
         />

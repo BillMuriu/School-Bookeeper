@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import OperationsBankChargesActionsCell from "./operations-bankcharges-actions-cell";
+import RmiBankChargesActionsCell from "./rmi-bankcharges-actions-cell";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -61,7 +61,7 @@ export const columns = [
     id: "actions",
     cell: ({ row }) => {
       const bankCharge = row.original;
-      return <OperationsBankChargesActionsCell bankCharge={bankCharge} />;
+      return <RmiBankChargesActionsCell bankCharge={bankCharge} />;
     },
   },
 ];

@@ -1,23 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-const BASE_URL = "http://127.0.0.1:8000/api/bank-charges/";
-
-export function useOperationsBankCharge(id) {
+import { BASE_URL } from "@/app/constants";
+// Fetch a single RMI bank charge by ID
+export function useRmiBankCharge(id) {
   return useQuery({
-    queryKey: ["bankCharge", { id }],
+    queryKey: ["rmiBankCharge", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(`${BASE_URL}/rmi-bank-charges/${id}/`);
       return response.data;
     },
   });
 }
 
-export function useAllOperationsBankCharges() {
+// Fetch all RMI bank charges
+export function useAllRmiBankCharges() {
   return useQuery({
-    queryKey: ["bankCharges"],
+    queryKey: ["rmiBankCharges"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(`${BASE_URL}/rmi-bank-charges/`);
       return response.data;
     },
   });

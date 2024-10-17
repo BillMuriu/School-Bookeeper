@@ -3,15 +3,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-
-export function useCreateOperationsPaymentVoucher() {
+import { BASE_URL } from "@/app/constants";
+// Create RMI Payment Voucher
+export function useCreateRmiPaymentVoucher() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/operations-paymentvouchers/create/",
+        `${BASE_URL}/rmi-payment-vouchers/create/`,
         data,
         {
           headers: {
@@ -23,32 +24,31 @@ export function useCreateOperationsPaymentVoucher() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["paymentVouchers"]);
-      //   const voucherId = data.id;
-      //   router.push(`/payment-vouchers/view/${voucherId}`);
+      await queryClient.invalidateQueries(["rmiPaymentVouchers"]);
 
-      toast.success("Payment voucher created!", {
+      toast.success("RMI payment voucher created!", {
         description: "The new payment voucher has been successfully created.",
         duration: 3000,
       });
     },
 
     onError: (error) => {
-      toast.error(`Error creating payment voucher: ${error.message}`, {
+      toast.error(`Error creating RMI payment voucher: ${error.message}`, {
         description: "Please try again later.",
       });
     },
   });
 }
 
-export function useEditOperationsPaymentVoucher() {
+// Edit RMI Payment Voucher
+export function useEditRmiPaymentVoucher() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/operations-paymentvouchers/${id}/update/`,
+        `${BASE_URL}/rmi-payment-vouchers/${id}/update/`,
         data,
         {
           headers: {
@@ -60,32 +60,31 @@ export function useEditOperationsPaymentVoucher() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["paymentVouchers"]);
-      //   const voucherId = data.id;
-      //   router.push(`/payment-vouchers/view/${voucherId}`);
+      await queryClient.invalidateQueries(["rmiPaymentVouchers"]);
 
-      toast.success("Payment voucher updated!", {
+      toast.success("RMI payment voucher updated!", {
         description: "The payment voucher has been successfully updated.",
         duration: 3000,
       });
     },
 
     onError: (error) => {
-      toast.error(`Error updating payment voucher: ${error.message}`, {
+      toast.error(`Error updating RMI payment voucher: ${error.message}`, {
         description: "Please try again later.",
       });
     },
   });
 }
 
-export function useDeleteOperationsPaymentVoucher() {
+// Delete RMI Payment Voucher
+export function useDeleteRmiPaymentVoucher() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `http://127.0.0.1:8000/api/operations-paymentvouchers/${id}/delete/`,
+        `${BASE_URL}/rmi-payment-vouchers/${id}/delete/`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -96,19 +95,19 @@ export function useDeleteOperationsPaymentVoucher() {
     },
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries(["paymentVouchers"]);
+      await queryClient.invalidateQueries(["rmiPaymentVouchers"]);
 
-      toast.success("Payment voucher deleted!", {
+      toast.success("RMI payment voucher deleted!", {
         description: "The payment voucher has been successfully deleted.",
         duration: 3000,
       });
 
       // Redirect to the payment vouchers list page after deletion
-      router.push("/payment-vouchers");
+      router.push("/rmi-payment-vouchers");
     },
 
     onError: (error) => {
-      toast.error(`Error deleting payment voucher: ${error.message}`, {
+      toast.error(`Error deleting RMI payment voucher: ${error.message}`, {
         description: "Please try again later.",
       });
     },
