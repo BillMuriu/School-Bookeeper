@@ -48,7 +48,7 @@ export function useEditRmiPaymentVoucher() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `${BASE_URL}/rmi-payment-vouchers/${id}/update/`,
+        `${BASE_URL}/rmi-payment-vouchers/${id}/`,
         data,
         {
           headers: {
@@ -84,7 +84,7 @@ export function useDeleteRmiPaymentVoucher() {
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `${BASE_URL}/rmi-payment-vouchers/${id}/delete/`,
+        `${BASE_URL}/rmi-payment-vouchers/${id}/`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -14,6 +14,26 @@ import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 
+// Function to transform camelCase to snake_case
+const adaptDataForBackend = (data) => {
+  return {
+    account: data.account || "rmi_account",
+    voucher_no: data.voucherNo ?? null,
+    payee_name: data.payeeName || "",
+    particulars: data.particulars || "",
+    amount_shs: data.amountShs ?? null,
+    payment_mode: data.paymentMode || "cash",
+    total_amount_in_words: data.totalAmountInWords || "",
+    prepared_by: data.preparedBy || "",
+    authorised_by: data.authorisedBy || "",
+    vote_head: data.voteHead || "",
+    vote_details: data.voteDetails || "",
+    date: data.date
+      ? new Date(data.date).toISOString()
+      : new Date().toISOString(),
+  };
+};
+
 const EditDeletePaymentVoucherForm = ({ voucherId }) => {
   const {
     formState: { errors },
@@ -25,12 +45,15 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("Raw submitted data:", data);
+    // Adapt the data for backend before submitting
+    const adaptedData = adaptDataForBackend(data);
 
-    console.log("Processed submit data:", data);
+    console.log("Raw submitted data:", data);
+    console.log("Processed submit data:", adaptedData);
+
     setIsLoading(true);
     editPaymentVoucherMutation.mutate(
-      { id: voucherId, data },
+      { id: voucherId, data: adaptedData },
       {
         onSettled: () => {
           setIsLoading(false);
@@ -44,7 +67,7 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
     deletePaymentVoucherMutation.mutate(voucherId, {
       onSettled: () => {
         setIsLoading(false);
-        // router.push("/payment-vouchers");
+        // router.push("/payment-vouchers"); // Uncomment if needed
       },
     });
   };

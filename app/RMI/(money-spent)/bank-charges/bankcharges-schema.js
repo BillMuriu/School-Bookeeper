@@ -8,7 +8,7 @@ export const bankChargesSchema = z.object({
 });
 
 export const defaultBankCharges = {
-  account: "operations_account",
+  account: "rmi_account",
   amount: 0,
   chargeDate: new Date(),
   description: "",

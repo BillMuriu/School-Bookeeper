@@ -20,10 +20,24 @@ const AddBankChargeForm = () => {
   const createBankChargeMutation = useCreateRmiBankCharge();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Function to transform camelCase to snake_case
+  const adaptDataForBackend = (data) => {
+    return {
+      account: data.account || "",
+      amount: data.amount ?? null,
+      charge_date: data.chargeDate
+        ? new Date(data.chargeDate).toISOString()
+        : new Date().toISOString(),
+      description: data.description || "",
+    };
+  };
+
   const onSubmit = (data) => {
-    console.log("Data submitted:", JSON.stringify(data, null, 2));
+    // Adapt the data before submitting it
+    const adaptedData = adaptDataForBackend(data);
+    console.log("Data submitted:", JSON.stringify(adaptedData, null, 2));
     setIsLoading(true);
-    createBankChargeMutation.mutate(data, {
+    createBankChargeMutation.mutate(adaptedData, {
       onSettled: () => {
         setIsLoading(false);
       },

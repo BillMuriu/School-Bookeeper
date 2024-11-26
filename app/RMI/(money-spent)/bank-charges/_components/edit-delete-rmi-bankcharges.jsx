@@ -13,6 +13,7 @@ import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 
+// EditDeleteRmiBankChargesForm component
 const EditDeleteRmiBankChargesForm = ({ bankChargeId }) => {
   const {
     formState: { errors },
@@ -23,10 +24,23 @@ const EditDeleteRmiBankChargesForm = ({ bankChargeId }) => {
   const deleteBankChargesMutation = useDeleteRmiBankCharge();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Function to adapt data to the correct format for the backend (snake_case)
+  const adaptDataForBackend = (data) => {
+    return {
+      account: data.account || "",
+      amount: data.amount ?? null,
+      charge_date: data.chargeDate
+        ? new Date(data.chargeDate).toISOString()
+        : new Date().toISOString(),
+      description: data.description || "",
+    };
+  };
+
   const onSubmit = (data) => {
     setIsLoading(true);
+    const adaptedData = adaptDataForBackend(data);
     editBankChargesMutation.mutate(
-      { id: bankChargeId, data },
+      { id: bankChargeId, data: adaptedData },
       {
         onSettled: () => {
           setIsLoading(false);
