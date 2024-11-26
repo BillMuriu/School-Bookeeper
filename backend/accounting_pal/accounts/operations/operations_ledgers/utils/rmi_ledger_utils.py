@@ -47,7 +47,7 @@ def get_rmi_credits(start_date, end_date):
     for receipt in operation_receipts:
         credits.append({
             "date": receipt.date,
-            "amount": receipt.rmi_fund,
+            "amount": receipt.total_amount,
             "cashbook": get_cashbook(receipt.date)  # Generate cashbook based on the date
         })
 

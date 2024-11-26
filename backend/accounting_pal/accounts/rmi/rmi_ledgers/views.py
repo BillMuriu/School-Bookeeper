@@ -2,7 +2,7 @@ from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .utils.rmi_ledger_utils import get_operations_ledger
+from .utils.operations_ledger_utils import get_operations_ledger
 from .utils.other_voteheads_ledger_utils import get_other_voteheads_ledger
 from .utils.schoolfund_ledger_utils import get_schoolfund_ledger
 from .utils.tuition_ledger_utils import get_tuition_ledger

@@ -1,4 +1,4 @@
-from accounts.rmi.rmi_ledgers.utils.rmi_ledger_utils import get_operations_ledger  # Import your RMI ledger utility
+from accounts.rmi.rmi_ledgers.utils.operations_ledger_utils import get_operations_ledger  # Import your RMI ledger utility
 from accounts.rmi.rmi_ledgers.utils.other_voteheads_ledger_utils import get_other_voteheads_ledger
 from accounts.rmi.rmi_ledgers.utils.schoolfund_ledger_utils import get_schoolfund_ledger
 from accounts.rmi.rmi_ledgers.utils.tuition_ledger_utils import get_tuition_ledger
@@ -55,7 +55,7 @@ def create_rmi_trial_balance(start_date, end_date):
     # Create the trial balance structure
     trial_balance = {
         "debits": {
-            "RMI": safe_get_ledger_total(operations_ledger, 'total_debits'),  # Use RMI ledger
+            "Operations": safe_get_ledger_total(operations_ledger, 'total_debits'),  # Use RMI ledger
             "Other Voteheads": safe_get_ledger_total(other_voteheads_ledger, 'total_debits'),
             "School Fund": safe_get_ledger_total(schoolfund_ledger, 'total_debits'),
             "Tuition": safe_get_ledger_total(tuition_ledger, 'total_debits'),
@@ -70,7 +70,7 @@ def create_rmi_trial_balance(start_date, end_date):
             },
         },
         "credits": {
-            "RMI": safe_get_ledger_total(operations_ledger, 'total_credits'),  # Use RMI ledger
+            "Operations": safe_get_ledger_total(operations_ledger, 'total_credits'),  # Use RMI ledger
             "Other Voteheads": safe_get_ledger_total(other_voteheads_ledger, 'total_credits'),
             "School Fund": safe_get_ledger_total(schoolfund_ledger, 'total_credits'),
             "Tuition": safe_get_ledger_total(tuition_ledger, 'total_credits'),
