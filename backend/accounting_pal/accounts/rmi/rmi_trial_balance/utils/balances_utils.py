@@ -9,6 +9,19 @@ from accounts.rmi.rmi_balances.models import RMIOpeningBalance  # Use RMI Openin
 
 
 def calculate_rmi_balances(start_date, end_date):
+    """
+    Calculate the RMI (Repair and Maintenance) balances, including opening and closing balances 
+    for a given period.
+
+    Args:
+        start_date (datetime): The start date of the period.
+        end_date (datetime): The end date of the period.
+
+    Returns:
+        list: A list containing two dictionaries:
+            - openingBalance (dict): Opening balances with the date, bank amount, and cash amount.
+            - closingBalance (dict): Closing balances with the date, bank amount, and cash amount.
+    """
     # Ensure both dates are timezone-aware
     if timezone.is_naive(start_date):
         start_date = timezone.make_aware(start_date)
@@ -16,6 +29,7 @@ def calculate_rmi_balances(start_date, end_date):
         end_date = timezone.make_aware(end_date)
 
     # Calculate Opening Balance
+    # - This is the initial opening balance. The one that was recorded at the start of using the project
     opening_balance_record = RMIOpeningBalance.objects.filter(date__lt=start_date).order_by('-date').first()
     
     if opening_balance_record:
@@ -65,7 +79,7 @@ def calculate_rmi_balances(start_date, end_date):
     )
     opening_cash_amount += total_cash_receipts_start - total_cash_payment_vouchers_start
 
-    # Create opening balance result
+    # Create opening balance result for a certain period e.g. a for a certain month or a certain school term
     opening_balance_result = {
         "date": start_date.isoformat(),
         "bankAmount": opening_bank_amount,
