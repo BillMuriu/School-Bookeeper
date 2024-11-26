@@ -7,9 +7,22 @@ class RMIPaymentVoucherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RMIPaymentVoucher
-        fields = ['id', 'voucher_no', 'payee_name', 'particulars', 'amount_shs', 'payment_mode',
-                  'total_amount_in_words', 'prepared_by', 'authorised_by', 'vote_head', 'vote_details', 'date', 'operation_receipt']
-
+        fields = [
+            'id',
+            'account',  
+            'voucher_no', 
+            'payee_name', 
+            'particulars', 
+            'amount_shs',
+            'payment_mode', 
+            'total_amount_in_words',  
+            'prepared_by', 
+            'authorised_by',
+            'vote_head',  
+            'vote_details',
+            'date',
+            'operation_receipt'
+        ]
     # Method to return basic details from the related OperationReceipt
     def get_operation_receipt(self, obj):
         if obj.operation_receipt:
