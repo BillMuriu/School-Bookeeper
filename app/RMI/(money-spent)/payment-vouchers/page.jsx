@@ -3,15 +3,11 @@
 import React from "react";
 import { DataTable } from "@/components/tables/operations-paymentvoucher-table";
 import { columns } from "./_components/payment-voucher-columns";
-import { useOperationsPaymentVouchers } from "./_services/queries";
+import { useRmiPaymentVouchers } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
 
 const PaymentVouchersPage = () => {
-  const {
-    data: paymentVouchers,
-    isLoading,
-    error,
-  } = useOperationsPaymentVouchers();
+  const { data: paymentVouchers, isLoading, error } = useRmiPaymentVouchers();
 
   if (isLoading) return <DataTableSkeleton />;
   if (error) return <p>Error: {error.message}</p>;

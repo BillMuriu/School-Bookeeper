@@ -12,7 +12,7 @@ export function useCreateRmiPaymentVoucher() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        `${BASE_URL}/rmi-payment-vouchers/create/`,
+        `${BASE_URL}/rmi-payment-vouchers/`,
         data,
         {
           headers: {

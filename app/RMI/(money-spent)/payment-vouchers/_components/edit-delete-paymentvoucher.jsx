@@ -5,8 +5,8 @@ import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
-  useEditOperationsPaymentVoucher,
-  useDeleteOperationsPaymentVoucher,
+  useEditRmiPaymentVoucher,
+  useDeleteRmiPaymentVoucher,
 } from "../_services/mutations";
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
@@ -20,8 +20,8 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
     handleSubmit,
   } = useFormContext();
   const router = useRouter();
-  const editPaymentVoucherMutation = useEditOperationsPaymentVoucher();
-  const deletePaymentVoucherMutation = useDeleteOperationsPaymentVoucher();
+  const editPaymentVoucherMutation = useEditRmiPaymentVoucher();
+  const deletePaymentVoucherMutation = useDeleteRmiPaymentVoucher();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {

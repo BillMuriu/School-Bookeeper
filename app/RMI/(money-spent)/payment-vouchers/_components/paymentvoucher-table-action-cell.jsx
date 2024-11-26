@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteOperationsPaymentVoucher } from "../_services/mutations";
+import { useDeleteRmiPaymentVoucher } from "../_services/mutations";
 import { useRouter } from "next/navigation";
 
 const PaymentVoucherActionsCell = ({ voucher }) => {
   // Renamed 'receipt' to 'voucher'
-  const deletePaymentVoucherMutation = useDeleteOperationsPaymentVoucher(); // Adjusted mutation hook
+  const deletePaymentVoucherMutation = useDeleteRmiPaymentVoucher(); // Adjusted mutation hook
   const router = useRouter();
 
   const handleViewVoucher = (id) => {

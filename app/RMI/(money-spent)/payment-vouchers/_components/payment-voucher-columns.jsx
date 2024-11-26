@@ -31,7 +31,7 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "voucherNo", // Ensure this matches with the key used in the filter
+    accessorKey: "voucher_no", // Matches schema field "voucher_no"
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -43,20 +43,20 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "payeeName",
+    accessorKey: "payee_name", // Matches schema field "payee_name"
     header: "Payee Name",
   },
   {
-    accessorKey: "amountShs",
+    accessorKey: "amount_shs", // Matches schema field "amount_shs"
     header: "Amount (Shs)",
     cell: ({ getValue }) => parseFloat(getValue()).toFixed(2), // Format amount as decimal
   },
   {
-    accessorKey: "paymentMode", // Added field
+    accessorKey: "payment_mode", // Matches schema field "payment_mode"
     header: "Payment Mode",
   },
   {
-    accessorKey: "date",
+    accessorKey: "date", // Matches schema field "date"
     header: "Date",
     cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
   },
@@ -65,7 +65,7 @@ export const columns = [
     id: "actions",
     cell: ({ row }) => {
       const voucher = row.original;
-      return <PaymentVoucherVoucherActionsCell voucher={voucher} />; // Adjust based on your actual actions
+      return <PaymentVoucherVoucherActionsCell voucher={voucher} />;
     },
   },
 ];

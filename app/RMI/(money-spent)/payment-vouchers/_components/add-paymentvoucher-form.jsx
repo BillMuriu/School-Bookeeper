@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useCreateOperationsPaymentVoucher } from "../_services/mutations";
+import { useCreateRmiPaymentVoucher } from "../_services/mutations";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
@@ -16,13 +16,37 @@ const AddPaymentVoucherForm = () => {
     handleSubmit,
   } = useFormContext();
 
-  const createPaymentVoucherMutation = useCreateOperationsPaymentVoucher();
+  const createPaymentVoucherMutation = useCreateRmiPaymentVoucher();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Function to transform camelCase to snake_case
+  const adaptDataForBackend = (data) => {
+    return {
+      account: data.account || "rmi_account",
+      voucher_no: data.voucherNo ?? null,
+      payee_name: data.payeeName || "",
+      particulars: data.particulars || "",
+      amount_shs: data.amountShs ?? null,
+      payment_mode: data.paymentMode || "cash",
+      total_amount_in_words: data.totalAmountInWords || "",
+      prepared_by: data.preparedBy || "",
+      authorised_by: data.authorisedBy || "",
+      vote_head: data.voteHead || "",
+      vote_details: data.voteDetails || "",
+      date: data.date
+        ? new Date(data.date).toISOString()
+        : new Date().toISOString(),
+    };
+  };
+
   const onSubmit = (data) => {
-    console.log("Data submitted:", JSON.stringify(data, null, 2));
     setIsLoading(true);
-    createPaymentVoucherMutation.mutate(data, {
+
+    // Adapt the data before submitting it
+    const adaptedData = adaptDataForBackend(data);
+    console.log("Data submitted:", JSON.stringify(adaptedData, null, 2));
+
+    createPaymentVoucherMutation.mutate(adaptedData, {
       onSettled: () => {
         setIsLoading(false);
       },
