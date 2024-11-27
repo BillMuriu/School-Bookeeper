@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import RmiBankChargesActionsCell from "./rmi-bankcharges-actions-cell";
+import TuitionBankChargesActionsCell from "./tuition-bankcharges-actions-cell";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -52,7 +52,7 @@ export const columns = [
     cell: ({ getValue }) => parseFloat(getValue()).toFixed(2), // Format amount as decimal
   },
   {
-    accessorKey: "chargeDate",
+    accessorKey: "charge_date",
     header: "Charge Date",
     cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
   },
@@ -61,7 +61,7 @@ export const columns = [
     id: "actions",
     cell: ({ row }) => {
       const bankCharge = row.original;
-      return <RmiBankChargesActionsCell bankCharge={bankCharge} />;
+      return <TuitionBankChargesActionsCell bankCharge={bankCharge} />;
     },
   },
 ];

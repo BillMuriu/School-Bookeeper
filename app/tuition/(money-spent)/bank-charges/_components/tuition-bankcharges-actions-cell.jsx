@@ -8,21 +8,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteRmiBankCharge } from "../_services/mutations";
+import { useDeleteTuitionBankCharge } from "../_services/mutations";
 import { useRouter } from "next/navigation";
 
-const RmiBankChargesActionsCell = ({ bankCharge }) => {
-  const deleteBankChargesMutation = useDeleteRmiBankCharge();
+const TuitionBankChargesActionsCell = ({ bankCharge }) => {
+  const deleteBankChargesMutation = useDeleteTuitionBankCharge(); // Use the mutation for deleting tuition bank charges
   const router = useRouter();
 
   const handleViewBankCharge = (id) => {
-    router.push(`/operations/view-bankcharge/${id}`); // Adjusted route for bank charges
+    router.push(`/tuition/view-bankcharge/${id}`); // Updated route for viewing tuition bank charges
   };
 
   const onDelete = (id) => {
     deleteBankChargesMutation.mutate([id], {
       onSuccess: () => {
-        window.location.reload();
+        window.location.reload(); // Refresh page after deletion
       },
     });
   };
@@ -38,14 +38,14 @@ const RmiBankChargesActionsCell = ({ bankCharge }) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => handleViewBankCharge(bankCharge.id)}>
-          View bank charge
+          View tuition bank charge
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => onDelete(bankCharge.id)}>
-          Delete bank charge
+          Delete tuition bank charge
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-export default RmiBankChargesActionsCell;
+export default TuitionBankChargesActionsCell;

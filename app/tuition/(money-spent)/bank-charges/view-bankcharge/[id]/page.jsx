@@ -3,7 +3,7 @@
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { bankChargesSchema } from "../../bankcharges-schema";
 import EditDeleteTuitionBankChargesForm from "../../_components/edit-delete-tuition-bankcharges"; // Updated component for tuition bank charges
-import { useTuitionBankCharge } from "../../_services/queries";
+import { useTuitionBankCharge } from "../../_services/queries"; // Hook for fetching tuition bank charges
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const TuitionBankChargesFormWrapper = ({ params }) => {
