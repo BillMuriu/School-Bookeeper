@@ -3,11 +3,23 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useCreateOperationsPettyCash } from "../_services/mutations"; // Corrected import for petty cash mutation
+import { useCreateRmiPettyCash } from "../_services/mutations"; // Corrected import for petty cash mutation
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 import SkeletonLoader from "@/components/skeleton-loader";
+
+// Function to format data for the backend
+const formatPettyCashData = (data) => {
+  return {
+    account: data.account,
+    payee_name: data.payeeName, // Convert camelCase to snake_case
+    cheque_number: data.chequeNumber, // Convert camelCase to snake_case
+    amount: data.amount,
+    description: data.description,
+    date_issued: data.dateIssued ? data.dateIssued.toISOString() : "", // Format the date to ISO 8601 string
+  };
+};
 
 // AddPettyCashForm component
 const AddPettyCashForm = () => {
@@ -16,13 +28,16 @@ const AddPettyCashForm = () => {
     handleSubmit,
   } = useFormContext();
 
-  const createPettyCashMutation = useCreateOperationsPettyCash(); // Hook for creating petty cash
+  const createPettyCashMutation = useCreateRmiPettyCash(); // Hook for creating petty cash
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("Data submitted:", JSON.stringify(data, null, 2));
+    const formattedData = formatPettyCashData(data);
+
+    console.log("Formatted data:", JSON.stringify(formattedData, null, 2));
+
     setIsLoading(true);
-    createPettyCashMutation.mutate(data, {
+    createPettyCashMutation.mutate(formattedData, {
       onSettled: () => {
         setIsLoading(false);
       },

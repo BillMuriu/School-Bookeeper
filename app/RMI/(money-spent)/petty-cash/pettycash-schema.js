@@ -30,7 +30,7 @@ export const pettyCashSchema = z.object({
 
 // Default values for Petty Cash
 export const defaultPettyCash = {
-  account: "operations_account",
+  account: "rmi_account",
   payeeName: "",
   chequeNumber: "",
   amount: 0,

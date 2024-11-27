@@ -2,11 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import OperationsPettyCashActionsCell from "./operations-pettycash-action-cell";
+import RmiPettyCashActionsCell from "./rmi-pettycash-action-cell"; // Update import based on actual actions
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
+// Updated columns for RMI Petty Cash
 export const columns = [
   {
     id: "select",
@@ -31,11 +32,11 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "payeeName",
+    accessorKey: "payee_name", // Updated to match schema field
     header: "Payee Name",
   },
   {
-    accessorKey: "chequeNumber",
+    accessorKey: "cheque_number", // Updated to match schema field
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -47,16 +48,16 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "amount",
+    accessorKey: "amount", // Updated to match schema field
     header: "Amount (Shs)",
     cell: ({ getValue }) => parseFloat(getValue()).toFixed(2), // Format amount as decimal
   },
   {
-    accessorKey: "description",
+    accessorKey: "description", // Updated to match schema field
     header: "Description",
   },
   {
-    accessorKey: "dateIssued",
+    accessorKey: "date_issued", // Updated to match schema field
     header: "Date Issued",
     cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
   },
@@ -65,7 +66,7 @@ export const columns = [
     id: "actions",
     cell: ({ row }) => {
       const pettyCash = row.original;
-      return <OperationsPettyCashActionsCell pettyCash={pettyCash} />; // Adjust based on your actual actions
+      return <RmiPettyCashActionsCell pettyCash={pettyCash} />; // Adjust based on your actual actions
     },
   },
 ];

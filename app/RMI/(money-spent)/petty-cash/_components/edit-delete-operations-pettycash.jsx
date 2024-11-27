@@ -5,13 +5,25 @@ import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
-  useEditOperationsPettyCash,
-  useDeleteOperationsPettyCash,
+  useEditRmiPettyCash,
+  useDeleteRmiPettyCash,
 } from "../_services/mutations";
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
+
+// Helper function to format data for backend
+const formatDataForBackend = (data) => {
+  return {
+    account: data.account, // Assuming this value is constant or selected somewhere
+    payee_name: data.payeeName,
+    cheque_number: data.chequeNumber,
+    amount: parseFloat(data.amount).toFixed(2), // Ensure it's a float with 2 decimals
+    description: data.description,
+    date_issued: data.dateIssued ? data.dateIssued.toISOString() : null, // Convert date to ISO format
+  };
+};
 
 const EditDeletePettyCashForm = ({ pettyCashId }) => {
   const {
@@ -19,16 +31,19 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
     handleSubmit,
   } = useFormContext();
   const router = useRouter();
-  const editPettyCashMutation = useEditOperationsPettyCash();
-  const deletePettyCashMutation = useDeleteOperationsPettyCash();
+  const editPettyCashMutation = useEditRmiPettyCash();
+  const deletePettyCashMutation = useDeleteRmiPettyCash();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("Raw submitted data:", data);
+    // Format the data before submission
+    const formattedData = formatDataForBackend(data);
+
+    console.log("Raw submitted data:", formattedData);
 
     setIsLoading(true);
     editPettyCashMutation.mutate(
-      { id: pettyCashId, data },
+      { id: pettyCashId, data: formattedData },
       {
         onSettled: () => {
           setIsLoading(false);
@@ -42,7 +57,7 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
     deletePettyCashMutation.mutate(pettyCashId, {
       onSettled: () => {
         setIsLoading(false);
-        router.push("/petty-cash");
+        router.push("/rmi-petty-cash"); // Redirect to the appropriate page
       },
     });
   };
@@ -64,7 +79,7 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
         <RHFTextField
           name="account"
           label="Account Name"
-          defaultValue=""
+          defaultValue="rmi" // Assuming the account name is predefined as 'rmi'
           disabled
         />
         <RHFTextField name="payeeName" label="Payee Name" />
