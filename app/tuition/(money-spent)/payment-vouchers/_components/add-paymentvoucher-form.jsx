@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useCreateRmiPaymentVoucher } from "../_services/mutations";
+import { useCreateTuitionPaymentVoucher } from "../_services/mutations"; // Updated to the tuition mutation
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
@@ -16,7 +16,7 @@ const AddPaymentVoucherForm = () => {
     handleSubmit,
   } = useFormContext();
 
-  const createPaymentVoucherMutation = useCreateRmiPaymentVoucher();
+  const createPaymentVoucherMutation = useCreateTuitionPaymentVoucher(); // Updated mutation hook
   const [isLoading, setIsLoading] = useState(false);
 
   // Function to transform camelCase to snake_case
@@ -68,7 +68,7 @@ const AddPaymentVoucherForm = () => {
         <RHFTextField
           name="account"
           label="Account Name"
-          defaultValue="default_account"
+          defaultValue="tuition_account" // Default set to tuition account
           disabled
         />
         <RHFNumberInput name="voucherNo" label="Voucher Number" min={1} />

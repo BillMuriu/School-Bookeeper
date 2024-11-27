@@ -52,7 +52,7 @@ export const paymentVoucherSchema = z.object({
 });
 
 export const defaultPaymentVoucher = {
-  account: "rmi_account",
+  account: "tuition_account",
   voucherNo: null,
   payeeName: "",
   particulars: "",

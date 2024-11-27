@@ -5,23 +5,23 @@ import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
-  useEditRmiPaymentVoucher,
-  useDeleteRmiPaymentVoucher,
-} from "../_services/mutations";
+  useEditTuitionPaymentVoucher,
+  useDeleteTuitionPaymentVoucher,
+} from "../_services/mutations"; // Ensure these mutations are for the tuition voucher
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 
-// Function to transform camelCase to snake_case
+// Function to transform camelCase to snake_case (for backend adaptation)
 const adaptDataForBackend = (data) => {
   return {
-    account: data.account || "rmi_account",
+    account: data.account || "tuition_account", // Default to tuition_account
     voucher_no: data.voucherNo ?? null,
     payee_name: data.payeeName || "",
     particulars: data.particulars || "",
-    amount_shs: data.amountShs ?? null,
+    amount_shs: data.amountShs ? data.amountShs.toFixed(2) : null, // Ensure amount is formatted correctly as string with 2 decimals
     payment_mode: data.paymentMode || "cash",
     total_amount_in_words: data.totalAmountInWords || "",
     prepared_by: data.preparedBy || "",
@@ -30,7 +30,7 @@ const adaptDataForBackend = (data) => {
     vote_details: data.voteDetails || "",
     date: data.date
       ? new Date(data.date).toISOString()
-      : new Date().toISOString(),
+      : new Date().toISOString(), // Ensure date is in ISO format
   };
 };
 
@@ -40,8 +40,8 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
     handleSubmit,
   } = useFormContext();
   const router = useRouter();
-  const editPaymentVoucherMutation = useEditRmiPaymentVoucher();
-  const deletePaymentVoucherMutation = useDeleteRmiPaymentVoucher();
+  const editPaymentVoucherMutation = useEditTuitionPaymentVoucher(); // Use tuition mutation hook
+  const deletePaymentVoucherMutation = useDeleteTuitionPaymentVoucher(); // Use tuition mutation hook
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
@@ -89,7 +89,7 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
         <RHFTextField
           name="account"
           label="Account Name"
-          defaultValue="default_account"
+          defaultValue="tuition_account" // Default value for tuition account
           disabled
         />
         <RHFNumberInput name="voucherNo" label="Voucher Number" min={1} />
