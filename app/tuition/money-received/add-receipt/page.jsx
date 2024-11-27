@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { RhfProvider } from "@/contexts/rhf-provider";
-import { rmiReceiptSchema, defaultRmiReceipt } from "../schema";
-import ReceiptForm from "../_components/rmi-receipt-form";
+import { tuitionReceiptSchema, defaultTuitionReceipt } from "../schema";
+import TuitionReceiptForm from "../_components/tuition-receipt-form";
 import SkeletonLoader from "@/components/skeleton-loader";
+
 const TestFormWrapper = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,8 +21,11 @@ const TestFormWrapper = () => {
   }
 
   return (
-    <RhfProvider schema={rmiReceiptSchema} defaultValues={defaultRmiReceipt}>
-      <ReceiptForm />
+    <RhfProvider
+      schema={tuitionReceiptSchema}
+      defaultValues={defaultTuitionReceipt}
+    >
+      <TuitionReceiptForm />
     </RhfProvider>
   );
 };

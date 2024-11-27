@@ -1,10 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  useEditRmiReceipt,
-  useDeleteRmiReceipts,
-} from "../_services/mutations";
+import { useCreateTuitionReceipt } from "../_services/mutations";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
@@ -13,43 +10,38 @@ import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 import SkeletonLoader from "@/components/skeleton-loader";
 
-const EditRmiReceiptForm = ({ receiptId }) => {
+// Function to map form data to API structure
+const mapFormDataToApiData = (data) => {
+  return {
+    account: data.account,
+    received_from: data.receivedFrom,
+    cash_bank: data.cashBank,
+    total_amount: data.totalAmount,
+    date: data.date.toISOString(), // Convert to ISO string
+  };
+};
+
+const TuitionReceiptForm = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useFormContext();
 
-  const editRmiReceiptMutation = useEditRmiReceipt();
-  const deleteRmiReceiptsMutation = useDeleteRmiReceipts();
-
+  const createTuitionReceiptMutation = useCreateTuitionReceipt();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("Raw submitted data:", data);
+    const apiData = mapFormDataToApiData(data);
 
-    // Convert date string to ISO string if necessary
-    if (data.date) {
-      data.date = data.date.toISOString();
-    }
-
-    const apiData = {
-      account: data.account,
-      received_from: data.received_from,
-      cash_bank: data.cash_bank,
-      total_amount: data.total_amount,
-      date: data.date,
-    };
-
-    console.log("Processed submit data:", apiData);
-    editRmiReceiptMutation.mutate({ id: receiptId, data: apiData });
-  };
-
-  const onDelete = () => {
+    console.log("Data submitted:", apiData);
     setIsLoading(true);
-    deleteRmiReceiptsMutation.mutate([receiptId], {
+    createTuitionReceiptMutation.mutate(apiData, {
       onSettled: () => {
         setIsLoading(false);
+      },
+      onError: (error) => {
+        console.error("Error creating Tuition receipt:", error.message); // Log the error message
       },
     });
   };
@@ -58,7 +50,8 @@ const EditRmiReceiptForm = ({ receiptId }) => {
     return <SkeletonLoader />;
   }
 
-  console.log("Form errors:", errors); // Debugging line
+  // Optional: You can also log any form errors here if needed
+  console.log("Form errors:", errors);
 
   return (
     <Container
@@ -71,44 +64,42 @@ const EditRmiReceiptForm = ({ receiptId }) => {
         <RHFNativeSelect
           name="account"
           label="Account Name"
-          options={[{ value: "rmi_account", label: "RMI Account" }]}
-          defaultValue="rmi_account"
-          disabled={true}
+          options={[{ value: "tuition_account", label: "Tuition Account" }]}
+          defaultValue="tuition_account"
+          disabled
         />
         <RHFNativeSelect
-          name="received_from"
+          name="receivedFrom"
           label="Received From"
           options={[
             { value: "pettycash", label: "Petty Cash" },
             { value: "FSE", label: "FSE (Government funds)" },
             { value: "others", label: "Others" },
           ]}
-          defaultValue="operations" // Adjust based on your logic for default value
+          defaultValue="pettycash"
         />
+
         <RHFRadioGroup
-          name="cash_bank"
+          name="cashBank"
           label="Cash or Bank"
           options={[
             { value: "cash", label: "Cash" },
             { value: "bank", label: "Bank" },
           ]}
         />
+
         <RHFNumberInput
-          name="total_amount"
+          name="totalAmount"
           label="Total Amount Received"
           min={0}
         />
+
         <RHFDatePicker name="date" label="Date Received" />
 
-        <Button variant="secondary" type="submit">
-          Edit
-        </Button>
-        <Button type="button" onClick={onDelete}>
-          Delete
-        </Button>
+        <Button type="submit">Submit</Button>
       </Stack>
     </Container>
   );
 };
 
-export default EditRmiReceiptForm;
+export default TuitionReceiptForm;

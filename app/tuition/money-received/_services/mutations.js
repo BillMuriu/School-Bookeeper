@@ -5,13 +5,13 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/app/constants";
 
-export function useCreateRmiReceipt() {
+export function useCreateTuitionReceipt() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
     mutationFn: async (data) => {
-      const response = await axios.post(`${BASE_URL}/rmi-receipts/`, data, {
+      const response = await axios.post(`${BASE_URL}/tuition-receipts/`, data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -20,51 +20,51 @@ export function useCreateRmiReceipt() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["rmiReceipts"]);
+      await queryClient.invalidateQueries(["tuitionReceipts"]);
       const receiptId = data.id;
-      router.push(`/rmi/money-received/view-receipt/${receiptId}`);
+      router.push(`/tuition/money-received/view-receipt/${receiptId}`);
 
       toast.success("Receipt created!", {
-        description: "The new RMI receipt has been successfully created.",
+        description: "The new Tuition receipt has been successfully created.",
         duration: 3000,
       });
     },
 
     onError: (error) => {
-      toast.error(`Error creating RMI receipt: ${error.message}`, {
+      toast.error(`Error creating Tuition receipt: ${error.message}`, {
         description: "Please try again later.",
       });
     },
   });
 }
 
-export function useEditRmiReceipt() {
+export function useEditTuitionReceipt() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ id, data }) => {
-      await axios.put(`${BASE_URL}/rmi-receipts/${id}/`, data, {
+      await axios.put(`${BASE_URL}/tuition-receipts/${id}/`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["rmiReceipts"] });
+      await queryClient.invalidateQueries({ queryKey: ["tuitionReceipts"] });
       toast.success("Receipt Edited Successfully!", {
-        description: "The RMI receipt has been successfully edited.",
+        description: "The Tuition receipt has been successfully edited.",
         duration: 3000,
       });
     },
     onError: (error) => {
-      toast.error(`Error editing RMI receipt: ${error.message}`, {
+      toast.error(`Error editing Tuition receipt: ${error.message}`, {
         description: "Please try again later.",
       });
     },
   });
 }
 
-export function useDeleteRmiReceipts() {
+export function useDeleteTuitionReceipts() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -72,20 +72,20 @@ export function useDeleteRmiReceipts() {
     mutationFn: async (ids) => {
       // Delete receipts in parallel
       await Promise.all(
-        ids.map((id) => axios.delete(`${BASE_URL}/rmi-receipts/${id}/`))
+        ids.map((id) => axios.delete(`${BASE_URL}/tuition-receipts/${id}/`))
       );
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["rmiReceipts"] });
+      await queryClient.invalidateQueries({ queryKey: ["tuitionReceipts"] });
       toast.success("Receipts Deleted Successfully!", {
-        description: "The RMI receipts have been successfully deleted.",
+        description: "The Tuition receipts have been successfully deleted.",
         duration: 3000,
       });
       // Redirect after deletion
-      router.push("/rmi/money-received/view-receipt");
+      router.push("/tuition/money-received/view-receipt");
     },
     onError: (error) => {
-      toast.error(`Error deleting RMI receipts: ${error.message}`, {
+      toast.error(`Error deleting Tuition receipts: ${error.message}`, {
         description: "Please try again later.",
       });
     },

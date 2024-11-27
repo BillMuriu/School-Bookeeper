@@ -1,16 +1,16 @@
 "use client";
 
 import { RhfProvider } from "@/contexts/rhf-provider";
-import { rmiReceiptSchema, defaultRmiReceipt } from "../../schema"; // Import the default schema
-import EditRmiReceiptForm from "../../_components/edit-rmi-receipt-form"; // Ensure the import matches your file name
-import { useRmiReceipt } from "../../_services/queries";
+import { tuitionReceiptSchema, defaultTuitionReceipt } from "../../schema"; // Updated schema and default values import
+import EditTuitionReceiptForm from "../../_components/edit-tuition-receipt-form"; // Ensure correct file path
+import { useTuitionReceipt } from "../../_services/queries"; // Updated query hook
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const TestFormWrapper = ({ params }) => {
   const receiptId = params?.id;
 
   // Use the query to fetch receipt data
-  const { data: receipt, isLoading, error } = useRmiReceipt(receiptId);
+  const { data: receipt, isLoading, error } = useTuitionReceipt(receiptId);
 
   if (isLoading) return <SkeletonLoader />;
   if (error) return <p>Error: {error.message}</p>;
@@ -18,17 +18,20 @@ const TestFormWrapper = ({ params }) => {
 
   return (
     <RhfProvider
-      schema={rmiReceiptSchema}
+      schema={tuitionReceiptSchema}
       defaultValues={{
-        account: receipt.account || defaultRmiReceipt.account, // Default value if not present
-        received_from: receipt.received_from || defaultRmiReceipt.received_from, // Adjusted for API field name
-        cash_bank: receipt.cash_bank || defaultRmiReceipt.cash_bank, // Adjusted for API field name
-        total_amount:
-          receipt.total_amount?.toString() || defaultRmiReceipt.total_amount, // Ensure it's a string
-        date: receipt.date ? new Date(receipt.date) : defaultRmiReceipt.date, // Default to the provided date or current date
+        account: receipt.account || defaultTuitionReceipt.account, // Default value if not present
+        receivedFrom:
+          receipt.received_from || defaultTuitionReceipt.receivedFrom, // CamelCase for schema compatibility
+        cashBank: receipt.cash_bank || defaultTuitionReceipt.cashBank, // Adjust for camelCase
+        totalAmount:
+          receipt.total_amount?.toString() || defaultTuitionReceipt.totalAmount, // Ensure it's a string
+        date: receipt.date
+          ? new Date(receipt.date)
+          : defaultTuitionReceipt.date, // Parse date
       }}
     >
-      <EditRmiReceiptForm receiptId={receiptId} />
+      <EditTuitionReceiptForm receiptId={receiptId} />
     </RhfProvider>
   );
 };
