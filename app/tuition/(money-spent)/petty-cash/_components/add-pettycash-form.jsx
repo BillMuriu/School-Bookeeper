@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useCreateRmiPettyCash } from "../_services/mutations"; // Corrected import for petty cash mutation
+import { useCreateTuitionPettyCash } from "../_services/mutations"; // Corrected import for tuition petty cash mutation
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
@@ -21,14 +21,14 @@ const formatPettyCashData = (data) => {
   };
 };
 
-// AddPettyCashForm component
-const AddPettyCashForm = () => {
+// AddTuitionPettyCashForm component
+const AddTuitionPettyCashForm = () => {
   const {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
 
-  const createPettyCashMutation = useCreateRmiPettyCash(); // Hook for creating petty cash
+  const createPettyCashMutation = useCreateTuitionPettyCash(); // Hook for creating tuition petty cash
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
@@ -82,4 +82,4 @@ const AddPettyCashForm = () => {
   );
 };
 
-export default AddPettyCashForm;
+export default AddTuitionPettyCashForm;

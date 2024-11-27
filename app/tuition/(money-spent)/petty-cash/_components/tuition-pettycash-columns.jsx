@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import RmiPettyCashActionsCell from "./rmi-pettycash-action-cell"; // Update import based on actual actions
+import TuitionPettyCashActionsCell from "./tuition-pettycash-action-cell";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -66,7 +66,7 @@ export const columns = [
     id: "actions",
     cell: ({ row }) => {
       const pettyCash = row.original;
-      return <RmiPettyCashActionsCell pettyCash={pettyCash} />; // Adjust based on your actual actions
+      return <TuitionPettyCashActionsCell pettyCash={pettyCash} />; // Adjust based on your actual actions
     },
   },
 ];

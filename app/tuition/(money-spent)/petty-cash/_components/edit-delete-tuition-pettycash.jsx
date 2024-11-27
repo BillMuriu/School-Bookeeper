@@ -5,9 +5,9 @@ import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
-  useEditRmiPettyCash,
-  useDeleteRmiPettyCash,
-} from "../_services/mutations";
+  useEditTuitionPettyCash,
+  useDeleteTuitionPettyCash,
+} from "../_services/mutations"; // Corrected import for tuition petty cash mutations
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
@@ -25,14 +25,14 @@ const formatDataForBackend = (data) => {
   };
 };
 
-const EditDeletePettyCashForm = ({ pettyCashId }) => {
+const EditDeleteTuitionPettyCashForm = ({ pettyCashId }) => {
   const {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
   const router = useRouter();
-  const editPettyCashMutation = useEditRmiPettyCash();
-  const deletePettyCashMutation = useDeleteRmiPettyCash();
+  const editPettyCashMutation = useEditTuitionPettyCash(); // Hook for editing tuition petty cash
+  const deletePettyCashMutation = useDeleteTuitionPettyCash(); // Hook for deleting tuition petty cash
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
@@ -57,7 +57,7 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
     deletePettyCashMutation.mutate(pettyCashId, {
       onSettled: () => {
         setIsLoading(false);
-        router.push("/rmi-petty-cash"); // Redirect to the appropriate page
+        router.push("/tuition-petty-cash"); // Redirect to the appropriate page for tuition petty cash
       },
     });
   };
@@ -79,7 +79,7 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
         <RHFTextField
           name="account"
           label="Account Name"
-          defaultValue="rmi" // Assuming the account name is predefined as 'rmi'
+          defaultValue="tuition" // Assuming the account name is predefined as 'tuition'
           disabled
         />
         <RHFTextField name="payeeName" label="Payee Name" />
@@ -104,4 +104,4 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
   );
 };
 
-export default EditDeletePettyCashForm;
+export default EditDeleteTuitionPettyCashForm;

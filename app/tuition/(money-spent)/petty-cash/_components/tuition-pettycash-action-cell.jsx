@@ -8,15 +8,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteRmiPettyCash } from "../_services/mutations";
+import { useDeleteTuitionPettyCash } from "../_services/mutations"; // Adjusted mutation hook for tuition
 import { useRouter } from "next/navigation";
 
-const RmiPettyCashActionsCell = ({ pettyCash }) => {
-  const deletePettyCashMutation = useDeleteRmiPettyCash(); // Adjusted mutation hook
+const TuitionPettyCashActionsCell = ({ pettyCash }) => {
+  const deletePettyCashMutation = useDeleteTuitionPettyCash(); // Hook for deleting tuition petty cash
   const router = useRouter();
 
   const handleViewPettyCash = (id) => {
-    router.push(`/operations/view-pettycash/${id}`); // Adjusted route for petty cash
+    router.push(`/tuition/view-pettycash/${id}`); // Adjusted route for tuition petty cash view
   };
 
   const onDelete = (id) => {
@@ -48,4 +48,4 @@ const RmiPettyCashActionsCell = ({ pettyCash }) => {
   );
 };
 
-export default RmiPettyCashActionsCell;
+export default TuitionPettyCashActionsCell;
