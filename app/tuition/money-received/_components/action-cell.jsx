@@ -9,19 +9,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteRmiReceipts } from "../../_services/mutations";
+import { useDeleteTuitionReceipts } from "../_services/mutations";
 import { useRouter } from "next/navigation";
 
 const ActionsCell = ({ receipt }) => {
-  const deleteOperationsReceiptMutation = useDeleteRmiReceipts();
+  const deleteTuitionReceiptMutation = useDeleteTuitionReceipts(); // Updated delete mutation
   const router = useRouter();
 
   const handleViewReceipt = (id) => {
-    router.push(`/operations/money-received/view-receipt/${id}`);
+    router.push(`/tuition/receipts/view-receipt/${id}`); // Updated route for tuition receipts
   };
 
   const onDelete = (id) => {
-    deleteOperationsReceiptMutation.mutate([id], {
+    deleteTuitionReceiptMutation.mutate([id], {
       onSuccess: () => {
         window.location.reload();
       },
