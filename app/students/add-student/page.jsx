@@ -2,10 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { RhfProvider } from "@/contexts/rhf-provider";
-import {
-  form1StudentSchema,
-  defaultForm1Student,
-} from "../form1-students-schema";
+import { form1StudentSchema, defaultForm1Student } from "../students-schema";
 import AddStudentForm from "@/app/students/_components/add-student-form";
 import SkeletonLoader from "@/components/skeleton-loader";
 

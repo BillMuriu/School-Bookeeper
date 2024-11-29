@@ -1,7 +1,7 @@
 "use client";
 
 import { RhfProvider } from "@/contexts/rhf-provider";
-import { form1StudentSchema } from "../../form1-students-schema";
+import { form1StudentSchema } from "../../students-schema";
 import EditDeleteStudentForm from "@/app/students/_components/edit-delete-student";
 import { useStudent } from "@/app/students/_services/queries";
 import SkeletonLoader from "@/components/skeleton-loader";
