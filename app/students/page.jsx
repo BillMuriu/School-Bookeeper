@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-const OperationAccount = () => {
+const Students = () => {
   return (
     <>
       <span className="font-bold mb-9 w-full text-center text-xl">
@@ -34,4 +34,4 @@ const OperationAccount = () => {
   );
 };
 
-export default OperationAccount;
+export default Students;

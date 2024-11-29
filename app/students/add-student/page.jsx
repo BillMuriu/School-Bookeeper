@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { RhfProvider } from "@/contexts/rhf-provider";
-import { form1StudentSchema, defaultForm1Student } from "../students-schema";
+import { studentSchema, defaultStudent } from "../students-schema";
 import AddStudentForm from "@/app/students/_components/add-student-form";
 import SkeletonLoader from "@/components/skeleton-loader";
 
@@ -21,10 +21,7 @@ const AddStudentFormWrapper = () => {
   }
 
   return (
-    <RhfProvider
-      schema={form1StudentSchema}
-      defaultValues={defaultForm1Student}
-    >
+    <RhfProvider schema={studentSchema} defaultValues={defaultStudent}>
       <AddStudentForm />
     </RhfProvider>
   );

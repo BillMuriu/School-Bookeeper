@@ -99,6 +99,12 @@ const AddStudentForm = () => {
           error={errors.guardiansPhoneNumber}
         />
 
+        <RHFDatePicker
+          name="admissionDate"
+          label="Admission Date"
+          error={errors.admissionDate}
+        />
+
         <Button type="submit">Submit</Button>
       </Stack>
     </Container>

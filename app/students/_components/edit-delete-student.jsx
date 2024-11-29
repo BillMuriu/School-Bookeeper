@@ -21,21 +21,34 @@ const EditDeleteStudentForm = ({ studentId, studentData }) => {
   const deleteStudentMutation = useDeleteStudent();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Reset the form with the student's existing data
-  React.useEffect(() => {
-    reset(studentData);
-  }, [studentData, reset]);
-
   const onSubmit = (data) => {
-    console.log("Form errors:", errors);
-    console.log("Data submitted:", JSON.stringify(data, null, 2));
+    // Log the data before any transformation
+    console.log("Data before conversion:", JSON.stringify(data, null, 2));
+
+    // Convert dateOfBirth and admissionDate fields to Date objects if they are strings
+    if (data.dateOfBirth && typeof data.dateOfBirth === "string") {
+      data.dateOfBirth = new Date(data.dateOfBirth);
+    }
+
+    if (data.admissionDate && typeof data.admissionDate === "string") {
+      data.admissionDate = new Date(data.admissionDate);
+    }
+
+    // Log the data after conversion
+    console.log("Data after conversion:", JSON.stringify(data, null, 2));
+
+    // Set loading state to true
     setIsLoading(true);
+
+    // Mutate data with the student ID and updated data
     editStudentMutation.mutate(
       { id: studentId, data },
       {
+        // Handle mutation completion
         onSettled: () => {
           setIsLoading(false);
         },
+        // Handle errors during the mutation
         onError: (error) => {
           console.error("Edit student mutation error:", error);
         },
@@ -122,6 +135,12 @@ const EditDeleteStudentForm = ({ studentId, studentData }) => {
           name="guardiansPhoneNumber"
           label="Guardian's Phone Number"
           error={errors.guardiansPhoneNumber}
+        />
+
+        <RHFDatePicker
+          name="admissionDate"
+          label="Admission Date"
+          error={errors.admissionDate}
         />
 
         <Button variant="secondary" type="submit">

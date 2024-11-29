@@ -1,7 +1,7 @@
 "use client";
 
 import { RhfProvider } from "@/contexts/rhf-provider";
-import { form1StudentSchema } from "../../students-schema";
+import { studentSchema } from "../../students-schema";
 import EditDeleteStudentForm from "@/app/students/_components/edit-delete-student";
 import { useStudent } from "@/app/students/_services/queries";
 import SkeletonLoader from "@/components/skeleton-loader";
@@ -18,7 +18,7 @@ const StudentWrapper = ({ params }) => {
 
   return (
     <RhfProvider
-      schema={form1StudentSchema} // Use the appropriate schema for validation
+      schema={studentSchema} // Use the appropriate schema for validation
       defaultValues={{
         admissionNumber: student.admissionNumber || "",
         firstName: student.firstName || "",
@@ -26,6 +26,9 @@ const StudentWrapper = ({ params }) => {
         dateOfBirth: student.dateOfBirth
           ? new Date(student.dateOfBirth)
           : new Date(),
+        admissionDate: student.admissionDate
+          ? new Date(student.admissionDate)
+          : new Date(), // Set default to today's date if no admission date is provided
         gender: student.gender || "male", // Set default to 'male' or your preferred value
         gradeClassLevel: student.gradeClassLevel || "form1", // Default to form1 or your preferred value
         guardiansName: student.guardiansName || "",
