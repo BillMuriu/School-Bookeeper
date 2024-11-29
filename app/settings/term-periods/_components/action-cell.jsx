@@ -1,4 +1,3 @@
-// ActionsCell.jsx
 import React from "react";
 import {
   DropdownMenu,
@@ -9,21 +8,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useDeleteTuitionReceipts } from "../_services/mutations";
+import { useDeleteTermPeriods } from "../_services/mutations"; // Updated delete mutation for term period
 import { useRouter } from "next/navigation";
 
-const ActionsCell = ({ receipt }) => {
-  const deleteTuitionReceiptMutation = useDeleteTuitionReceipts(); // Updated delete mutation
+const ActionsCell = ({ termPeriod }) => {
+  const deleteTermPeriodMutation = useDeleteTermPeriods(); // Use the term period delete mutation
   const router = useRouter();
 
-  const handleViewReceipt = (id) => {
-    router.push(`/tuition/receipts/view-receipt/${id}`); // Updated route for tuition receipts
+  const handleViewTermPeriod = (id) => {
+    router.push(`/term-periods/view-term-period/${id}`); // Updated route for term period
   };
 
   const onDelete = (id) => {
-    deleteTuitionReceiptMutation.mutate([id], {
+    deleteTermPeriodMutation.mutate([id], {
       onSuccess: () => {
-        window.location.reload();
+        window.location.reload(); // Reload after successful deletion
       },
     });
   };
@@ -38,11 +37,11 @@ const ActionsCell = ({ receipt }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => handleViewReceipt(receipt.id)}>
-          View receipt
+        <DropdownMenuItem onClick={() => handleViewTermPeriod(termPeriod.id)}>
+          View term period
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onDelete(receipt.id)}>
-          Delete receipt
+        <DropdownMenuItem onClick={() => onDelete(termPeriod.id)}>
+          Delete term period
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

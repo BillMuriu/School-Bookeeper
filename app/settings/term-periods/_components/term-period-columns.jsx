@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import ActionsCell from "./action-cell";
+import ActionsCell from "./action-cell"; // Adjust as needed for term period actions
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -31,8 +31,8 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "received_from",
-    header: "Received From",
+    accessorKey: "term_name", // Updated to reflect term name
+    header: "Term Name",
   },
   {
     accessorKey: "id",
@@ -49,25 +49,30 @@ export const columns = [
     },
   },
   {
-    accessorKey: "cash_bank", // Adding cash_bank column
-    header: "Cash or Bank",
-    cell: ({ getValue }) => (getValue() === "cash" ? "Cash" : "Bank"), // Optionally format the value
+    accessorKey: "start_date", // Updated to reflect start date of term
+    header: "Start Date",
+    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
   },
   {
-    accessorKey: "total_amount",
-    header: "Total Amount",
+    accessorKey: "end_date", // Updated to reflect end date of term
+    header: "End Date",
+    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
   },
   {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"),
+    accessorKey: "year", // Updated to reflect year of the term
+    header: "Year",
+  },
+  {
+    accessorKey: "fees", // Updated to reflect fees
+    header: "Fees",
+    cell: ({ getValue }) => `$${parseFloat(getValue()).toFixed(2)}`, // Format as currency
   },
   {
     header: "Actions",
     id: "actions",
     cell: ({ row }) => {
-      const receipt = row.original;
-      return <ActionsCell receipt={receipt} />;
+      const termPeriod = row.original; // Updated to refer to term period
+      return <ActionsCell termPeriod={termPeriod} />; // Pass the term period to the action cell
     },
   },
 ];
