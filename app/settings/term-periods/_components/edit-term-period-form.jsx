@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  useEditTuitionReceipt,
-  useDeleteTuitionReceipts,
+  useEditTermPeriod,
+  useDeleteTermPeriods,
 } from "../_services/mutations";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
@@ -16,26 +16,27 @@ import SkeletonLoader from "@/components/skeleton-loader";
 // Function to map form data to API structure
 const mapFormDataToApiData = (data) => {
   return {
-    account: data.account,
-    received_from: data.receivedFrom,
-    cash_bank: data.cashBank,
-    total_amount: data.totalAmount,
-    date: data.date.toISOString(), // Ensure date is in ISO string format
+    term_name: data.termName,
+    start_date: data.startDate.toISOString().split("T")[0], // Format to YYYY-MM-DD
+    end_date: data.endDate.toISOString().split("T")[0], // Format to YYYY-MM-DD
+    year: data.year,
+    fees: data.fees.toFixed(2), // Ensure fees are a string with two decimal places
   };
 };
 
-const EditTuitionReceiptForm = ({ receiptId }) => {
+const EditTermPeriodForm = ({ termPeriodId }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useFormContext();
 
-  const editTuitionReceiptMutation = useEditTuitionReceipt();
-  const deleteTuitionReceiptsMutation = useDeleteTuitionReceipts();
+  const editTermPeriodMutation = useEditTermPeriod(); // Custom mutation for editing
+  const deleteTermPeriodMutation = useDeleteTermPeriods(); // Custom mutation for deleting
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // Form submission handler
   const onSubmit = (data) => {
     console.log("Raw submitted data:", data);
 
@@ -43,27 +44,28 @@ const EditTuitionReceiptForm = ({ receiptId }) => {
     console.log("Processed submit data:", apiData);
 
     setIsLoading(true);
-    editTuitionReceiptMutation.mutate(
-      { id: receiptId, data: apiData },
+    editTermPeriodMutation.mutate(
+      { id: termPeriodId, data: apiData },
       {
         onSettled: () => {
           setIsLoading(false);
         },
         onError: (error) => {
-          console.error("Error editing Tuition receipt:", error.message);
+          console.error("Error editing term period:", error.message);
         },
       }
     );
   };
 
+  // Delete term period handler
   const onDelete = () => {
     setIsLoading(true);
-    deleteTuitionReceiptsMutation.mutate([receiptId], {
+    deleteTermPeriodMutation.mutate([termPeriodId], {
       onSettled: () => {
         setIsLoading(false);
       },
       onError: (error) => {
-        console.error("Error deleting Tuition receipt:", error.message);
+        console.error("Error deleting term period:", error.message);
       },
     });
   };
@@ -71,8 +73,6 @@ const EditTuitionReceiptForm = ({ receiptId }) => {
   if (isLoading) {
     return <SkeletonLoader />;
   }
-
-  // console.log("Form errors:", errors);
 
   return (
     <Container
@@ -83,36 +83,19 @@ const EditTuitionReceiptForm = ({ receiptId }) => {
     >
       <Stack sx={{ gap: 2 }}>
         <RHFNativeSelect
-          name="account"
-          label="Account Name"
-          options={[{ value: "tuition_account", label: "Tuition Account" }]}
-          defaultValue="tuition_account"
-          disabled
-        />
-        <RHFNativeSelect
-          name="receivedFrom"
-          label="Received From"
+          name="termName"
+          label="Term Name"
           options={[
-            { value: "pettycash", label: "Petty Cash" },
-            { value: "FSE", label: "FSE (Government funds)" },
-            { value: "others", label: "Others" },
+            { value: "Term 1", label: "Term 1" },
+            { value: "Term 2", label: "Term 2" },
+            { value: "Term 3", label: "Term 3" },
           ]}
-          defaultValue="pettycash" // Adjust based on your logic for default value
+          defaultValue="Term 1"
         />
-        <RHFRadioGroup
-          name="cashBank"
-          label="Cash or Bank"
-          options={[
-            { value: "cash", label: "Cash" },
-            { value: "bank", label: "Bank" },
-          ]}
-        />
-        <RHFNumberInput
-          name="totalAmount"
-          label="Total Amount Received"
-          min={0}
-        />
-        <RHFDatePicker name="date" label="Date Received" />
+        <RHFDatePicker name="startDate" label="Start Date" />
+        <RHFDatePicker name="endDate" label="End Date" />
+        <RHFNumberInput name="year" label="Year" min={2000} />
+        <RHFNumberInput name="fees" label="Fees" min={0} step={0.01} />
 
         <Button variant="secondary" type="submit">
           Edit
@@ -125,4 +108,4 @@ const EditTuitionReceiptForm = ({ receiptId }) => {
   );
 };
 
-export default EditTuitionReceiptForm;
+export default EditTermPeriodForm;
