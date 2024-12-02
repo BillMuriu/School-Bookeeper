@@ -3,7 +3,7 @@
 import React from "react";
 import { StudentsDataTable } from "@/components/tables/students-datatable";
 import { columns } from "./_components/student-columns";
-import { useStudents } from "./_services/queries";
+import { useStudents } from "@/app/(students)/students/_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
 
 const StudentsTable = () => {
