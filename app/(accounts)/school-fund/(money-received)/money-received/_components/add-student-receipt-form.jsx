@@ -1,42 +1,34 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { useFormContext } from "react-hook-form";
 import { Stack, Container } from "@mui/material";
-import {
-  useEditSchoolFundReceipt,
-  useDeleteSchoolFundReceipts,
-} from "../_services/mutations";
+import { useCreateSchoolFundReceipt } from "../_services/mutations";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
 import { RHFNativeSelect } from "@/components/form-components/RHFNativeSelect";
-import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 import SkeletonLoader from "@/components/skeleton-loader";
+import { RHFTextField } from "@/components/form-components/RHFTextField";
 
-const EditDeleteSchoolFundReceiptForm = ({ receiptId }) => {
+const AddStudentReceiptForm = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useFormContext();
 
-  const editSchoolFundReceiptMutation = useEditSchoolFundReceipt();
-  const deleteSchoolFundReceiptMutation = useDeleteSchoolFundReceipts();
+  const createReceiptMutation = useCreateSchoolFundReceipt();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const formatDataForBackend = (data) => {
-    return {
-      account: data.account,
-      received_from: data.receivedFrom,
-      student: data.student ?? null,
-      cash_bank: data.cashBank,
-      total_amount: data.totalAmount.toFixed(2),
-      date: data.date.toISOString(),
-    };
-  };
+  const formatDataForBackend = (data) => ({
+    account: data.account,
+    received_from: data.receivedFrom,
+    student: data.student ?? null,
+    cash_bank: data.cashBank,
+    total_amount: data.totalAmount.toFixed(2),
+    date: data.date.toISOString(),
+  });
 
   const onSubmit = (data) => {
     console.log("Raw submitted data:", data);
@@ -44,24 +36,8 @@ const EditDeleteSchoolFundReceiptForm = ({ receiptId }) => {
     const formattedData = formatDataForBackend(data);
     console.log("Formatted data for backend:", formattedData);
 
-    editSchoolFundReceiptMutation.mutate({
-      id: receiptId,
-      data: formattedData,
-    });
+    createReceiptMutation.mutate(formattedData);
   };
-
-  const onDelete = () => {
-    setIsLoading(true);
-    deleteSchoolFundReceiptMutation.mutate([receiptId], {
-      onSettled: () => {
-        setIsLoading(false);
-      },
-    });
-  };
-
-  if (isLoading) {
-    return <SkeletonLoader />;
-  }
 
   return (
     <Container
@@ -90,9 +66,7 @@ const EditDeleteSchoolFundReceiptForm = ({ receiptId }) => {
             { value: "bank", label: "Bank" },
             { value: "cash", label: "Cash" },
           ]}
-          sx={{
-            maxWidth: "30px",
-          }}
+          sx={{ maxWidth: "30px" }}
         />
         <RHFNumberInput
           type="number"
@@ -109,14 +83,11 @@ const EditDeleteSchoolFundReceiptForm = ({ receiptId }) => {
         />
         <RHFDatePicker name="date" label="Date Received" />
         <Button variant="secondary" type="submit">
-          Edit
-        </Button>
-        <Button type="button" onClick={onDelete}>
-          Delete
+          Submit
         </Button>
       </Stack>
     </Container>
   );
 };
 
-export default EditDeleteSchoolFundReceiptForm;
+export default AddStudentReceiptForm;

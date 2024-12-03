@@ -23,7 +23,7 @@ const EditDeleteSchoolFundReceiptWrapper = ({ params }) => {
         account: receipt.account || "school_fund_account",
         receivedFrom: receipt.received_from || "",
         cashBank: receipt.cash_bank || "bank",
-        totalAmount: receipt.total_amount ?? null,
+        totalAmount: receipt.total_amount ? Number(receipt.total_amount) : null,
         student: receipt.student ?? null,
         date: receipt.date ? new Date(receipt.date) : new Date("2024-08-01"),
       }}

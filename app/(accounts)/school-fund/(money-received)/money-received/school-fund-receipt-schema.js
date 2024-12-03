@@ -5,9 +5,7 @@ export const schoolFundReceiptSchema = z.object({
     .string()
     .min(2, { message: "Account name must be at least 2 letters." }),
 
-  receivedFrom: z.enum(["government", "donation", "others"], {
-    message: "Received From is required.",
-  }),
+  receivedFrom: z.string().min(2, { message: "Received From is required." }),
 
   cashBank: z.enum(["cash", "bank"]),
 

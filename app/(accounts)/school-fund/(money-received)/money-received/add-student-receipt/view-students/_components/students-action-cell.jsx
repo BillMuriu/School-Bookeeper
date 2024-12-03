@@ -20,7 +20,7 @@ const StudentActionsCell = ({ student }) => {
 
   // Function to navigate to the "Add Receipt" page
   const handleAddReceipt = (studentId) => {
-    router.push(`/students/receipt/create/${studentId}`);
+    router.push(`/school-fund/money-received/add-student-receipt/${studentId}`);
   };
 
   return (
