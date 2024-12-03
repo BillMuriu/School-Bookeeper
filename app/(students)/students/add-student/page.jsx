@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { studentSchema, defaultStudent } from "../students-schema";
-import AddStudentForm from "@/app/students/_components/add-student-form";
+import AddStudentForm from "../_components/add-student-form";
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const AddStudentFormWrapper = () => {

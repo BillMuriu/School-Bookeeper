@@ -45,6 +45,7 @@ const AddStudentForm = () => {
           name="admissionNumber"
           label="Admission Number"
           error={errors.admissionNumber}
+          color="grey"
         />
 
         <RHFTextField
