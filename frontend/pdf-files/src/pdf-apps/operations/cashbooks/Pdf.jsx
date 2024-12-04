@@ -1,28 +1,73 @@
 import React, { useState } from "react";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import CashbookPDF from "./components/CashbookPDF";
 
+const formSchema = z.object({
+  month: z
+    .string()
+    .min(1, "Month must be between 1 and 12")
+    .max(2, "Month must be between 1 and 12")
+    .regex(
+      /^(0?[1-9]|1[0-2])$/,
+      "Month must be a valid number between 1 and 12"
+    ),
+  year: z
+    .string()
+    .min(4, "Year must be at least 4 digits")
+    .max(4, "Year must be exactly 4 digits")
+    .regex(/^\d{4}$/, "Year must be a valid 4-digit number"),
+});
+
 const CashBookForm = () => {
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
-  const [formData, setFormData] = useState(null); // Store form data for the PDF
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState(null);
   const [cashbookData, setCashbookData] = useState({
     receipts: [],
     payments: [],
-  }); // Store fetched cashbook data
+  });
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      month: "",
+      year: "",
+    },
+  });
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue,
+    trigger,
+  } = form;
+
+  const onSubmit = (values) => {
     const parsedData = {
-      month: Number(month),
-      year: Number(year),
+      month: Number(values.month),
+      year: Number(values.year),
     };
 
-    console.log("Parsed data:", parsedData);
-    setFormData(parsedData); // Store the form data
+    setFormData(parsedData);
     fetchCashbooks(parsedData.year, parsedData.month);
   };
 
@@ -33,13 +78,8 @@ const CashBookForm = () => {
         `http://127.0.0.1:8000/api/operations-cashbooks/cashbook/?year=${year}&month=${month}`
       );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
       const data = await response.json();
-      console.log("Fetched cashbooks data:", data);
-      setCashbookData(data); // Set the fetched data
+      setCashbookData(data);
     } catch (error) {
       console.error("Error fetching cashbooks:", error);
     } finally {
@@ -47,68 +87,109 @@ const CashBookForm = () => {
     }
   };
 
+  const handleInputChange = async (e) => {
+    const { name, value } = e.target;
+    setValue(name, value);
+    await trigger(name);
+  };
+
   return (
     <div className="flex items-center justify-center flex-col h-screen w-screen">
-      <form onSubmit={onSubmit} className="flex flex-col space-y-4">
-        <div className="flex justify-between space-x-4">
-          {/* Month Field */}
-          <div className="flex-1">
-            <label>Month</label>
-            <Input
-              type="number"
-              placeholder="Enter month (1-12)"
-              value={month}
-              onChange={(e) => setMonth(e.target.value)}
-              required
-            />
-          </div>
+      <Form {...form}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="max-w-md w-full flex flex-col gap-4"
+        >
+          <FormField
+            control={control}
+            name="month"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Month</FormLabel>
+                <FormControl>
+                  <Select
+                    {...field}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                    }}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Month" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">January</SelectItem>
+                      <SelectItem value="2">February</SelectItem>
+                      <SelectItem value="3">March</SelectItem>
+                      <SelectItem value="4">April</SelectItem>
+                      <SelectItem value="5">May</SelectItem>
+                      <SelectItem value="6">June</SelectItem>
+                      <SelectItem value="7">July</SelectItem>
+                      <SelectItem value="8">August</SelectItem>
+                      <SelectItem value="9">September</SelectItem>
+                      <SelectItem value="10">October</SelectItem>
+                      <SelectItem value="11">November</SelectItem>
+                      <SelectItem value="12">December</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                {errors.month && (
+                  <p className="text-red-500 text-sm">{errors.month.message}</p>
+                )}
+              </FormItem>
+            )}
+          />
 
-          {/* Year Field */}
-          <div className="flex-1">
-            <label>Year</label>
-            <Input
-              type="number"
-              placeholder="Enter year"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              required
-            />
-          </div>
-        </div>
+          <FormField
+            control={control}
+            name="year"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Year</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Enter year"
+                    {...field}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                      field.onChange(e);
+                    }}
+                  />
+                </FormControl>
+                {errors.year && (
+                  <p className="text-red-500 text-sm">{errors.year.message}</p>
+                )}
+              </FormItem>
+            )}
+          />
 
-        <Button type="submit">Submit</Button>
-      </form>
+          <Button type="submit" className="w-full">
+            Submit
+          </Button>
+        </form>
+      </Form>
 
       {loading && <p>Loading cashbooks...</p>}
 
-      {/* Show fetched cashbook data */}
-      {cashbookData.receipts.length > 0 || cashbookData.payments.length > 0 ? (
-        <pre className="mt-4 bg-gray-100 p-4 rounded">
-          {JSON.stringify(cashbookData, null, 2)}
-        </pre>
-      ) : null}
-
-      {/* PDF Download Link, only if there are receipts or payments */}
       {formData &&
         (cashbookData.receipts.length > 0 ||
           cashbookData.payments.length > 0) && (
           <Button className="mt-4">
-            <div>
-              <PDFDownloadLink
-                document={
-                  <CashbookPDF
-                    month={formData.month}
-                    year={formData.year}
-                    cashbookData={cashbookData} // Pass the fetched data
-                  />
-                }
-                fileName={`cashbook_${formData.month}_${formData.year}.pdf`}
-              >
-                {({ loading }) =>
-                  loading ? "Preparing document..." : "Download Cashbook PDF"
-                }
-              </PDFDownloadLink>
-            </div>
+            <PDFDownloadLink
+              document={
+                <CashbookPDF
+                  month={formData.month}
+                  year={formData.year}
+                  cashbookData={cashbookData}
+                />
+              }
+              fileName={`cashbook_${formData.month}_${formData.year}.pdf`}
+            >
+              {({ loading }) =>
+                loading ? "Preparing document..." : "Download Cashbook PDF"
+              }
+            </PDFDownloadLink>
           </Button>
         )}
     </div>
