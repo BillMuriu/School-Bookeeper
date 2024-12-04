@@ -48,6 +48,24 @@ class StudentSerializer(serializers.ModelSerializer):
         return None
 
     def get_total_fees(self, obj):
+        """
+            Calculate the total fees for a student starting from their opening balance record.
+
+            This method retrieves the student's opening balance and determines all term periods 
+            that began on or after the date the opening balance was recorded. It then calculates 
+            the sum of fees for these terms.
+
+            Args:
+                obj: The student object for which the total fees need to be calculated.
+
+            Returns:
+                float: The total fees from the relevant term periods, or None if the student 
+                does not have an opening balance.
+                
+            Notes:
+                - Ensures the calculation only includes terms after the student was added to the system.
+                - Returns None if the student does not have an opening balance, indicating no fees can be calculated.
+        """
         opening_balance = StudentOpeningBalance.objects.filter(student=obj).first()
         if not opening_balance:
             return None
