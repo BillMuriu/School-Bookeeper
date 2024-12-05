@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -17,10 +18,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import CashbookPDF from "./components/CashbookPDF";
+import { ReceiptsDataTable } from "@/components/tables/receipts-table";
+import { receiptsColumns } from "@/components/columns/cashbook-columns/receipt-columns";
 
+// Schema for validation
 const formSchema = z.object({
   month: z
     .string()
@@ -45,11 +48,14 @@ const CashBookForm = () => {
     payments: [],
   });
 
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      month: "",
-      year: "",
+      month: currentMonth.toString(),
+      year: currentYear.toString(),
     },
   });
 
@@ -77,7 +83,6 @@ const CashBookForm = () => {
       const response = await fetch(
         `http://127.0.0.1:8000/api/operations-cashbooks/cashbook/?year=${year}&month=${month}`
       );
-
       const data = await response.json();
       setCashbookData(data);
     } catch (error) {
@@ -87,12 +92,6 @@ const CashBookForm = () => {
     }
   };
 
-  const handleInputChange = async (e) => {
-    const { name, value } = e.target;
-    setValue(name, value);
-    await trigger(name);
-  };
-
   return (
     <div className="flex items-center justify-center flex-col h-screen w-screen">
       <Form {...form}>
@@ -100,6 +99,7 @@ const CashBookForm = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-md w-full flex flex-col gap-4"
         >
+          {/* Month Select */}
           <FormField
             control={control}
             name="month"
@@ -107,15 +107,9 @@ const CashBookForm = () => {
               <FormItem>
                 <FormLabel>Month</FormLabel>
                 <FormControl>
-                  <Select
-                    {...field}
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                    }}
-                    defaultValue={field.value}
-                  >
+                  <Select {...field} onValueChange={field.onChange}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Month" />
+                      <SelectValue placeholder="Select month" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="1">January</SelectItem>
@@ -139,7 +133,7 @@ const CashBookForm = () => {
               </FormItem>
             )}
           />
-
+          {/* Year Field */}
           <FormField
             control={control}
             name="year"
@@ -148,13 +142,9 @@ const CashBookForm = () => {
                 <FormLabel>Year</FormLabel>
                 <FormControl>
                   <Input
-                    type="text"
-                    placeholder="Enter year"
                     {...field}
-                    onChange={(e) => {
-                      handleInputChange(e);
-                      field.onChange(e);
-                    }}
+                    className="w-full"
+                    onChange={(e) => field.onChange(e.target.value)}
                   />
                 </FormControl>
                 {errors.year && (
@@ -163,7 +153,6 @@ const CashBookForm = () => {
               </FormItem>
             )}
           />
-
           <Button type="submit" className="w-full">
             Submit
           </Button>
@@ -172,26 +161,15 @@ const CashBookForm = () => {
 
       {loading && <p>Loading cashbooks...</p>}
 
-      {formData &&
-        (cashbookData.receipts.length > 0 ||
-          cashbookData.payments.length > 0) && (
-          <Button className="mt-4">
-            <PDFDownloadLink
-              document={
-                <CashbookPDF
-                  month={formData.month}
-                  year={formData.year}
-                  cashbookData={cashbookData}
-                />
-              }
-              fileName={`cashbook_${formData.month}_${formData.year}.pdf`}
-            >
-              {({ loading }) =>
-                loading ? "Preparing document..." : "Download Cashbook PDF"
-              }
-            </PDFDownloadLink>
-          </Button>
-        )}
+      {!loading && cashbookData.receipts.length > 0 && (
+        <div className="mt-6 w-full max-w-4xl">
+          <h2 className="text-lg font-bold mb-4">Receipts</h2>
+          <ReceiptsDataTable
+            columns={receiptsColumns}
+            data={cashbookData.receipts}
+          />
+        </div>
+      )}
     </div>
   );
 };
