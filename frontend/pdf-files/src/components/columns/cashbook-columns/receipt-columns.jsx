@@ -22,21 +22,15 @@ export const receiptsColumns = [
   },
   {
     accessorKey: "cash",
-    header: "Cash",
+    header: "Cash (KES)",
     cell: ({ getValue }) =>
-      parseFloat(getValue().replace(/,/g, "")).toLocaleString("en-KE", {
-        style: "currency",
-        currency: "KES",
-      }),
+      parseFloat(getValue().replace(/,/g, "")).toLocaleString("en-KE"),
   },
   {
     accessorKey: "bank",
-    header: "Bank",
+    header: "Bank (KES)",
     cell: ({ getValue }) =>
-      parseFloat(getValue().replace(/,/g, "")).toLocaleString("en-KE", {
-        style: "currency",
-        currency: "KES",
-      }),
+      parseFloat(getValue().replace(/,/g, "")).toLocaleString("en-KE"),
   },
   {
     accessorKey: "rmi",

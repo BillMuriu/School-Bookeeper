@@ -22,6 +22,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import CashbookPDF from "./components/CashbookPDF";
 import { ReceiptsDataTable } from "@/components/tables/receipts-table";
 import { receiptsColumns } from "@/components/columns/cashbook-columns/receipt-columns";
+import { paymentsColumns } from "@/components/columns/cashbook-columns/payment-columns";
 
 // Schema for validation
 const formSchema = z.object({
@@ -93,7 +94,7 @@ const CashBookForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col h-screen w-screen">
+    <div className="flex items-center justify-center flex-col h-full w-screen">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -161,15 +162,52 @@ const CashBookForm = () => {
 
       {loading && <p>Loading cashbooks...</p>}
 
-      {!loading && cashbookData.receipts.length > 0 && (
-        <div className="mt-6 w-full max-w-4xl">
-          <h2 className="text-lg font-bold mb-4">Receipts</h2>
-          <ReceiptsDataTable
-            columns={receiptsColumns}
-            data={cashbookData.receipts}
-          />
-        </div>
-      )}
+      {formData &&
+        (cashbookData.receipts.length > 0 ||
+          cashbookData.payments.length > 0) && (
+          <Button className="mt-4">
+            <PDFDownloadLink
+              document={
+                <CashbookPDF
+                  month={formData.month}
+                  year={formData.year}
+                  cashbookData={cashbookData}
+                />
+              }
+              fileName={`cashbook_${formData.month}_${formData.year}.pdf`}
+            >
+              {({ loading }) =>
+                loading ? "Preparing document..." : "Download Cashbook PDF"
+              }
+            </PDFDownloadLink>
+          </Button>
+        )}
+
+      {!loading &&
+        (cashbookData.receipts.length > 0 ||
+          cashbookData.payments.length > 0) && (
+          <div className="mt-6 w-full max-w-4xl">
+            {cashbookData.receipts.length > 0 && (
+              <>
+                <h2 className="text-lg font-bold mb-4">Receipts</h2>
+                <ReceiptsDataTable
+                  columns={receiptsColumns}
+                  data={cashbookData.receipts}
+                />
+              </>
+            )}
+
+            {cashbookData.payments.length > 0 && (
+              <>
+                <h2 className="text-lg font-bold mt-8 mb-4">Payments</h2>
+                <ReceiptsDataTable
+                  columns={paymentsColumns}
+                  data={cashbookData.payments}
+                />
+              </>
+            )}
+          </div>
+        )}
     </div>
   );
 };
