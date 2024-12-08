@@ -18,7 +18,7 @@ export default function CarouselDemo() {
         {" "}
         {/* Adds spacing between the title and iframe */}
         <iframe
-          src="https://billmuriu.github.io/vite-test/#/operations-cashbook-pdfs"
+          src="http://localhost:5173/#/operations-ledger"
           title="Dashboard Iframe"
           width="100%"
           height="600px"

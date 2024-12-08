@@ -20,7 +20,9 @@ const StudentActionsCell = ({ student }) => {
 
   // Function to navigate to the "Add Receipt" page
   const handleAddReceipt = (studentId) => {
-    router.push(`/school-fund/money-received/add-student-receipt/${studentId}`);
+    router.push(
+      `/students-opening-balance/add-specific-student-opening-balance/${studentId}`
+    );
   };
 
   return (
@@ -37,7 +39,7 @@ const StudentActionsCell = ({ student }) => {
           View Student
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleAddReceipt(student.id)}>
-          Add Receipt
+          Add Opening Balance
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
