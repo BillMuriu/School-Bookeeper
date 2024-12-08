@@ -152,8 +152,73 @@ const Ledger = () => {
       {ledgerData && (
         <div className="mt-6 w-full max-w-4xl">
           <h2 className="text-xl font-bold mb-4">Ledger Summary</h2>
-          {/* Display ledger data */}
-          {/* Add your summary and table rendering logic */}
+
+          {/* Credits Section */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">Credits</h3>
+            <table className="min-w-full table-auto border-collapse">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left border-b">Date</th>
+                  <th className="px-4 py-2 text-left border-b">Amount</th>
+                  <th className="px-4 py-2 text-left border-b">Cashbook</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ledgerData.credits.map((credit, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-2">
+                      {format(new Date(credit.date), "MM/dd/yyyy")}
+                    </td>
+                    <td className="px-4 py-2">
+                      {credit.amount.toLocaleString()}
+                    </td>
+                    <td className="px-4 py-2">{credit.cashbook}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Debits Section */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">Debits</h3>
+            <table className="min-w-full table-auto border-collapse">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left border-b">Date</th>
+                  <th className="px-4 py-2 text-left border-b">Amount</th>
+                  <th className="px-4 py-2 text-left border-b">Cashbook</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ledgerData.debits.map((debit, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-2">
+                      {format(new Date(debit.date), "MM/dd/yyyy")}
+                    </td>
+                    <td className="px-4 py-2">
+                      {debit.amount.toLocaleString()}
+                    </td>
+                    <td className="px-4 py-2">{debit.cashbook}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Totals Section */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold">Totals</h3>
+            <div className="flex justify-between mt-2">
+              <span className="font-medium">Total Credits:</span>
+              <span>{ledgerData.total_credits.toLocaleString()}</span>
+            </div>
+            <div className="flex justify-between mt-2">
+              <span className="font-medium">Total Debits:</span>
+              <span>{ledgerData.total_debits.toLocaleString()}</span>
+            </div>
+          </div>
         </div>
       )}
     </div>
