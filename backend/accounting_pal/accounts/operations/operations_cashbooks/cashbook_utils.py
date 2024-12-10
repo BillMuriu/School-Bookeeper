@@ -9,35 +9,42 @@ from accounts.operations.operations_balances.utils import calculate_balance_carr
 
 def get_payments_money_out(year, month):
     payments = []
+    total_cash_payments = 0
+    total_bank_payments = 0
+    total_bankcharges = 0
 
-    # Define the start and end date for the specified month and year
     start_date = timezone.make_aware(datetime(year, month, 1))
     end_date = timezone.make_aware(datetime(year, month + 1, 1)) if month < 12 else timezone.make_aware(datetime(year + 1, 1, 1))
 
     # Fetch Bank Charges within the specified month and year
     bank_charges = BankCharges.objects.filter(charge_date__gte=start_date, charge_date__lt=end_date)
     for charge in bank_charges:
+        total_bankcharges += charge.amount
         payments.append({
             "type": "bankcharge",
-            "voucher_no": "",  # Not applicable to bank charges
-            "cheque_no": "",  # Not applicable to bank charges
-            "cash": "",  # Not applicable to bank charges
-            "bank": "",  # Not applicable to bank charges
-            "bank_charge": charge.amount,  # This field only applies to bank charges
-            "description": charge.description,  # Additional field for context
+            "voucher_no": "",
+            "cheque_no": "",
+            "cash": "",
+            "bank": "",
+            "bank_charge": charge.amount,
+            "description": charge.description,
             "date": charge.charge_date
         })
 
     # Fetch Payment Vouchers within the specified month and year
     payment_vouchers = PaymentVoucher.objects.filter(date__gte=start_date, date__lt=end_date)
     for voucher in payment_vouchers:
+        if voucher.payment_mode == 'cash':
+            total_cash_payments += voucher.amount_shs
+        elif voucher.payment_mode == 'bank':
+            total_bank_payments += voucher.amount_shs
         payments.append({
             "type": "paymentvoucher",
             "voucher_no": voucher.voucher_no,
-            "cheque_no": voucher.cheque_number if voucher.payment_mode == 'bank' else "",  # Only applicable if paid through the bank
-            "cash": voucher.amount_shs if voucher.payment_mode == 'cash' else "",  # Only applicable if paid by cash
-            "bank": voucher.amount_shs if voucher.payment_mode == 'bank' else "",  # Only applicable if paid by bank
-            "bank_charge": "",  # Not applicable to payment vouchers
+            "cheque_no": voucher.cheque_number if voucher.payment_mode == 'bank' else "",
+            "cash": voucher.amount_shs if voucher.payment_mode == 'cash' else "",
+            "bank": voucher.amount_shs if voucher.payment_mode == 'bank' else "",
+            "bank_charge": "",
             "description": voucher.particulars,
             "date": voucher.date
         })
@@ -45,61 +52,67 @@ def get_payments_money_out(year, month):
     # Fetch Petty Cash Entries within the specified month and year
     petty_cash_entries = PettyCash.objects.filter(date_issued__gte=start_date, date_issued__lt=end_date)
     for petty_cash in petty_cash_entries:
+        total_cash_payments += petty_cash.amount  # Add Petty Cash amount to total cash payments
         payments.append({
             "type": "pettycash",
-            "voucher_no": "",  # Not applicable to petty cash
-            "cheque_no": petty_cash.cheque_number,  # Only applies to petty cash if issued through cheque
-            "cash": petty_cash.amount,  # Cash is applicable for petty cash entries
-            "bank": "",  # Not applicable to petty cash
-            "bank_charge": "",  # Not applicable to petty cash
+            "voucher_no": "",
+            "cheque_no": petty_cash.cheque_number,
+            "cash": petty_cash.amount,
+            "bank": "",
+            "bank_charge": "",
             "description": petty_cash.description,
             "date": petty_cash.date_issued
         })
 
-    return {"payments": payments}
+    total_payments = {
+        "total_cash_payments": total_cash_payments,
+        "total_bank_payments": total_bank_payments,
+        "total_bankcharges": total_bankcharges
+    }
+
+    return {"payments": payments, "total_payments": total_payments}
 
 def get_receipts_money_in(year, month):
-    # Get the balance carried forward for the specified year and month
     balance_info = calculate_balance_carried_forward(year, month)
 
-    # Initialize the data structure with the balance carried forward
     receipts_data = []
+    total_cash_received = 0
+    total_bank_received = 0
 
     balance_forward = {
         'from_whom': 'Balance Carried Forward',
         'receipt_no': '-',
-        'cash': f"{balance_info['cashAmount']:,}",  # Format with commas
-        'bank': f"{balance_info['bankAmount']:,}",  # Format with commas
+        'cash': f"{balance_info['cashAmount']:,}",
+        'bank': f"{balance_info['bankAmount']:,}",
         'rmi': '-',
         'other_voteheads': '-',
     }
     receipts_data.append(balance_forward)
 
-    # Define the start and end date for the specified month and year
     start_date = timezone.make_aware(datetime(year, month, 1))
     end_date = timezone.make_aware(datetime(year, month + 1, 1)) if month < 12 else timezone.make_aware(datetime(year + 1, 1, 1))
 
-    # Query Petty Cash Receipts from the Receipts Model within the specified year and month
+    # Petty Cash Receipts
     petty_cash_entries = OperationReceipt.objects.filter(
         received_from='pettycash',
         date__gte=start_date,
         date__lt=end_date
     ).values('petty_cash__payee_name').annotate(
-        total_amount=Sum('total_amount')  # Use snake_case field names
+        total_amount=Sum('total_amount')
     )
 
     for entry in petty_cash_entries:
-        row = {
-            'from_whom': 'Petty Cash',  # Set to 'Petty Cash'
+        total_cash_received += entry['total_amount']
+        receipts_data.append({
+            'from_whom': 'Petty Cash',
             'receipt_no': '-',
-            'cash': f"{entry['total_amount']:,}",  # Petty cash goes under cash
+            'cash': f"{entry['total_amount']:,}",
             'bank': '-',
             'rmi': '-',
             'other_voteheads': '-',
-        }
-        receipts_data.append(row)
+        })
 
-    # Query Operation Receipts (non-petty cash) within the specified year and month
+    # Operation Receipts (non-petty cash)
     operation_receipts = OperationReceipt.objects.exclude(
         received_from='pettycash'
     ).filter(
@@ -110,32 +123,44 @@ def get_receipts_money_in(year, month):
     )
 
     for receipt in operation_receipts:
-        row = {
-            'from_whom': receipt['received_from'],  # Use the correct field name here
-            'receipt_no': '-',
-            'cash': f"{receipt['total_amount']:,}" if receipt['cash_bank'] == 'cash' else '-',  # Cash amount
-            'bank': f"{receipt['total_amount']:,}" if receipt['cash_bank'] == 'bank' else '-',  # Bank amount
-            'rmi': f"{receipt['rmi_fund']:,}" if receipt['rmi_fund'] > 0 else '-',  # RMI fund
-            'other_voteheads': f"{receipt['other_voteheads']:,}" if receipt['other_voteheads'] > 0 else '-',  # Other voteheads
-        }
-        receipts_data.append(row)
+        if receipt['cash_bank'] == 'cash':
+            total_cash_received += receipt['total_amount']
+        elif receipt['cash_bank'] == 'bank':
+            total_bank_received += receipt['total_amount']
 
-    return receipts_data
+        receipts_data.append({
+            'from_whom': receipt['received_from'],
+            'receipt_no': '-',
+            'cash': f"{receipt['total_amount']:,}" if receipt['cash_bank'] == 'cash' else '-',
+            'bank': f"{receipt['total_amount']:,}" if receipt['cash_bank'] == 'bank' else '-',
+            'rmi': f"{receipt['rmi_fund']:,}" if receipt['rmi_fund'] > 0 else '-',
+            'other_voteheads': f"{receipt['other_voteheads']:,}" if receipt['other_voteheads'] > 0 else '-',
+        })
+
+    total_receipts = {
+        "total_cash_received": total_cash_received,
+        "total_bank_received": total_bank_received
+    }
+
+    return {"receipts": receipts_data, "total_receipts": total_receipts}
 
 
 def get_cashbook(year, month):
-    # Initialize a dictionary to store the cashbook data
     cashbook_data = {
-        "receipts": [],  # For storing money-in data
-        "payments": []   # For storing money-out data
+        "receipts": [],
+        "payments": []
     }
 
-    # Get Receipts (Money In) using existing function
+    # Get Receipts (Money In)
     receipts = get_receipts_money_in(year, month)
-    cashbook_data["receipts"].extend(receipts)
+    cashbook_data["receipts"].extend(receipts["receipts"])
 
-    # Get Payments (Money Out) using existing function
+    # Get Payments (Money Out)
     payments = get_payments_money_out(year, month)
     cashbook_data["payments"].extend(payments["payments"])
+
+    # Add total_receipts and total_payments
+    cashbook_data["total_receipts"] = receipts["total_receipts"]
+    cashbook_data["total_payments"] = payments["total_payments"]
 
     return cashbook_data

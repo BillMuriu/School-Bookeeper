@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'custom_auth.User'
+
 
 # Application definition
 
@@ -87,6 +89,8 @@ INSTALLED_APPS = [
     'students.students_opening_balances',
     'other_apps.term_periods',
 
+# authentication
+    'custom_auth',
     
 ]
 
