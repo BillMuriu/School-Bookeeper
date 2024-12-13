@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Stack, Container } from "@mui/material";
+import { Stack, Container, Typography } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import SkeletonLoader from "@/components/skeleton-loader";
@@ -14,6 +14,7 @@ const SignInForm = () => {
   } = useFormContext();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const onSubmit = async (data) => {
     console.log("Data submitted:", JSON.stringify(data, null, 2));
@@ -34,14 +35,16 @@ const SignInForm = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        console.log("Erastus");
-      } else {
-        // Handle success response (e.g., magic link sent)
-        console.log("Magic link sent successfully:", result);
+        throw new Error(result.message || "Failed to send magic link.");
       }
+
+      // Success: show the success message
+      setSuccess(true);
     } catch (error) {
       console.error("Error during sign in:", error);
-      setError("email", { message: "An error occurred. Please try again." });
+      setError("email", {
+        message: error.message || "An error occurred. Please try again.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -49,6 +52,16 @@ const SignInForm = () => {
 
   if (isLoading) {
     return <SkeletonLoader />;
+  }
+
+  if (success) {
+    return (
+      <Container sx={{ mt: 3 }} maxWidth="sm">
+        <Typography variant="h5" align="center" gutterBottom>
+          Check your email to access the login link
+        </Typography>
+      </Container>
+    );
   }
 
   return (
