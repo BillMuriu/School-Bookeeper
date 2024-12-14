@@ -1,5 +1,15 @@
 "use client";
 import * as React from "react";
+import { Icon } from "@iconify/react";
+import {
+  HomeIcon,
+  DashboardIcon,
+  ClipboardIcon,
+  BookmarkIcon,
+  CardStackIcon,
+  BackpackIcon,
+} from "@radix-ui/react-icons";
+
 import {
   AudioWaveform,
   BookOpen,
@@ -14,6 +24,7 @@ import {
 } from "lucide-react";
 import { NavMain } from "@/components/nav-main";
 import { NavProjects } from "@/components/nav-projects";
+import { NavAccounts } from "./nav-accounts";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -48,93 +59,49 @@ const data = {
       plan: "Free",
     },
   ],
-  navMain: [
+  accounts: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
+      title: "Operations",
+      url: "/operations",
+      icon: ClipboardIcon,
       items: [
-        {
-          title: "History",
-          url: "/history",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
+        { title: "All Operation Files", url: "/operations" },
+        { title: "Payment Vouchers", url: "/operations/payment-vouchers" },
+        { title: "Petty Cash", url: "/operations/petty-cash" },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "RMI",
+      url: "/rmi",
+      icon: CardStackIcon,
       items: [
-        {
-          title: "Genesis",
-          url: "/genesis",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
+        { title: "All Operation Files", url: "/rmi" },
+        { title: "Payment Vouchers", url: "/rmi/payment-vouchers" },
+        { title: "Petty Cash", url: "/rmi/petty-cash" },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
+      title: "Tuition",
+      url: "/tuition",
+      icon: BackpackIcon,
       items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
+        { title: "All Operation Files", url: "/tuition" },
+        { title: "Payment Vouchers", url: "/tuition/payment-vouchers" },
+        { title: "Petty Cash", url: "/tuition/petty-cash" },
       ],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
+      title: "School Fund",
+      url: "/school-fund",
+      icon: HomeIcon,
       items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
+        { title: "All Operation Files", url: "/school-fund" },
+        { title: "Payment Vouchers", url: "/school-fund/payment-vouchers" },
+        { title: "Petty Cash", url: "/school-fund/petty-cash" },
       ],
     },
   ],
+
   projects: [
     {
       name: "Design Engineering",
@@ -161,7 +128,8 @@ export function AppSidebar(props) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        {/* <NavMain items={data.accounts} /> */}
+        <NavAccounts accounts={data.accounts} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>

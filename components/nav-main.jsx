@@ -22,7 +22,7 @@ export function NavMain({ items }) {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Accounts</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
           // Check if any subitem is active
