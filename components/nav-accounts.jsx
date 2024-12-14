@@ -39,8 +39,11 @@ export function NavAccounts({ accounts }) {
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover>
+              <DropdownMenuTrigger asChild isActive>
+                <SidebarMenuAction
+                  showOnHover
+                  className="transition-all duration-300 ease-in-out hover:scale-125 hover:rotate-12 hover:text-primary hover:shadow-lg"
+                >
                   <MoreHorizontal />
                   <span className="sr-only">More</span>
                 </SidebarMenuAction>
