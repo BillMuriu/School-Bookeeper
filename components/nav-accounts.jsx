@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import {
   ClipboardIcon,
   CardStackIcon,
@@ -25,6 +26,7 @@ import {
 
 export function NavAccounts({ accounts }) {
   const { isMobile } = useSidebar();
+  const [openMenu, setOpenMenu] = useState(null); // Track the open menu
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -38,11 +40,16 @@ export function NavAccounts({ accounts }) {
                 <span>{account.title}</span>
               </a>
             </SidebarMenuButton>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild isActive>
+            <DropdownMenu
+              open={openMenu === account.title} // Open only if this menu is active
+              onOpenChange={(isOpen) =>
+                setOpenMenu(isOpen ? account.title : null)
+              }
+            >
+              <DropdownMenuTrigger asChild>
                 <SidebarMenuAction
                   showOnHover
-                  className="transition-all duration-300 ease-in-out hover:scale-125 hover:rotate-12 hover:text-primary hover:shadow-lg"
+                  className="transition-all duration-300 ease-in-out hover:scale-110 hover:rotate-12 hover:text-primary hover:shadow-lg"
                 >
                   <MoreHorizontal />
                   <span className="sr-only">More</span>
@@ -53,9 +60,16 @@ export function NavAccounts({ accounts }) {
                 side={isMobile ? "bottom" : "right"}
                 align={isMobile ? "end" : "start"}
               >
+                <h1>{account.title}</h1>
+                <DropdownMenuSeparator />
                 {account.items.map((item) => (
                   <DropdownMenuItem key={item.title}>
-                    <a href={item.url}>{item.title}</a>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <account.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator />
