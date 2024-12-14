@@ -25,36 +25,36 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-export function NavAccounts({ accounts }) {
+export function NavStudents({ students }) {
   const { isMobile } = useSidebar();
   const pathname = usePathname(); // Get the current pathname
   const [activeAccount, setActiveAccount] = useState(null); // Track the active account
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Accounts</SidebarGroupLabel>
+      <SidebarGroupLabel>Students</SidebarGroupLabel>
       <SidebarMenu>
-        {accounts?.map((account) => {
+        {students?.map((student) => {
           // Determine if the current account is active
-          const isActive = activeAccount === account.title;
+          const isActive = activeAccount === student.title;
 
           return (
-            <SidebarMenuItem key={account.title}>
+            <SidebarMenuItem key={student.title}>
               <SidebarMenuButton
                 asChild
                 isActive={isActive} // Active if it's the current URL or active account
-                onClick={() => setActiveAccount(account.title)} // Set active account on click
+                onClick={() => setActiveAccount(student.title)} // Set active account on click
               >
-                <a href={account.url}>
-                  <account.icon />
-                  <span>{account.title}</span>
+                <a href={student.url}>
+                  <student.icon />
+                  <span>{student.title}</span>
                 </a>
               </SidebarMenuButton>
               <DropdownMenu
-                open={activeAccount === account.title} // Open if this account is active
+                open={activeAccount === student.title} // Open if this account is active
                 onOpenChange={(isOpen) => {
                   if (isOpen) {
-                    setActiveAccount(account.title); // Set active when opened
+                    setActiveAccount(student.title); // Set active when opened
                   } else {
                     setActiveAccount(null); // Reset active account when closed
                   }
@@ -74,13 +74,13 @@ export function NavAccounts({ accounts }) {
                   side={isMobile ? "bottom" : "right"}
                   align={isMobile ? "end" : "start"}
                 >
-                  <h1>{account.title}</h1>
+                  <h1>{student.title}</h1>
                   <DropdownMenuSeparator />
-                  {account.items.map((item) => (
+                  {student.items.map((item) => (
                     <DropdownMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
                         <a href={item.url}>
-                          <account.icon />
+                          <student.icon />
                           <span>{item.title}</span>
                         </a>
                       </SidebarMenuButton>

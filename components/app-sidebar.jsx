@@ -23,8 +23,9 @@ import {
   SquareTerminal,
 } from "lucide-react";
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
+import { GenericNav } from "./generic-nav";
 import { NavAccounts } from "./nav-accounts";
+import { NavStudents } from "./nav-students";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -101,6 +102,17 @@ const data = {
       ],
     },
   ],
+  students: [
+    {
+      title: "Students",
+      url: "/students",
+      icon: HomeIcon,
+      items: [
+        { title: "All students", url: "/students" },
+        { title: "Opening balances", url: "/students/opening-balances" },
+      ],
+    },
+  ],
 
   projects: [
     {
@@ -129,8 +141,10 @@ export function AppSidebar(props) {
       </SidebarHeader>
       <SidebarContent>
         {/* <NavMain items={data.accounts} /> */}
+        <GenericNav projects={data.projects} />
         <NavAccounts accounts={data.accounts} />
-        <NavProjects projects={data.projects} />
+        <NavStudents students={data.students} />
+        {/* <NavProjects projects={data.students} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
