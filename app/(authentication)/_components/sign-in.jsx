@@ -1,10 +1,12 @@
 "use client";
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Stack, Container, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import SkeletonLoader from "@/components/skeleton-loader";
+import { GalleryVerticalEnd } from "lucide-react";
 
 const SignInForm = () => {
   const {
@@ -38,7 +40,6 @@ const SignInForm = () => {
         throw new Error(result.message || "Failed to send magic link.");
       }
 
-      // Success: show the success message
       setSuccess(true);
     } catch (error) {
       console.error("Error during sign in:", error);
@@ -56,33 +57,50 @@ const SignInForm = () => {
 
   if (success) {
     return (
-      <Container sx={{ mt: 3 }} maxWidth="sm">
-        <Typography variant="h5" align="center" gutterBottom>
-          Check your email to access the login link
-        </Typography>
-      </Container>
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
+        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+          <h2 className="text-lg font-semibold text-center mb-4">
+            Check your email to access the login link
+          </h2>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Container
-      sx={{ mt: 3 }}
-      maxWidth="sm"
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <Stack sx={{ gap: 2 }}>
-        <RHFTextField
-          name="email"
-          label="Email"
-          type="email"
-          required
-          error={Boolean(errors.email)}
-          helperText={errors.email?.message}
-        />
-        <Button type="submit">Sign In</Button>
-      </Stack>
-    </Container>
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <div className="flex flex-col items-center gap-4 mb-6">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
+            <GalleryVerticalEnd className="w-6 h-6 text-indigo-500" />
+          </div>
+          <h1 className="text-xl font-bold text-gray-800">
+            Welcome to Ciagini Secondary
+          </h1>
+          <p className="text-sm text-gray-500">
+            Enter your email to sign in or register.
+          </p>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing={3}>
+            <RHFTextField
+              name="email"
+              label="Email"
+              type="email"
+              required
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
+            />
+            <Button
+              type="submit"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+            >
+              Sign In
+            </Button>
+          </Stack>
+        </form>
+      </div>
+    </div>
   );
 };
 

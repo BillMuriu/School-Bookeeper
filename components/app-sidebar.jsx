@@ -1,28 +1,14 @@
 "use client";
+
 import * as React from "react";
-import { Icon } from "@iconify/react";
+import { usePathname } from "next/navigation";
 import {
   HomeIcon,
-  DashboardIcon,
   ClipboardIcon,
-  BookmarkIcon,
   CardStackIcon,
   BackpackIcon,
 } from "@radix-ui/react-icons";
-
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
-import { NavMain } from "@/components/nav-main";
+import { Frame, GalleryVerticalEnd } from "lucide-react";
 import { GenericNav } from "./generic-nav";
 import { NavAccounts } from "./nav-accounts";
 import { NavStudents } from "./nav-students";
@@ -36,7 +22,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 
-// This is sample data.
 const data = {
   user: {
     name: "shadcn",
@@ -45,19 +30,9 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: "Ciagini",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
+      plan: "Secondary",
     },
   ],
   accounts: [
@@ -116,35 +91,30 @@ const data = {
 
   projects: [
     {
-      name: "Design Engineering",
+      name: "Dashboard",
       url: "#",
       icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 };
 
 export function AppSidebar(props) {
+  const pathname = usePathname(); // Get the current path
+
+  // Hide sidebar on sign-in and sign-up pages
+  if (pathname === "/sign-in" || pathname === "/sign-up") {
+    return null;
+  }
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        {/* <NavMain items={data.accounts} /> */}
         <GenericNav projects={data.projects} />
         <NavAccounts accounts={data.accounts} />
         <NavStudents students={data.students} />
-        {/* <NavProjects projects={data.students} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

@@ -2,16 +2,18 @@
 
 import React from "react";
 import { useSelectedLayoutSegment, usePathname } from "next/navigation";
-import { ModeToggle } from "./mode-toggle";
-import { Button } from "./ui/button";
 import { useHeaderContext } from "../contexts/header-context";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { SidebarTrigger } from "./ui/sidebar";
 
 const Header = () => {
   const selectedLayout = useSelectedLayoutSegment();
   const { handleOpen } = useHeaderContext();
   const pathname = usePathname();
+
+  // Hide Header on sign-in and sign-up pages
+  if (pathname === "/sign-in" || pathname === "/sign-up") {
+    return null;
+  }
 
   return (
     <div
@@ -24,12 +26,7 @@ const Header = () => {
         <div className="flex-shrink-0">
           <SidebarTrigger />
         </div>
-        <div className="flex flex-row items-center gap-2">
-          {/* <div className="h-8 w-8 rounded-full border-b-border flex items-center justify-center text-center">
-            <span className="font-semibold text-sm">HQ</span>
-          </div> */}
-          {/* <ModeToggle /> */}
-        </div>
+        <div className="flex flex-row items-center gap-2"></div>
       </div>
     </div>
   );
