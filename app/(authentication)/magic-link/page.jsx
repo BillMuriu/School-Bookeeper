@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie"; // Install via: npm install js-cookie
+import { jwtDecode } from "jwt-decode";
 
 const MagicLinkPage = () => {
   const router = useRouter();
@@ -24,15 +24,19 @@ const MagicLinkPage = () => {
         const decoded = jwtDecode(token);
         console.log("Decoded Token:", decoded);
 
-        const isValid = decoded && decoded.exp * 1000 > Date.now();
-        if (!isValid) {
-          throw new Error("Invalid or expired token");
-        }
+        // Set expiration time for the cookie (e.g., 1 hour from now)
+        const expirationDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour in milliseconds
 
-        // Save user data to cookies (or localStorage as needed)
-        Cookies.set("username", decoded.email, { secure: true });
-        console.log(decoded.email);
-        Cookies.set("authToken", token, { secure: true, httpOnly: false });
+        // Save user data to cookies
+        Cookies.set("username", decoded.email, {
+          secure: true,
+          expires: expirationDate,
+        });
+        Cookies.set("authToken", token, {
+          secure: true,
+          expires: expirationDate,
+          httpOnly: false,
+        });
 
         // Redirect to the dashboard
         router.push("/");

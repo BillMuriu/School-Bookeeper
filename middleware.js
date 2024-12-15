@@ -1,20 +1,22 @@
 import { NextResponse } from "next/server";
 
-const PROTECTED_ROUTES = ["/operations"]; // Define protected routes here
-
 export function middleware(req) {
   const { pathname } = req.nextUrl;
 
-  // Skip middleware for non-protected routes
-  if (!PROTECTED_ROUTES.some((route) => pathname.startsWith(route))) {
+  // Check for the authToken cookie for protected routes
+  const token = req.cookies.get("authToken");
+
+  // Exempt the routes: /sign-in, /sign-out, /magic-link
+  if (
+    pathname.startsWith("/sign-in") ||
+    pathname.startsWith("/sign-out") ||
+    pathname.startsWith("/magic-link")
+  ) {
     return NextResponse.next();
   }
 
-  // Check for the authToken cookie
-  const token = req.cookies.get("authToken");
-
+  // Redirect to sign-in if authToken is missing
   if (!token) {
-    // Redirect to sign-in if authToken is missing
     const signInUrl = new URL("/sign-in", req.url);
     return NextResponse.redirect(signInUrl);
   }
@@ -24,5 +26,7 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: PROTECTED_ROUTES, // Apply middleware only to protected routes
+  matcher: [
+    "/((?!sign-in|sign-out|magic-link|api|_next/static|_next/image|favicon.ico).*)",
+  ], // Exclude public routes
 };
