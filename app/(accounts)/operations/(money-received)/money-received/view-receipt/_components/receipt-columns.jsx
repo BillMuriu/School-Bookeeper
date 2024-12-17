@@ -3,8 +3,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import ActionsCell from "./action-cell";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export const columns = [
@@ -19,14 +17,20 @@ export const columns = [
       return (
         <div className="flex items-center space-x-2">
           {badgeValues.includes(value) && (
-            <Badge variant="outline" className="bg-blue-500 text-white">
+            <Badge
+              variant="outline"
+              className="border-blue-500 bg-blue-100 text-blue-500"
+            >
               IAB
             </Badge>
           )}
           {isPettyCash && (
-            <Badge variant="outline" className="bg-purple-500 text-white">
+            <Badge
+              variant="outline"
+              className="border-purple-500 bg-purple-100 text-purple-500"
+            >
               Petty Cash
-            </Badge> // Add badge for pettycash
+            </Badge> // Add subtle badge for pettycash
           )}
           <span>{value}</span>
         </div>
@@ -36,8 +40,6 @@ export const columns = [
   {
     accessorKey: "totalAmount",
     header: "Total Amount",
-    // For responsiveness, we can make the total amount hidden on small screens
-    cell: ({ getValue }) => <div className="hidden sm:block">{getValue()}</div>,
   },
   {
     accessorKey: "date",
@@ -50,13 +52,19 @@ export const columns = [
     cell: ({ getValue }) => {
       const value = getValue();
       return (
-        <div className="sm:w-auto w-full">
+        <div>
           {value === "bank" ? (
-            <Badge variant="outline" className="bg-green-500 text-white">
+            <Badge
+              variant="outline"
+              className="border-green-500 bg-green-100 text-green-500"
+            >
               Bank
             </Badge>
           ) : (
-            <Badge variant="outline" className="bg-yellow-500 text-white">
+            <Badge
+              variant="outline"
+              className="border-yellow-500 bg-yellow-100 text-yellow-500"
+            >
               Cash
             </Badge>
           )}

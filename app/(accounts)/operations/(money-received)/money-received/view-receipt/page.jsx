@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { DataTable } from "@/components/tables/operations-receipts-table";
+// import { DataTable } from "@/components/tables/operations-receipts-table";
+import { DataTable } from "@/components/tables/receipts/advanced-operations-receipts-table";
 import { columns } from "./_components/receipt-columns";
 import { useOperationsReceipts } from "../_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
