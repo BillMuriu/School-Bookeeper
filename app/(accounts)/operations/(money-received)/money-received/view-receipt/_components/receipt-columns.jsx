@@ -6,45 +6,31 @@ import ActionsCell from "./action-cell";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 
 export const columns = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: "receivedFrom",
     header: "Received From",
-  },
-  {
-    accessorKey: "id",
-    header: ({ column }) => {
+    cell: ({ getValue }) => {
+      const value = getValue();
+      const badgeValues = ["rmi", "school_fund", "operations_account"];
+      const isPettyCash = value === "pettycash"; // Check for pettycash
+
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Id
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="flex items-center space-x-2">
+          {badgeValues.includes(value) && (
+            <Badge variant="outline" className="bg-blue-500 text-white">
+              IAB
+            </Badge>
+          )}
+          {isPettyCash && (
+            <Badge variant="outline" className="bg-purple-500 text-white">
+              Petty Cash
+            </Badge> // Add badge for pettycash
+          )}
+          <span>{value}</span>
+        </div>
       );
     },
   },
@@ -56,6 +42,26 @@ export const columns = [
     accessorKey: "date",
     header: "Date",
     cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"),
+  },
+  {
+    accessorKey: "cashBank", // Add the new column
+    header: "Payment Method",
+    cell: ({ getValue }) => {
+      const value = getValue();
+      return (
+        <div>
+          {value === "bank" ? (
+            <Badge variant="outline" className="bg-green-500 text-white">
+              Bank
+            </Badge>
+          ) : (
+            <Badge variant="outline" className="bg-yellow-500 text-white">
+              Cash
+            </Badge>
+          )}
+        </div>
+      );
+    },
   },
   {
     header: "Actions",
