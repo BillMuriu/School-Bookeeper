@@ -2,12 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import DataTableFacetedFilter from "./data-table-faceted-filter";
-
 import { X } from "lucide-react";
+import DataTableFacetedFilter from "./data-table-faceted-filter";
 
 export function DataTableToolbar({ table }) {
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  const cashBankOptions = [
+    { label: "Cash", value: "cash" },
+    { label: "Bank", value: "bank" },
+  ];
 
   return (
     <div className="flex items-center justify-between p-4">
@@ -22,18 +26,13 @@ export function DataTableToolbar({ table }) {
           className="h-8 w-[150px] lg:w-[250px]"
         />
 
-        {/* Cash/Bank Filter */}
-        {table.getColumn("cashBank") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("cashBank")}
-            title="Cash/Bank"
-            options={[
-              { label: "Bank", value: "bank" },
-              { label: "Cash", value: "cash" },
-              { label: "Transfer", value: "transfer" },
-            ]}
-          />
-        )}
+        {/* Single-select filter for cashBank */}
+        <DataTableFacetedFilter
+          column={table.getColumn("cashBank")}
+          title="Cash/Bank"
+          options={cashBankOptions}
+          className="h-8"
+        />
 
         {/* Reset Filters Button */}
         {isFiltered && (
@@ -42,7 +41,7 @@ export function DataTableToolbar({ table }) {
             onClick={() => table.resetColumnFilters()}
             className="h-8 px-2 lg:px-3"
           >
-            Reset <X />
+            Reset <X className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>

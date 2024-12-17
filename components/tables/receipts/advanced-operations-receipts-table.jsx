@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -20,16 +22,25 @@ import { DataTablePagination } from "./pagination";
 import { DataTableToolbar } from "./tool-bar";
 
 export function DataTable({ columns, data }) {
+  const [globalFilter, setGlobalFilter] = useState(""); // Initialize as an empty string
+  const [columnFilters, setColumnFilters] = useState([]);
+
   const table = useReactTable({
     data,
     columns,
+    state: {
+      globalFilter, // Use globalFilter state
+      columnFilters,
+    },
+    onGlobalFilterChange: setGlobalFilter, // Handle changes for global filter
+    onColumnFiltersChange: setColumnFilters, // Update columnFilters state when it changes
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(), // Add pagination support
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(), // Include filtering
   });
 
   return (
     <div>
-      {/* Add the DataTableToolbar here, passing the table object */}
       <DataTableToolbar table={table} />
 
       <ScrollArea className="w-96 sm:w-full whitespace-nowrap rounded-md border">
@@ -79,7 +90,6 @@ export function DataTable({ columns, data }) {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      {/* Add Pagination Component Below */}
       <DataTablePagination table={table} />
     </div>
   );

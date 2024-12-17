@@ -1,5 +1,4 @@
 import React from "react";
-import { Column } from "@tanstack/react-table";
 import { Check, PlusCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -22,19 +21,15 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 const DataTableFacetedFilter = ({ column, title, options, className }) => {
-  const facets = column?.getFacetedUniqueValues();
-  const selectedValues = new Set(column?.getFilterValue() || []);
+  const selectedValue = column?.getFilterValue() || ""; // Holds the selected value
 
-  const toggleFilter = (optionValue) => {
-    const isSelected = selectedValues.has(optionValue);
-    if (isSelected) {
-      selectedValues.delete(optionValue);
+  // Set or clear the filter value
+  const setSingleFilter = (optionValue) => {
+    if (selectedValue === optionValue) {
+      column?.setFilterValue(undefined); // Clear filter if the same option is clicked again
     } else {
-      selectedValues.add(optionValue);
+      column?.setFilterValue(optionValue); // Set new filter value
     }
-    column?.setFilterValue(
-      selectedValues.size ? Array.from(selectedValues) : undefined
-    );
   };
 
   return (
@@ -45,39 +40,20 @@ const DataTableFacetedFilter = ({ column, title, options, className }) => {
           size="sm"
           className={cn("h-8 border-dashed", className)}
         >
-          <PlusCircle />
+          <PlusCircle className="mr-2 h-4 w-4" />
           {title}
-          {selectedValues.size > 0 && (
+          {selectedValue && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
+                className="rounded-sm px-1 font-normal"
               >
-                {selectedValues.size}
+                {
+                  options.find((option) => option.value === selectedValue)
+                    ?.label
+                }
               </Badge>
-              <div className="hidden space-x-1 lg:flex">
-                {selectedValues.size > 2 ? (
-                  <Badge
-                    variant="secondary"
-                    className="rounded-sm px-1 font-normal"
-                  >
-                    {selectedValues.size} selected
-                  </Badge>
-                ) : (
-                  options
-                    .filter((option) => selectedValues.has(option.value))
-                    .map((option) => (
-                      <Badge
-                        variant="secondary"
-                        key={option.value}
-                        className="rounded-sm px-1 font-normal"
-                      >
-                        {option.label}
-                      </Badge>
-                    ))
-                )}
-              </div>
             </>
           )}
         </Button>
@@ -89,11 +65,11 @@ const DataTableFacetedFilter = ({ column, title, options, className }) => {
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const isSelected = selectedValues.has(option.value);
+                const isSelected = selectedValue === option.value; // Check for single selection
                 return (
                   <CommandItem
                     key={option.value}
-                    onSelect={() => toggleFilter(option.value)}
+                    onSelect={() => setSingleFilter(option.value)}
                   >
                     <div
                       className={cn(
@@ -109,16 +85,11 @@ const DataTableFacetedFilter = ({ column, title, options, className }) => {
                       <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
                     <span>{option.label}</span>
-                    {facets?.get(option.value) && (
-                      <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {facets.get(option.value)}
-                      </span>
-                    )}
                   </CommandItem>
                 );
               })}
             </CommandGroup>
-            {selectedValues.size > 0 && (
+            {selectedValue && (
               <>
                 <CommandSeparator />
                 <CommandGroup>
@@ -126,7 +97,7 @@ const DataTableFacetedFilter = ({ column, title, options, className }) => {
                     onSelect={() => column?.setFilterValue(undefined)}
                     className="justify-center text-center"
                   >
-                    Clear filters
+                    Clear filter
                   </CommandItem>
                 </CommandGroup>
               </>

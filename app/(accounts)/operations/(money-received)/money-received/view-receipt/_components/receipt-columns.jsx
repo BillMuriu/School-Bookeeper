@@ -7,6 +7,13 @@ import { Badge } from "@/components/ui/badge";
 
 export const columns = [
   {
+    accessorKey: "id",
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+    header: "ID",
+  },
+  {
     accessorKey: "receivedFrom",
     header: "Received From",
     cell: ({ getValue }) => {
@@ -16,23 +23,26 @@ export const columns = [
 
       return (
         <div className="flex items-center space-x-2">
-          {badgeValues.includes(value) && (
-            <Badge
-              variant="outline"
-              className="border-blue-500 bg-blue-100 text-blue-500"
-            >
-              IAB
-            </Badge>
-          )}
-          {isPettyCash && (
-            <Badge
-              variant="outline"
-              className="border-purple-500 bg-purple-100 text-purple-500"
-            >
-              Petty Cash
-            </Badge> // Add subtle badge for pettycash
-          )}
-          <span>{value}</span>
+          <div className="flex items-center">
+            {badgeValues.includes(value) && (
+              <Badge
+                variant="outline"
+                className="border-blue-500 bg-blue-100 text-blue-500"
+              >
+                IAB
+              </Badge>
+            )}
+            {isPettyCash && (
+              <Badge
+                variant="outline"
+                className="border-purple-500 bg-purple-100 text-purple-500"
+              >
+                Petty Cash
+              </Badge>
+            )}
+          </div>
+          <span className="ml-2">{value}</span>{" "}
+          {/* Added margin for proper spacing */}
         </div>
       );
     },
