@@ -7,13 +7,6 @@ import { Badge } from "@/components/ui/badge";
 
 export const columns = [
   {
-    accessorKey: "id",
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-    header: "ID",
-  },
-  {
     accessorKey: "receivedFrom",
     header: "Received From",
     cell: ({ getValue }) => {
@@ -52,11 +45,6 @@ export const columns = [
     header: "Total Amount",
   },
   {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"),
-  },
-  {
     accessorKey: "cashBank", // Add the new column
     header: "Payment Method",
     cell: ({ getValue }) => {
@@ -81,6 +69,11 @@ export const columns = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"),
   },
   {
     header: "Actions",

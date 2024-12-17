@@ -10,17 +10,17 @@ import { Button } from "@/components/ui/button";
 
 export function DataTablePagination({ table }) {
   return (
-    <div className="flex items-center justify-between px-4 py-2">
-      <div className="text-sm text-muted-foreground">
+    <div className="flex flex-col items-center gap-2 px-2 py-2 sm:flex-row sm:justify-between">
+      <div className="text-xs sm:text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
-      <div className="flex items-center space-x-6">
+      <div className="flex flex-wrap items-center justify-center gap-2">
         {/* Rows per page */}
-        <div className="flex items-center space-x-2">
-          <span className="text-sm font-medium">Rows per page</span>
+        <div className="flex items-center gap-1 text-xs sm:text-sm">
+          <span>Rows per page</span>
           <select
-            className="h-8 border rounded-md text-sm"
+            className="h-8 border rounded-md text-xs sm:text-sm"
             value={table.getState().pagination.pageSize}
             onChange={(e) => table.setPageSize(Number(e.target.value))}
           >
@@ -32,21 +32,15 @@ export function DataTablePagination({ table }) {
           </select>
         </div>
 
-        {/* Page Info */}
-        <div className="text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </div>
-
         {/* Pagination Controls */}
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center gap-1">
           <Button
             variant="outline"
             size="sm"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <ChevronsLeft />
+            <ChevronsLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -54,15 +48,19 @@ export function DataTablePagination({ table }) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            <ChevronLeft />
+            <ChevronLeft className="h-4 w-4" />
           </Button>
+          <span className="text-xs sm:text-sm">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </span>
           <Button
             variant="outline"
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            <ChevronRight />
+            <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -70,7 +68,7 @@ export function DataTablePagination({ table }) {
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <ChevronsRight />
+            <ChevronsRight className="h-4 w-4" />
           </Button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import {
   flexRender,
   getCoreRowModel,
@@ -22,17 +23,14 @@ import { DataTablePagination } from "./pagination";
 import { DataTableToolbar } from "./tool-bar";
 
 export function DataTable({ columns, data }) {
-  const [globalFilter, setGlobalFilter] = useState(""); // Initialize as an empty string
   const [columnFilters, setColumnFilters] = useState([]);
 
   const table = useReactTable({
     data,
     columns,
     state: {
-      globalFilter, // Use globalFilter state
       columnFilters,
     },
-    onGlobalFilterChange: setGlobalFilter, // Handle changes for global filter
     onColumnFiltersChange: setColumnFilters, // Update columnFilters state when it changes
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -43,8 +41,8 @@ export function DataTable({ columns, data }) {
     <div>
       <DataTableToolbar table={table} />
 
-      <ScrollArea className="w-96 sm:w-full whitespace-nowrap rounded-md border">
-        <Table>
+      <ScrollArea className="w-[350px] rounded-md border overflow-x-auto">
+        <Table className="text-xs sm:text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

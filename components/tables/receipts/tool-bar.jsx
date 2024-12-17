@@ -14,19 +14,18 @@ export function DataTableToolbar({ table }) {
   ];
 
   return (
-    <div className="flex items-center justify-between p-4">
-      <div className="flex flex-1 items-center space-x-2">
-        {/* Search by receivedFrom field */}
+    <div className="flex flex-wrap items-center justify-between gap-2 p-2 sm:p-4">
+      {/* Filters */}
+      <div className="flex flex-wrap items-center gap-2 flex-1">
         <Input
           placeholder="Search by receivedFrom..."
           value={table.getColumn("receivedFrom")?.getFilterValue() || ""}
           onChange={(event) =>
             table.getColumn("receivedFrom")?.setFilterValue(event.target.value)
           }
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-full sm:w-[150px] lg:w-[250px]"
         />
 
-        {/* Single-select filter for cashBank */}
         <DataTableFacetedFilter
           column={table.getColumn("cashBank")}
           title="Cash/Bank"
@@ -34,7 +33,6 @@ export function DataTableToolbar({ table }) {
           className="h-8"
         />
 
-        {/* Reset Filters Button */}
         {isFiltered && (
           <Button
             variant="ghost"
