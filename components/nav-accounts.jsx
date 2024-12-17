@@ -66,7 +66,7 @@ export function NavAccounts({ accounts }) {
                     showOnHover
                     className="transition-all duration-100 ease-in-out hover:border hover:border-primary hover:shadow-lg"
                   >
-                    <MoreHorizontal />
+                    <MoreHorizontal className="h-100 w-5" />
                   </SidebarMenuAction>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent

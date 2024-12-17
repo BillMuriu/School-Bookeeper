@@ -41,10 +41,19 @@ const data = {
       url: "/operations",
       icon: ClipboardIcon,
       items: [
-        { title: "Add Receipt", url: "/operations" },
-        { title: "Add Petty-Cash", url: "/operations/payment-vouchers" },
-        { title: "Add Payment-Voucher", url: "/operations/petty-cash" },
-        { title: "Add Bank-Charge", url: "/operations/petty-cash" },
+        { title: "Add Receipt", url: "/operations/money-received/add-receipt" },
+        {
+          title: "Add Petty-Cash",
+          url: "/operations/petty-cash/add-pettycash",
+        },
+        {
+          title: "Add Payment-Voucher",
+          url: "/operations/payment-vouchers/add-paymentvoucher",
+        },
+        {
+          title: "Add Bank-Charge",
+          url: "/operations/bank-charges/add-bankcharge",
+        },
       ],
     },
     {
@@ -52,10 +61,13 @@ const data = {
       url: "/rmi",
       icon: CardStackIcon,
       items: [
-        { title: "Add Receipt", url: "/rmi" },
-        { title: "Add Petty-Cash", url: "/rmi/payment-vouchers" },
-        { title: "Add Payment-Voucher", url: "/rmi/petty-cash" },
-        { title: "Add Bank-Charge", url: "/rmi/petty-cash" },
+        { title: "Add Receipt", url: "/RMI/money-received/add-receipt" },
+        { title: "Add Petty-Cash", url: "/RMI/petty-cash/add-pettycash" },
+        {
+          title: "Add Payment-Voucher",
+          url: "/RMI/payment-vouchers/add-paymentvoucher",
+        },
+        { title: "Add Bank-Charge", url: "/RMI/bank-charges/add-bankcharge" },
       ],
     },
     {
@@ -63,10 +75,16 @@ const data = {
       url: "/tuition",
       icon: BackpackIcon,
       items: [
-        { title: "Add Receipt", url: "/tuition" },
-        { title: "Add Petty-Cash", url: "/tuition/payment-vouchers" },
-        { title: "Add Payment-Voucher", url: "/tuition/petty-cash" },
-        { title: "Add Bank-Charge", url: "/tuition/petty-cash" },
+        { title: "Add Receipt", url: "/tuition/money-received/add-receipt" },
+        { title: "Add Petty-Cash", url: "/tuition/petty-cash/add-pettycash" },
+        {
+          title: "Add Payment-Voucher",
+          url: "/tuition/payment-vouchers/add-paymentvoucher",
+        },
+        {
+          title: "Add Bank-Charge",
+          url: "/tuition/bank-charges/add-bankcharge",
+        },
       ],
     },
     {
