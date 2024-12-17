@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -108,7 +108,7 @@ export function DataTable({ columns, data, onSelectionChange }) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <ScrollArea className="min-w-96 whitespace-nowrap rounded-md border">
+      <ScrollArea className="w-96 sm:w-full whitespace-nowrap rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

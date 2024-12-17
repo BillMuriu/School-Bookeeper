@@ -5,7 +5,6 @@ import { format } from "date-fns";
 import ActionsCell from "./action-cell";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 
 export const columns = [
@@ -37,6 +36,8 @@ export const columns = [
   {
     accessorKey: "totalAmount",
     header: "Total Amount",
+    // For responsiveness, we can make the total amount hidden on small screens
+    cell: ({ getValue }) => <div className="hidden sm:block">{getValue()}</div>,
   },
   {
     accessorKey: "date",
@@ -49,7 +50,7 @@ export const columns = [
     cell: ({ getValue }) => {
       const value = getValue();
       return (
-        <div>
+        <div className="sm:w-auto w-full">
           {value === "bank" ? (
             <Badge variant="outline" className="bg-green-500 text-white">
               Bank
