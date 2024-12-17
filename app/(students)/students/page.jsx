@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { StudentsDataTable } from "@/components/tables/students-datatable";
+// import { StudentsDataTable } from "@/components/tables/students-datatable";
+import { StudentsDataTable } from "@/components/tables/students/advanced-students-data-table";
 import { columns } from "./_components/student-columns";
 import { useStudents } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
