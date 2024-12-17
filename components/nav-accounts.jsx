@@ -1,14 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import {
-  ClipboardIcon,
-  CardStackIcon,
-  BackpackIcon,
-  HomeIcon,
-  MoreHorizontal,
-  PlusCircle,
-} from "lucide-react";
+import { MoreHorizontal, PlusCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -33,9 +33,6 @@ const StudentActionsCell = ({ student }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => handleViewStudent(student.id)}>
-          View Student
-        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleAddReceipt(student.id)}>
           Add Receipt
         </DropdownMenuItem>

@@ -1,13 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import {
-  ClipboardIcon,
-  CardStackIcon,
-  BackpackIcon,
-  HomeIcon,
-  MoreHorizontal,
-} from "lucide-react";
+import { MoreHorizontal, PlusCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -63,40 +57,36 @@ export function NavStudents({ students }) {
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuAction
                     showOnHover
-                    className="transition-all duration-300 ease-in-out hover:rotate-12 hover:text-primary hover:shadow-lg"
+                    className="transition-all duration-100 ease-in-out hover:border hover:border-primary hover:shadow-lg"
                   >
-                    <MoreHorizontal />
-                    <span className="sr-only">More</span>
+                    <MoreHorizontal className="h-100 w-5" />
                   </SidebarMenuAction>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  className="w-48 rounded-lg"
+                  className="w-54 rounded-lg border border-border bg-background shadow-lg"
                   side={isMobile ? "bottom" : "right"}
                   align={isMobile ? "end" : "start"}
                 >
-                  <h1>{student.title}</h1>
+                  <h3 className="px-3 py-2 text-sm font-semibold text-muted-foreground">
+                    {student.title}
+                  </h3>
                   <DropdownMenuSeparator />
                   {student.items.map((item) => (
                     <DropdownMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
-                        <a href={item.url}>
-                          <student.icon />
-                          <span>{item.title}</span>
+                        <a
+                          href={item.url}
+                          className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                        >
+                          {/* Circle Plus icon added here */}
+                          <PlusCircle className="h-4 w-4 text-primary" />
+                          <span className="text-sm font-medium">
+                            {item.title}
+                          </span>
                         </a>
                       </SidebarMenuButton>
                     </DropdownMenuItem>
                   ))}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <span>View Details</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Edit</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <span>Delete</span>
-                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </SidebarMenuItem>

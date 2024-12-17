@@ -38,7 +38,7 @@ const data = {
   accounts: [
     {
       title: "Operations",
-      url: "/operations",
+      url: "/operations/money-received/view-receipt",
       icon: ClipboardIcon,
       items: [
         { title: "Add Receipt", url: "/operations/money-received/add-receipt" },
@@ -92,18 +92,17 @@ const data = {
       url: "/school-fund",
       icon: HomeIcon,
       items: [
-        { title: "Add Receipt", url: "/school-fund" },
         {
           title: "Add Petty-Cash",
-          url: "/school-fund/payment-vouchers",
+          url: "/school-fund/petty-cash/add-pettycash",
         },
         {
           title: "Add Payment-Voucher",
-          url: "/school-fund/petty-cash",
+          url: "/school-fund/payment-vouchers/add-paymentvoucher",
         },
         {
           title: "Add Bank-Charge",
-          url: "/school-fund/petty-cash",
+          url: "/school-fund/bank-charges/add-bankcharge",
         },
       ],
     },
@@ -114,8 +113,14 @@ const data = {
       url: "/students",
       icon: HomeIcon,
       items: [
-        { title: "All students", url: "/students" },
-        { title: "Opening balances", url: "/students/opening-balances" },
+        {
+          title: "Create Student's Receipt",
+          url: "/school-fund/money-received/add-student-receipt/view-students",
+        },
+        {
+          title: "Add Student",
+          url: "/students/add-student",
+        },
       ],
     },
   ],
