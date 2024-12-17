@@ -41,9 +41,10 @@ const data = {
       url: "/operations",
       icon: ClipboardIcon,
       items: [
-        { title: "All Operation Files", url: "/operations" },
-        { title: "Payment Vouchers", url: "/operations/payment-vouchers" },
-        { title: "Petty Cash", url: "/operations/petty-cash" },
+        { title: "Add Receipt", url: "/operations" },
+        { title: "Add Petty-Cash", url: "/operations/payment-vouchers" },
+        { title: "Add Payment-Voucher", url: "/operations/petty-cash" },
+        { title: "Add Bank-Charge", url: "/operations/petty-cash" },
       ],
     },
     {
@@ -51,9 +52,10 @@ const data = {
       url: "/rmi",
       icon: CardStackIcon,
       items: [
-        { title: "All Operation Files", url: "/rmi" },
-        { title: "Payment Vouchers", url: "/rmi/payment-vouchers" },
-        { title: "Petty Cash", url: "/rmi/petty-cash" },
+        { title: "Add Receipt", url: "/rmi" },
+        { title: "Add Petty-Cash", url: "/rmi/payment-vouchers" },
+        { title: "Add Payment-Voucher", url: "/rmi/petty-cash" },
+        { title: "Add Bank-Charge", url: "/rmi/petty-cash" },
       ],
     },
     {
@@ -61,9 +63,10 @@ const data = {
       url: "/tuition",
       icon: BackpackIcon,
       items: [
-        { title: "All Operation Files", url: "/tuition" },
-        { title: "Payment Vouchers", url: "/tuition/payment-vouchers" },
-        { title: "Petty Cash", url: "/tuition/petty-cash" },
+        { title: "Add Receipt", url: "/tuition" },
+        { title: "Add Petty-Cash", url: "/tuition/payment-vouchers" },
+        { title: "Add Payment-Voucher", url: "/tuition/petty-cash" },
+        { title: "Add Bank-Charge", url: "/tuition/petty-cash" },
       ],
     },
     {
@@ -71,9 +74,19 @@ const data = {
       url: "/school-fund",
       icon: HomeIcon,
       items: [
-        { title: "All Operation Files", url: "/school-fund" },
-        { title: "Payment Vouchers", url: "/school-fund/payment-vouchers" },
-        { title: "Petty Cash", url: "/school-fund/petty-cash" },
+        { title: "Add Receipt", url: "/school-fund" },
+        {
+          title: "Add Petty-Cash",
+          url: "/school-fund/payment-vouchers",
+        },
+        {
+          title: "Add Payment-Voucher",
+          url: "/school-fund/petty-cash",
+        },
+        {
+          title: "Add Bank-Charge",
+          url: "/school-fund/petty-cash",
+        },
       ],
     },
   ],
