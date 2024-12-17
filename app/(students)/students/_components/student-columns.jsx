@@ -7,31 +7,11 @@ import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import StudentActionsCell from "./students-action-cell";
 
+import Link from "next/link";
+
 export const columns = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "admissionNumber", // Ensure this matches with the key used in the filter
+    accessorKey: "admissionNumber",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -41,6 +21,17 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
+    cell: ({ row }) => {
+      const { id, admissionNumber } = row.original;
+      return (
+        <Link
+          href={`/students/view-student/${id}`}
+          className="text-blue-500 hover:underline"
+        >
+          {admissionNumber}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "firstName",
@@ -51,37 +42,11 @@ export const columns = [
     header: "Last Name",
   },
   {
-    accessorKey: "dateOfBirth",
-    header: "Date of Birth",
-    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
-  },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-  },
-  {
-    accessorKey: "admissionDate",
-    header: "Admission Date",
-    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
-  },
-  {
     accessorKey: "gradeClassLevel",
     header: "Grade/Class Level",
   },
   {
-    accessorKey: "guardiansName",
-    header: "Guardian's Name",
-  },
-  {
-    accessorKey: "guardiansPhoneNumber",
-    header: "Guardian's Phone Number",
-  },
-  {
-    header: "Actions",
-    id: "actions",
-    cell: ({ row }) => {
-      const student = row.original;
-      return <StudentActionsCell student={student} />; // Use the imported component
-    },
+    accessorKey: "balance",
+    header: "Balance",
   },
 ];

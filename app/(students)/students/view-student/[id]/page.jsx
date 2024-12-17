@@ -2,8 +2,8 @@
 
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { studentSchema } from "../../students-schema";
-import EditDeleteStudentForm from "@/app/students/_components/edit-delete-student";
-import { useStudent } from "@/app/students/_services/queries";
+import EditDeleteStudentForm from "../../_components/edit-delete-student";
+import { useStudent } from "../../_services/queries";
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const StudentWrapper = ({ params }) => {
