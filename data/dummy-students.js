@@ -10,6 +10,7 @@ export const students = [
     gradeClassLevel: "1",
     guardiansName: "Jane Doe",
     guardiansPhoneNumber: "+1234567890",
+    balance: 500, // balance field added
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ export const students = [
     gradeClassLevel: "2",
     guardiansName: "Robert Smith",
     guardiansPhoneNumber: "+1234567891",
+    balance: 2000, // balance field added
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ export const students = [
     gradeClassLevel: "2",
     guardiansName: "Sarah Brown",
     guardiansPhoneNumber: "+1234567893",
+    balance: -100, // balance field added
   },
   {
     id: 4,
@@ -46,6 +49,7 @@ export const students = [
     gradeClassLevel: "1",
     guardiansName: "William Davis",
     guardiansPhoneNumber: "+1234567894",
+    balance: 3000, // balance field added
   },
   {
     id: 5,
@@ -58,6 +62,7 @@ export const students = [
     gradeClassLevel: "3",
     guardiansName: "Linda Martinez",
     guardiansPhoneNumber: "+1234567895",
+    balance: 1500, // balance field added
   },
   {
     id: 6,
@@ -70,6 +75,7 @@ export const students = [
     gradeClassLevel: "2",
     guardiansName: "James Garcia",
     guardiansPhoneNumber: "+1234567896",
+    balance: -2000, // balance field added
   },
   {
     id: 7,
@@ -82,6 +88,7 @@ export const students = [
     gradeClassLevel: "1",
     guardiansName: "Monica Hernandez",
     guardiansPhoneNumber: "+1234567897",
+    balance: 800, // balance field added
   },
   {
     id: 8,
@@ -94,6 +101,7 @@ export const students = [
     gradeClassLevel: "4",
     guardiansName: "Carlos Lopez",
     guardiansPhoneNumber: "+1234567898",
+    balance: 4000, // balance field added
   },
   {
     id: 9,
@@ -106,6 +114,7 @@ export const students = [
     gradeClassLevel: "3",
     guardiansName: "Nancy Martinez",
     guardiansPhoneNumber: "+1234567899",
+    balance: -500, // balance field added
   },
   {
     id: 10,
@@ -118,6 +127,7 @@ export const students = [
     gradeClassLevel: "2",
     guardiansName: "John Johnson",
     guardiansPhoneNumber: "+1234567800",
+    balance: 2000, // balance field added
   },
   {
     id: 11,
@@ -130,6 +140,7 @@ export const students = [
     gradeClassLevel: "4",
     guardiansName: "Sophie Lee",
     guardiansPhoneNumber: "+1234567801",
+    balance: 1000, // balance field added
   },
   {
     id: 12,
@@ -142,5 +153,6 @@ export const students = [
     gradeClassLevel: "1",
     guardiansName: "Daniel Walker",
     guardiansPhoneNumber: "+1234567802",
+    balance: -1500, // balance field added
   },
 ];

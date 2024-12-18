@@ -1,48 +1,59 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { PlusCircle } from "lucide-react"; // Import PlusCircle icon
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export const columns = [
   {
     accessorKey: "admissionNumber",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
+    header: () => (
+      <div className="w-full flex justify-start">
+        {" "}
+        {/* Align header to the left */}
         Admission Number
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
+      </div>
     ),
     cell: ({ row }) => {
       const { id, admissionNumber } = row.original;
       return (
-        <Link
-          href={`/students/view-student/${id}`}
-          className="text-blue-500 hover:underline"
-        >
-          {admissionNumber}
-        </Link>
+        <div className="w-full flex justify-start">
+          {" "}
+          {/* Make the div take full width and align left */}
+          <Link
+            href={`/students/view-student/${id}`}
+            className="text-blue-500 hover:underline"
+          >
+            {admissionNumber}
+          </Link>
+        </div>
       );
     },
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: () => (
+      <div className="w-full flex justify-start">
+        {" "}
+        {/* Align header to the left */}
+        Name
+      </div>
+    ),
     cell: ({ row }) => {
       const { firstName, lastName } = row.original;
       return (
-        <span>
-          {firstName} {lastName}
-        </span>
+        <div className="w-full flex justify-start">
+          {" "}
+          {/* Make the div take full width and align left */}
+          <span>
+            {firstName} {lastName}
+          </span>
+        </div>
       );
     },
   },
   {
     accessorKey: "gradeClassLevel",
-    header: "Grade/Class Level",
+    header: "Form Level",
   },
   {
     accessorKey: "balance",
@@ -53,25 +64,41 @@ export const columns = [
 
       // Adjusting badge color logic
       if (balance < 0) {
-        // Negative balance (good, so green)
         badgeColor = "bg-green-100 text-green-500 border-green-500";
       } else if (balance > 0) {
-        // Positive balance (bad, so red)
         badgeColor = "bg-red-100 text-red-500 border-red-500";
       } else {
-        // Zero balance (neutral, so gray)
         badgeColor = "bg-gray-100 text-gray-500 border-gray-500";
       }
 
       return (
         <div className="flex justify-center items-center h-full">
-          {/* Center the Badge in the parent div */}
           <Badge
             variant="outline"
             className={`border ${badgeColor} flex items-center justify-center`}
           >
             {balance}
           </Badge>
+        </div>
+      );
+    },
+  },
+  {
+    header: "Create Receipt",
+    id: "createReceipt",
+    cell: ({ row }) => {
+      const { id } = row.original;
+      return (
+        <div className="flex justify-center">
+          <Link
+            href={`/school-fund/money-received/add-student-receipt/${id}`}
+            className="flex items-center gap-2 px-4 py-2 sm:px-3 sm:py-1.5 border border-dotted border-gray-400 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors text-xs sm:text-sm"
+          >
+            <PlusCircle className="h-5 w-5 text-blue-500" />
+            <span className="text-xs text-blue-500 md:text-xs">
+              Create Receipt
+            </span>
+          </Link>
         </div>
       );
     },

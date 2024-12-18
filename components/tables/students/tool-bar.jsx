@@ -1,15 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
 import DataTableFacetedFilter from "./data-table-faceted-filter";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 export function DataTableToolbar({ table }) {
   const gradeClassLevelOptions = [
@@ -20,16 +12,16 @@ export function DataTableToolbar({ table }) {
   ];
 
   return (
-    <div className="flex items-center py-4 gap-4">
-      {/* Filter by Name */}
+    <div className="flex flex-wrap items-center justify-between gap-4 p-2 sm:p-4">
+      {/* Filter by Admission Number */}
       <Input
         type="text"
-        placeholder="Filter By Name..."
-        value={table.getColumn("name")?.getFilterValue() || ""}
+        placeholder="Filter By Admission Number..."
+        value={table.getColumn("admissionNumber")?.getFilterValue() || ""}
         onChange={(e) =>
-          table.getColumn("name")?.setFilterValue(e.target.value)
+          table.getColumn("admissionNumber")?.setFilterValue(e.target.value)
         }
-        className="max-w-sm"
+        className="h-8 w-full sm:w-[150px] lg:w-[250px]"
       />
 
       {/* Filter by Grade Class Level */}
@@ -37,33 +29,8 @@ export function DataTableToolbar({ table }) {
         column={table.getColumn("gradeClassLevel")}
         title="Grade Level"
         options={gradeClassLevelOptions}
-        className="h-8"
+        className="h-8 w-full sm:w-[150px] lg:w-[200px]"
       />
-
-      {/* View Options */}
-      {/* <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="ml-auto">
-            <EyeOpenIcon className="mr-2 h-4 w-4" />
-            View
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {table
-            .getAllColumns()
-            .filter((column) => column.getCanHide())
-            .map((column) => (
-              <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize"
-                checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
-              >
-                {column.id}
-              </DropdownMenuCheckboxItem>
-            ))}
-        </DropdownMenuContent>
-      </DropdownMenu> */}
     </div>
   );
 }
