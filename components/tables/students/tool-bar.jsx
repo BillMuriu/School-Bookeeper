@@ -41,7 +41,7 @@ export function DataTableToolbar({ table }) {
       />
 
       {/* View Options */}
-      <DropdownMenu>
+      {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="ml-auto">
             <EyeOpenIcon className="mr-2 h-4 w-4" />
@@ -63,7 +63,7 @@ export function DataTableToolbar({ table }) {
               </DropdownMenuCheckboxItem>
             ))}
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </div>
   );
 }
