@@ -44,7 +44,6 @@ const ReceiptsTable = () => {
 
   return (
     <div>
-      <h1>All Receipts</h1>
       <DataTable columns={columns} data={receipts} />
     </div>
   );

@@ -43,7 +43,6 @@ const StudentsTable = () => {
 
   return (
     <div>
-      <h1>All Students</h1>
       <StudentsDataTable columns={columns} data={students} />
     </div>
   );

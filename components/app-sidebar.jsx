@@ -115,7 +115,7 @@ const data = {
       items: [
         {
           title: "Create Student's Receipt",
-          url: "/school-fund/money-received/add-student-receipt/view-students",
+          url: "/students",
         },
         {
           title: "Add Student",

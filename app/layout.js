@@ -1,6 +1,5 @@
 "use client";
 import { ThemeProviderNext } from "@/contexts/theme-provider";
-import { HeaderProvider } from "@/contexts/header-context";
 import QueryProvider from "@/contexts/query-provider";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -45,18 +44,15 @@ export default function RootLayout({ children }) {
           <ThemeProvider theme={theme}>
             <QueryProvider>
               <SidebarProvider>
-                <HeaderProvider>
-                  {/* <div className="flex"> */}
-                  <AppSidebar />
-                  {/* <SideNav /> */}
-                  <main className="flex-1">
-                    {/* <MarginWidthWrapper> */}
-                    <Header />
-                    <PageWrapper>{children}</PageWrapper>
-                    {/* </MarginWidthWrapper> */}
-                  </main>
-                  <Toaster />
-                </HeaderProvider>
+                <AppSidebar />
+                {/* <SideNav /> */}
+                <main className="flex-1">
+                  {/* <MarginWidthWrapper> */}
+                  <Header />
+                  <PageWrapper>{children}</PageWrapper>
+                  {/* </MarginWidthWrapper> */}
+                </main>
+                <Toaster />
               </SidebarProvider>
             </QueryProvider>
           </ThemeProvider>

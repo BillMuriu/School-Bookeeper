@@ -1,13 +1,13 @@
 import React from "react";
 import FilesCard from "../../components/files-card";
-import SeparatorWithText from "../../components/sperator-with-text";
+import { Badge } from "@/components/ui/badge";
 
 const MoneySpentOperations = () => {
   return (
-    <div className="flex flex-col p-6 bg-gray-50 rounded-lg shadow-lg">
-      <span className="font-bold mb-6 w-full text-center text-xl">
+    <div className="flex flex-col items-center mb-10 bg-card p-6 rounded-lg shadow-md space-y-4">
+      <Badge className="px-4 py-1 text-lg w-fit text-background bg-foreground border border-border">
         Money Spent
-      </span>
+      </Badge>
       <div className="w-full h-full rounded-lg lg:flex flex-row gap-2">
         <FilesCard
           title="Payment Vouchers"
@@ -15,8 +15,8 @@ const MoneySpentOperations = () => {
           buttonText="Add new"
           buttonVariant="outline"
           viewAllText="View all"
-          viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          viewAllLink="/operations/payment-vouchers/"
+          addNewLink="/operations/payment-vouchers/add-paymentvoucher"
         />
         <FilesCard
           title="Petty Cash"
@@ -24,8 +24,8 @@ const MoneySpentOperations = () => {
           buttonText="Add new"
           buttonVariant="outline"
           viewAllText="View all"
-          viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          viewAllLink="/operations/petty-cash/"
+          addNewLink="/operations/petty-cash/add-pettycash/"
         />
         <FilesCard
           title="Bank Charges"
@@ -33,8 +33,8 @@ const MoneySpentOperations = () => {
           buttonText="Add new"
           buttonVariant="outline"
           viewAllText="View all"
-          viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          viewAllLink="/operations/bank-charges/"
+          addNewLink="/operations/bank-charges/add-bankcharge"
         />
       </div>
     </div>

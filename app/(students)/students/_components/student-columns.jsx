@@ -92,12 +92,12 @@ export const columns = [
         <div className="flex justify-center">
           <Link
             href={`/school-fund/money-received/add-student-receipt/${id}`}
-            className="flex items-center gap-2 px-4 py-2 sm:px-3 sm:py-1.5 border border-dotted border-gray-400 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors text-xs sm:text-sm"
+            passHref
           >
-            <PlusCircle className="h-5 w-5 text-blue-500" />
-            <span className="text-xs text-blue-500 md:text-xs">
-              Create Receipt
-            </span>
+            <Badge className="px-2 py-1 text-black bg-gray-100 border border-gray-300 hover:bg-gray-200">
+              <PlusCircle className="mr-1 w-4 h-4" />
+              Create
+            </Badge>
           </Link>
         </div>
       );

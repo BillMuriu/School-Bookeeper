@@ -7,9 +7,7 @@ const AllFiles = () => {
   return (
     <div>
       <MoneyReceivedOperations />
-      <Separator className="mb-10" />
       <MoneySpentOperations />
-      <Separator className="mb-10" />
       <OperationsBooks />
     </div>
   );
