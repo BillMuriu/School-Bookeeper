@@ -117,10 +117,10 @@ const EditDeleteStudentForm = ({ studentId, studentData }) => {
           name="gradeClassLevel"
           label="Class Level"
           options={[
-            { value: "form1", label: "Form 1" },
-            { value: "form2", label: "Form 2" },
-            { value: "form3", label: "Form 3" },
-            { value: "form4", label: "Form 4" },
+            { value: "1", label: "Form 1" },
+            { value: "2", label: "Form 2" },
+            { value: "3", label: "Form 3" },
+            { value: "4", label: "Form 4" },
           ]}
           error={errors.gradeClassLevel}
         />
