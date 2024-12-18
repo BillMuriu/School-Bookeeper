@@ -19,6 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { DataTableToolbar } from "./tool-bar";
 import { DataTablePagination } from "./pagination";
 
@@ -57,6 +58,7 @@ export function StudentsDataTable({ columns, data }) {
     <div>
       <DataTableToolbar table={table} />
       {/* Conditionally render ScrollArea width based on screen size */}
+      <Separator className="mt-4 mb-4" />
       {isSmallScreen ? (
         <ScrollArea className="w-[350px] rounded-md border overflow-x-auto">
           <Table className="text-xs sm:text-sm">

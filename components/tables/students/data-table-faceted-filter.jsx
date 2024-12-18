@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Check, PlusCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +21,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 const DataTableFacetedFilter = ({ column, title, options, className }) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false); // Track popover state
   const selectedValue = column?.getFilterValue() || ""; // Holds the selected value
 
   // Set or clear the filter value
@@ -30,15 +31,19 @@ const DataTableFacetedFilter = ({ column, title, options, className }) => {
     } else {
       column?.setFilterValue(optionValue); // Set new filter value
     }
+    setIsPopoverOpen(false); // Close popover when an option is selected
   };
 
   return (
-    <Popover>
+    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           size="sm"
-          className={cn("h-8 border-dashed", className)}
+          className={cn(
+            "h-8 border border-gray-300 rounded-lg hover:border-blue-400 transition-colors",
+            className
+          )}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           {title}
@@ -47,7 +52,7 @@ const DataTableFacetedFilter = ({ column, title, options, className }) => {
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
-                className="rounded-sm px-1 font-normal"
+                className="rounded-sm px-1 font-normal bg-blue-500 text-white" // More prominent background and text color for selected element
               >
                 {
                   options.find((option) => option.value === selectedValue)
@@ -69,7 +74,7 @@ const DataTableFacetedFilter = ({ column, title, options, className }) => {
                 return (
                   <CommandItem
                     key={option.value}
-                    onSelect={() => setSingleFilter(option.value)}
+                    onSelect={() => setSingleFilter(option.value)} // Close popover when option is selected
                   >
                     <div
                       className={cn(
