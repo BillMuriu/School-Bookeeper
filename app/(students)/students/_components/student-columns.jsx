@@ -29,12 +29,16 @@ export const columns = [
     },
   },
   {
-    accessorKey: "firstName",
-    header: "First Name",
-  },
-  {
-    accessorKey: "lastName",
-    header: "Last Name",
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const { firstName, lastName } = row.original;
+      return (
+        <span>
+          {firstName} {lastName}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "gradeClassLevel",
@@ -60,9 +64,12 @@ export const columns = [
       }
 
       return (
-        <div className="flex items-center space-x-2">
-          {/* Badge with balance value */}
-          <Badge variant="outline" className={`border ${badgeColor}`}>
+        <div className="flex justify-center items-center h-full">
+          {/* Center the Badge in the parent div */}
+          <Badge
+            variant="outline"
+            className={`border ${badgeColor} flex items-center justify-center`}
+          >
             {balance}
           </Badge>
         </div>

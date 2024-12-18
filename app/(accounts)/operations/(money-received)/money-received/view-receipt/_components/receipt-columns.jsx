@@ -8,34 +8,31 @@ import { Badge } from "@/components/ui/badge";
 export const columns = [
   {
     accessorKey: "receivedFrom",
-    header: "Received From",
+    header: ({ column }) => <div className="text-left">Received From</div>,
     cell: ({ getValue }) => {
       const value = getValue();
       const badgeValues = ["rmi", "school_fund", "operations_account"];
-      const isPettyCash = value === "pettycash"; // Check for pettycash
+      const isPettyCash = value === "pettycash";
 
       return (
-        <div className="flex items-center space-x-2">
-          <div className="flex items-center">
-            {badgeValues.includes(value) && (
-              <Badge
-                variant="outline"
-                className="border-blue-500 bg-blue-100 text-blue-500"
-              >
-                IAB
-              </Badge>
-            )}
-            {isPettyCash && (
-              <Badge
-                variant="outline"
-                className="border-purple-500 bg-purple-100 text-purple-500"
-              >
-                Petty Cash
-              </Badge>
-            )}
-          </div>
-          <span className="ml-2">{value}</span>{" "}
-          {/* Added margin for proper spacing */}
+        <div className="flex items-center justify-start gap-4 space-y-1">
+          {badgeValues.includes(value) && (
+            <Badge
+              variant="outline"
+              className="border-blue-500 bg-blue-100 text-blue-500 flex items-center justify-center"
+            >
+              IAB
+            </Badge>
+          )}
+          {isPettyCash && (
+            <Badge
+              variant="outline"
+              className="border-purple-500 bg-purple-100 text-purple-500 flex items-center justify-center"
+            >
+              Petty Cash
+            </Badge>
+          )}
+          <span className="text-center text-sm">{value}</span>
         </div>
       );
     },
@@ -45,27 +42,22 @@ export const columns = [
     header: "Total Amount",
   },
   {
-    accessorKey: "cashBank", // Add the new column
+    accessorKey: "cashBank",
     header: "Payment Method",
     cell: ({ getValue }) => {
       const value = getValue();
       return (
-        <div>
-          {value === "bank" ? (
-            <Badge
-              variant="outline"
-              className="border-green-500 bg-green-100 text-green-500"
-            >
-              Bank
-            </Badge>
-          ) : (
-            <Badge
-              variant="outline"
-              className="border-yellow-500 bg-yellow-100 text-yellow-500"
-            >
-              Cash
-            </Badge>
-          )}
+        <div className="flex flex-col items-center space-y-1">
+          <Badge
+            variant="outline"
+            className={`${
+              value === "bank"
+                ? "border-green-500 bg-green-100 text-green-500"
+                : "border-yellow-500 bg-yellow-100 text-yellow-500"
+            } flex items-center justify-center`}
+          >
+            {value === "bank" ? "Bank" : "Cash"}
+          </Badge>
         </div>
       );
     },
