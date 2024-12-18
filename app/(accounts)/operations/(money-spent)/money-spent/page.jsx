@@ -4,7 +4,7 @@ import SeparatorWithText from "../../components/sperator-with-text";
 
 const MoneySpentOperations = () => {
   return (
-    <>
+    <div className="flex flex-col p-6 bg-gray-50 rounded-lg shadow-lg">
       <span className="font-bold mb-6 w-full text-center text-xl">
         Money Spent
       </span>
@@ -37,7 +37,7 @@ const MoneySpentOperations = () => {
           addNewLink="/operations/money-received/add-receipt"
         />
       </div>
-    </>
+    </div>
   );
 };
 
