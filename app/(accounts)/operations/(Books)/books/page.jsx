@@ -1,11 +1,11 @@
 import React from "react";
-import BooksCard from "../../components/books-card";
+import BooksCard from "../../../../../components/main-accounts-pages/books-card";
 import { Badge } from "@/components/ui/badge";
 
 const OperationsBooks = () => {
   return (
-    <div className="flex flex-col items-center mb-10 bg-card p-6 rounded-lg shadow-md space-y-4">
-      <Badge className="px-4 py-1 text-lg w-fit text-background bg-foreground border border-border">
+    <div className="flex flex-col items-center mb-10 bg-card p-6 rounded-lg shadow-sm space-y-4">
+      <Badge className="px-4 py-1 text-md w-fit text-background bg-foreground border border-border">
         Books
       </Badge>
       <div className="w-full h-full rounded-lg lg:flex flex-row gap-2">

@@ -1,30 +1,40 @@
-import * as React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+"use client";
 
-export default function CarouselDemo() {
+import { Bar, BarChart } from "recharts";
+import { ChartContainer } from "@/components/ui/chart";
+import { Card } from "@/components/ui/card";
+
+const chartData = [
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 214, mobile: 140 },
+];
+
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "#2563eb",
+  },
+  mobile: {
+    label: "Mobile",
+    color: "#60a5fa",
+  },
+};
+
+function ChartComponent() {
   return (
-    <div>
-      <h1>Dashboard</h1>
-
-      {/* Add iframe below the title */}
-      <div className="mt-8">
-        {" "}
-        {/* Adds spacing between the title and iframe */}
-        <iframe
-          src="http://localhost:5173/#/operations-ledger"
-          title="Dashboard Iframe"
-          width="100%"
-          height="600px"
-          className="border border-gray-300" // Optional styling for the iframe
-        />
-      </div>
-    </div>
+    <Card className="w-80 h-48">
+      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+        <BarChart accessibilityLayer data={chartData}>
+          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+          <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+        </BarChart>
+      </ChartContainer>
+    </Card>
   );
 }
+
+export default ChartComponent;

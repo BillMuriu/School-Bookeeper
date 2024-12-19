@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const BooksCard = ({ title, description, viewAllText, viewAllLink }) => {
   return (
-    <Card className="mb-6 lg:mb-0 lg:max-w-[400px] border border-border bg-card/60 text-card-foreground backdrop-blur-md rounded-lg">
+    <Card className="mb-6 lg:mb-0 lg:max-w-[400px] border border-border bg-card/60 text-card-foreground rounded-lg">
       <CardHeader>
         <CardTitle className="text-lg">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

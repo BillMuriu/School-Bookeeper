@@ -1,11 +1,11 @@
 import React from "react";
-import FilesCard from "../../components/files-card";
+import FilesCard from "../../../../../components/main-accounts-pages/files-card";
 import { Badge } from "@/components/ui/badge";
 
 const MoneySpentOperations = () => {
   return (
-    <div className="flex flex-col items-center mb-10 bg-card p-6 rounded-lg shadow-md space-y-4">
-      <Badge className="px-4 py-1 text-lg w-fit text-background bg-foreground border border-border">
+    <div className="flex flex-col items-center mb-10 bg-card p-6 rounded-lg shadow-sm space-y-4">
+      <Badge className="px-4 py-1 text-md w-fit text-background bg-foreground border border-border">
         Money Spent
       </Badge>
       <div className="w-full h-full rounded-lg lg:flex flex-row gap-2">
