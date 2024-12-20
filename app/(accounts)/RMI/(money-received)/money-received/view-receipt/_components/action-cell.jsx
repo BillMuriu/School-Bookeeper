@@ -17,7 +17,7 @@ const ActionsCell = ({ receipt }) => {
   const router = useRouter();
 
   const handleViewReceipt = (id) => {
-    router.push(`/operations/money-received/view-receipt/${id}`);
+    router.push(`/RMI/money-received/view-receipt/${id}`);
   };
 
   const onDelete = (id) => {
