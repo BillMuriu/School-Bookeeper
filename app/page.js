@@ -7,13 +7,25 @@ import { Progress } from "@/components/ui/progress";
 
 // Preprocess data to calculate the "difference" field
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
+  { month: "Term1", desktop: 186, mobile: 80 },
+  { month: "Term2", desktop: 305, mobile: 200 },
+  { month: "Term3", desktop: 237, mobile: 120 },
 ].map((data) => ({
   ...data,
   difference: data.mobile - data.desktop, // Inverted difference (negative)
 }));
+const feeCollectionData = {
+  overall: {
+    collected: 1200000, // Total collected amount in KES
+    expected: 1500000, // Total expected amount in KES
+  },
+  forms: [
+    { form: "Form 1", collected: 300000, expected: 400000 },
+    { form: "Form 2", collected: 400000, expected: 450000 },
+    { form: "Form 3", collected: 200000, expected: 300000 },
+    { form: "Form 4", collected: 300000, expected: 350000 },
+  ],
+};
 
 const chartConfig = {
   desktop: {
@@ -31,6 +43,10 @@ const chartConfig = {
 };
 
 function ChartComponent() {
+  const { overall, forms } = feeCollectionData;
+
+  // Calculate overall progress
+  const overallProgress = (overall.collected / overall.expected) * 100;
   return (
     <Card className="w-100 h-[300px]">
       <ChartContainer
@@ -49,7 +65,7 @@ function ChartComponent() {
             tickLine={true}
             tickMargin={10}
             axisLine={false}
-            tickFormatter={(value) => value.slice(0, 3)}
+            tickFormatter={(value) => value.slice(0, 5)}
           />
           <YAxis
             tickLine={false}
@@ -63,11 +79,44 @@ function ChartComponent() {
           <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
         </BarChart>
       </ChartContainer>
-      <Card className="mt-20 px-4">
-        <Progress value={90} className="mt-10 h-2" />
-        <Progress value={90} className="mt-10 h-2" />
-        <Progress value={90} className="mt-10 h-2" />
-        <Progress value={90} className="mt-10 mb-10 h-2" />
+      <Card className="mt-10 px-4 py-6">
+        {/* Overall Fee Collection */}
+        <div className="flex items-center mb-2">
+          <div className="text-sm font-semibold mr-2">Total Collected:</div>
+          <div className="text-xs text-green-600">
+            KES {overall.collected.toLocaleString()}
+          </div>
+        </div>
+
+        <div className="flex items-center mb-6">
+          <div className="text-sm font-semibold mr-2">Amount Expected:</div>
+          <div className="text-xs text-blue-600">
+            KES {overall.expected.toLocaleString()}
+          </div>
+        </div>
+
+        {/* Per Form Fee Collection */}
+        {forms.map(({ form, collected, expected }, index) => {
+          const progress = (collected / expected) * 100;
+          return (
+            <div key={index} className="mb-6">
+              <div className="text-xs mb-2">
+                <span className="font-bold">{form}:</span>{" "}
+                <span className="text-green-600">
+                  KES {collected.toLocaleString()}
+                </span>{" "}
+                out of{" "}
+                <span className="text-blue-600">
+                  KES {expected.toLocaleString()}
+                </span>
+              </div>
+              <Progress
+                value={progress}
+                className="h-2 bg-gray-200 rounded-md"
+              />
+            </div>
+          );
+        })}
       </Card>
     </Card>
   );
