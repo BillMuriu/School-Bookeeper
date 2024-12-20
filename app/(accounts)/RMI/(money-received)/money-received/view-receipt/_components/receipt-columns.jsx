@@ -16,7 +16,7 @@ export const columns = [
         .replace(/_/g, " ") // Replace underscores with spaces
         .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
 
-      const badgeValues = ["rmi", "school_fund", "operations_account"];
+      const badgeValues = ["tuition", "school_fund", "operations_account"];
       const isPettyCash = rawValue === "pettycash";
 
       return (

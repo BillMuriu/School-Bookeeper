@@ -15,6 +15,8 @@ const Header = () => {
     "/operations/books": "Books",
     "/operations/receipts": "Receipts",
     "/operations/money-received/view-receipt": "Operations Receipts",
+    "/RMI/money-received/view-receipt": "RMI Receipts",
+    "/tuition/money-received/view-receipt": "Tuition Receipts",
     "/operations/ledgers": "Ledgers",
     "/students": "Students List",
   };
