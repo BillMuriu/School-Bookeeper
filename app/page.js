@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, XAxis, CartesianGrid, YAxis } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 // Preprocess data to calculate the "difference" field
@@ -40,6 +40,12 @@ const chartConfig = {
     label: "Difference",
     color: "#f87171", // Red color for negative bars
   },
+};
+
+const balances = {
+  total: 100000,
+  cash: 40000,
+  bank: 60000,
 };
 
 function ChartComponent() {
@@ -118,6 +124,46 @@ function ChartComponent() {
           );
         })}
       </Card>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {/* Total Balance Card */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Balance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">
+              KES {balances.total.toLocaleString()}
+            </div>
+            <p className="text-xs text-muted-foreground">Available funds</p>
+          </CardContent>
+        </Card>
+
+        {/* Cash Balance Card */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Cash Balance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-600">
+              KES {balances.cash.toLocaleString()}
+            </div>
+            <p className="text-xs text-muted-foreground">Cash on hand</p>
+          </CardContent>
+        </Card>
+
+        {/* Bank Balance Card */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Bank Balance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-500">
+              KES {balances.bank.toLocaleString()}
+            </div>
+            <p className="text-xs text-muted-foreground">Banked funds</p>
+          </CardContent>
+        </Card>
+      </div>
     </Card>
   );
 }
