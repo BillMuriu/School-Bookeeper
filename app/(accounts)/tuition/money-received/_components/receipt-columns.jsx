@@ -40,7 +40,7 @@ export const columns = [
           <div className="flex items-center gap-2">
             <span className="text-center text-sm">{formattedValue}</span>
             <Link
-              href={`/RMI/money-received/view-receipt/${receiptId}`}
+              href={`/tuition/money-received/view-receipt/${receiptId}`}
               className="text-blue-500 hover:text-blue-700"
               aria-label={`Open link to ${formattedValue}`}
             >
