@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { DataTable } from "@/components/tables/operations-paymentvoucher-table";
-// import { DataTable } from "@/components/tables/payments/advanced-operations-payment-voucher";
+// import { DataTable } from "@/components/tables/operations-paymentvoucher-table";
+import { DataTable } from "@/components/tables/payments/advanced-operations-payment-voucher";
 import { columns } from "./_components/payment-voucher-columns";
 import { useOperationsPaymentVouchers } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
