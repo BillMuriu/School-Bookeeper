@@ -1,71 +1,62 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import OperationsPettyCashActionsCell from "./operations-pettycash-action-cell";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 
 export const columns = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: "payeeName",
-    header: "Payee Name",
+    header: () => <div className="text-left">Payee Name</div>, // Left align header
+    cell: ({ getValue }) => {
+      const rawValue = getValue();
+      const formattedValue = rawValue
+        .replace(/_/g, " ") // Replace underscores with spaces
+        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
+      return <div className="text-left">{formattedValue}</div>; // Left align value
+    },
   },
   {
     accessorKey: "chequeNumber",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Cheque Number
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    header: () => <div className="text-left">Cheque Number</div>, // Left align header
+    cell: ({ getValue, row }) => {
+      const value = getValue();
+      const pettyCashId = row.original.id;
+      return (
+        <div className="flex items-center justify-start gap-2">
+          <div className="text-left">{value}</div> {/* Left align value */}
+          <Link
+            href={`/petty-cash/view/${pettyCashId}`}
+            className="text-blue-500 hover:text-blue-700"
+            aria-label="View Cheque Details"
+          >
+            <ExternalLink className="h-4 w-4" />
+          </Link>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "amount",
-    header: "Amount (Shs)",
-    cell: ({ getValue }) => parseFloat(getValue()).toFixed(2), // Format amount as decimal
+    header: () => <div className="text-left">Amount (Shs)</div>, // Right align header
+    cell: ({ getValue }) => (
+      <div className="text-left">
+        {parseFloat(getValue()).toFixed(2)} {/* Format amount as decimal */}
+      </div>
+    ),
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: () => <div className="text-left">Description</div>, // Left align header
+    cell: ({ getValue }) => <div className="text-left">{getValue()}</div>,
   },
   {
     accessorKey: "dateIssued",
-    header: "Date Issued",
-    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
-  },
-  {
-    header: "Actions",
-    id: "actions",
-    cell: ({ row }) => {
-      const pettyCash = row.original;
-      return <OperationsPettyCashActionsCell pettyCash={pettyCash} />; // Adjust based on your actual actions
-    },
+    header: () => <div className="text-center">Date Issued</div>, // Center align header
+    cell: ({ getValue }) => (
+      <div className="text-center">
+        {format(new Date(getValue()), "MM/dd/yyyy")} {/* Format date */}
+      </div>
+    ),
   },
 ];
