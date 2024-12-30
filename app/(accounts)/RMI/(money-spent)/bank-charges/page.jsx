@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { BankChargesTable } from "@/components/tables/operations-bankcharges-table";
+import { BankChargesTable } from "@/components/tables/bank-charges/advanced-operations-bank-charges";
 import { columns } from "./_components/rmi-bankcharges-columns";
 import { useAllRmiBankCharges } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
