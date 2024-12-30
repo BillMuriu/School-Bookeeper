@@ -12,7 +12,7 @@ export const columns = [
       const value = getValue();
       const bankChargeId = row.original.id;
       return (
-        <div className="flex items-center justify-start gap-2">
+        <div className="flex items-left justify-start gap-2">
           <div className="text-left">{value}</div> {/* Left align value */}
           <Link
             href={`/bank-charges/view/${bankChargeId}`}
@@ -32,9 +32,9 @@ export const columns = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount (Shs)</div>, // Right align header
+    header: () => <div className="text-left">Amount (Shs)</div>, // Right align header
     cell: ({ getValue }) => (
-      <div className="text-right">
+      <div className="text-left">
         {parseFloat(getValue()).toFixed(2)} {/* Format amount as decimal */}
       </div>
     ),

@@ -1,72 +1,62 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import TuitionPettyCashActionsCell from "./tuition-pettycash-action-cell";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 
-// Updated columns for RMI Petty Cash
 export const columns = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "payee_name", // Updated to match schema field
-    header: "Payee Name",
-  },
-  {
-    accessorKey: "cheque_number", // Updated to match schema field
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Cheque Number
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-  },
-  {
-    accessorKey: "amount", // Updated to match schema field
-    header: "Amount (Shs)",
-    cell: ({ getValue }) => parseFloat(getValue()).toFixed(2), // Format amount as decimal
-  },
-  {
-    accessorKey: "description", // Updated to match schema field
-    header: "Description",
-  },
-  {
-    accessorKey: "date_issued", // Updated to match schema field
-    header: "Date Issued",
-    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
-  },
-  {
-    header: "Actions",
-    id: "actions",
-    cell: ({ row }) => {
-      const pettyCash = row.original;
-      return <TuitionPettyCashActionsCell pettyCash={pettyCash} />; // Adjust based on your actual actions
+    accessorKey: "payee_name",
+    header: () => <div className="text-left">Payee Name</div>,
+    cell: ({ getValue }) => {
+      const rawValue = getValue();
+      const formattedValue = rawValue
+        .replace(/_/g, " ") // Replace underscores with spaces
+        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
+      return <div className="text-left">{formattedValue}</div>;
     },
+  },
+  {
+    accessorKey: "cheque_number",
+    header: () => <div className="text-left">Cheque Number</div>,
+    cell: ({ getValue, row }) => {
+      const value = getValue();
+      const pettyCashId = row.original.id;
+      return (
+        <div className="flex items-center justify-start gap-2">
+          <div className="text-left">{value}</div>
+          <Link
+            href={`/petty-cash/view/${pettyCashId}`}
+            className="text-blue-500 hover:text-blue-700"
+            aria-label="View Cheque Details"
+          >
+            <ExternalLink className="h-4 w-4" />
+          </Link>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "amount",
+    header: () => <div className="text-left">Amount (Shs)</div>,
+    cell: ({ getValue }) => (
+      <div className="text-left">
+        {parseFloat(getValue()).toFixed(2)} {/* Format amount as decimal */}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "description",
+    header: () => <div className="text-left">Description</div>,
+    cell: ({ getValue }) => <div className="text-left">{getValue()}</div>,
+  },
+  {
+    accessorKey: "date_issued",
+    header: () => <div className="text-center">Date Issued</div>,
+    cell: ({ getValue }) => (
+      <div className="text-center">
+        {format(new Date(getValue()), "MM/dd/yyyy")} {/* Format date */}
+      </div>
+    ),
   },
 ];

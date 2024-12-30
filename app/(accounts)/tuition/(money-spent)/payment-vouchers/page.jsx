@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { DataTable } from "@/components/tables/operations-paymentvoucher-table"; // Adjusted table component
+import { DataTable } from "@/components/tables/payments/advanced-operations-payment-voucher";
 import { columns } from "./_components/payment-voucher-columns"; // Ensure columns are correct for tuition payment vouchers
 import { useTuitionPaymentVouchers } from "./_services/queries"; // Adjusted hook for tuition payment vouchers
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
