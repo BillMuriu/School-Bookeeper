@@ -3,7 +3,7 @@
 import React from "react";
 // import { DataTable } from "@/components/tables/operations-receipts-table";
 // import { DataTable } from "@/components/tables/receipts/advanced-operations-receipts-table";
-import { DataTable } from "@/components/tables/receipts/rmi-tuition-schoolfund/advanced-receipts-table";
+import { DataTable } from "@/components/tables/receipts/rmi-tuition-receipt/advanced-receipts-table";
 import { columns } from "./_components/receipt-columns";
 import { useRmiReceipts } from "../_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";

@@ -1,67 +1,51 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import OperationsBankChargesActionsCell from "./operations-bankcharges-actions-cell";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 
 export const columns = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: "account",
-    header: "Account",
+    header: () => <div className="text-left">Account</div>, // Left align header
+    cell: ({ getValue, row }) => {
+      const value = getValue();
+      const bankChargeId = row.original.id;
+      return (
+        <div className="flex items-center justify-start gap-2">
+          <div className="text-left">{value}</div> {/* Left align value */}
+          <Link
+            href={`/bank-charges/view/${bankChargeId}`}
+            className="text-blue-500 hover:text-blue-700"
+            aria-label="View Bank Charge Details"
+          >
+            <ExternalLink className="h-4 w-4" />
+          </Link>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: () => <div className="text-left">Description</div>, // Left align header
+    cell: ({ getValue }) => <div className="text-left">{getValue()}</div>,
   },
   {
     accessorKey: "amount",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Amount (Shs)
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
+    header: () => <div className="text-right">Amount (Shs)</div>, // Right align header
+    cell: ({ getValue }) => (
+      <div className="text-right">
+        {parseFloat(getValue()).toFixed(2)} {/* Format amount as decimal */}
+      </div>
     ),
-    cell: ({ getValue }) => parseFloat(getValue()).toFixed(2), // Format amount as decimal
   },
   {
     accessorKey: "chargeDate",
-    header: "Charge Date",
-    cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
-  },
-  {
-    header: "Actions",
-    id: "actions",
-    cell: ({ row }) => {
-      const bankCharge = row.original;
-      return <OperationsBankChargesActionsCell bankCharge={bankCharge} />;
-    },
+    header: () => <div className="text-center">Charge Date</div>, // Center align header
+    cell: ({ getValue }) => (
+      <div className="text-center">
+        {format(new Date(getValue()), "MM/dd/yyyy")} {/* Format date */}
+      </div>
+    ),
   },
 ];
