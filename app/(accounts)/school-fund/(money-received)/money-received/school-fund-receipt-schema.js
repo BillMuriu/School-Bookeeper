@@ -23,6 +23,8 @@ export const schoolFundReceiptSchema = z.object({
     .optional(),
 
   date: z.date({ required_error: "Date is required." }),
+
+  receiptNumber: z.string().optional().nullable(), // Optional and can be null
 });
 
 export const defaultSchoolFundReceipt = {
@@ -32,4 +34,5 @@ export const defaultSchoolFundReceipt = {
   totalAmount: null,
   student: null,
   date: new Date(),
+  receiptNumber: null, // Default value for receiptNumber
 };

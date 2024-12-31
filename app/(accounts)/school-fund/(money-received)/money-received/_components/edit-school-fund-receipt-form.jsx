@@ -106,6 +106,7 @@ const EditDeleteSchoolFundReceiptForm = ({ receiptId }) => {
           label="Student Number (if applicable)"
           min={0}
           disabled
+          style={{ display: "none" }}
         />
         <RHFDatePicker name="date" label="Date Received" />
         <Button variant="secondary" type="submit">

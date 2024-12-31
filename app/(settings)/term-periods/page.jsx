@@ -1,5 +1,5 @@
 import React from "react";
-import FilesCard from "@/app/RMI/components/files-card"; //I imported this from the RMI just as a place holder
+import FilesCard from "@/components/main-accounts-pages/files-card";
 
 const MoneyReceivedOperations = () => {
   return (

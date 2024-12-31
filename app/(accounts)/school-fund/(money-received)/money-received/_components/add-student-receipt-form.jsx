@@ -9,7 +9,6 @@ import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
 import { RHFNativeSelect } from "@/components/form-components/RHFNativeSelect";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
-import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 
 const AddStudentReceiptForm = () => {
@@ -28,6 +27,7 @@ const AddStudentReceiptForm = () => {
     cash_bank: data.cashBank,
     total_amount: data.totalAmount.toFixed(2),
     date: data.date.toISOString(),
+    receipt_number: data.receiptNumber ?? null, // Include the receipt number
   });
 
   const onSubmit = (data) => {
@@ -57,7 +57,7 @@ const AddStudentReceiptForm = () => {
         <RHFTextField
           name="receivedFrom"
           label="Received From"
-          disabled="true"
+          disabled={true}
         />
         <RHFRadioGroup
           name="cashBank"
@@ -80,6 +80,13 @@ const AddStudentReceiptForm = () => {
           label="Student Number (if applicable)"
           min={0}
           disabled
+          style={{ display: "none" }} // This will hide the component
+        />
+
+        <RHFTextField
+          name="receiptNumber"
+          label="Receipt Number"
+          placeholder="Optional"
         />
         <RHFDatePicker name="date" label="Date Received" />
         <Button variant="secondary" type="submit">
