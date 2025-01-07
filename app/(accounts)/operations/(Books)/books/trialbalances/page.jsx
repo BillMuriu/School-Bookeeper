@@ -1,10 +1,10 @@
 import React from "react";
 
-const Cashbooks = () => {
+const TrialBalances = () => {
   return (
     <div className="w-full h-full flex items-center justify-center">
       <iframe
-        src="https://billmuriu.github.io/trial-balace-check/#/operations-cashbook-pdfs"
+        src="https://billmuriu.github.io/trial-balace-check/#/operations-trial-balance"
         className="w-full h-[720px] border-none"
         style={{
           display: "block",
@@ -12,10 +12,10 @@ const Cashbooks = () => {
           padding: 0,
           overflow: "hidden",
         }}
-        title="Cashbooks"
+        title="Trial Balances"
       ></iframe>
     </div>
   );
 };
 
-export default Cashbooks;
+export default TrialBalances;
