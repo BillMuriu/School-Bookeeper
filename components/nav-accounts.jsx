@@ -1,12 +1,11 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import { MoreHorizontal, PlusCircle } from "lucide-react";
+import { MoreHorizontal, PlusCircle, BookOpen, FolderOpen } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -21,36 +20,35 @@ import {
 
 export function NavAccounts({ accounts }) {
   const { isMobile } = useSidebar();
-  const pathname = usePathname(); // Get the current pathname
-  const [activeAccount, setActiveAccount] = useState(null); // Track the active account
+  const pathname = usePathname();
+  const [activeAccount, setActiveAccount] = useState(null);
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Accounts</SidebarGroupLabel>
       <SidebarMenu>
         {accounts?.map((account) => {
-          // Determine if the current account is active
           const isActive = activeAccount === account.title;
 
           return (
             <SidebarMenuItem key={account.title}>
               <SidebarMenuButton
                 asChild
-                isActive={isActive} // Active if it's the current URL or active account
-                onClick={() => setActiveAccount(account.title)} // Set active account on click
+                isActive={isActive}
+                onClick={() => setActiveAccount(account.title)}
               >
-                <a href={account.url}>
+                <div>
                   <account.icon />
                   <span>{account.title}</span>
-                </a>
+                </div>
               </SidebarMenuButton>
               <DropdownMenu
-                open={activeAccount === account.title} // Open if this account is active
+                open={activeAccount === account.title}
                 onOpenChange={(isOpen) => {
                   if (isOpen) {
-                    setActiveAccount(account.title); // Set active when opened
+                    setActiveAccount(account.title);
                   } else {
-                    setActiveAccount(null); // Reset active account when closed
+                    setActiveAccount(null);
                   }
                 }}
               >
@@ -67,10 +65,28 @@ export function NavAccounts({ accounts }) {
                   side={isMobile ? "bottom" : "right"}
                   align={isMobile ? "end" : "start"}
                 >
-                  <h3 className="px-3 py-2 text-sm font-semibold text-muted-foreground">
-                    {account.title}
-                  </h3>
-                  <DropdownMenuSeparator />
+                  {/* Main Link for All Files */}
+                  <DropdownMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a
+                        href={account.url}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <FolderOpen className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">All Files</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </DropdownMenuItem>
+                  {/* Custom Separator with Title */}
+
+                  {/* Custom Separator for Additional Items */}
+                  <div className="relative flex items-center py-1">
+                    <span className="absolute mt-4 mb-3 inset-x-0 flex justify-center bg-background px-2 text-[12px] text-muted-foreground">
+                      Quick Adds
+                    </span>
+                    <hr className="w-full border-border" />
+                  </div>
+
                   {account.items.map((item) => (
                     <DropdownMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
@@ -78,7 +94,6 @@ export function NavAccounts({ accounts }) {
                           href={item.url}
                           className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
                         >
-                          {/* Circle Plus icon added here */}
                           <PlusCircle className="h-4 w-4 text-primary" />
                           <span className="text-sm font-medium">
                             {item.title}
@@ -87,6 +102,48 @@ export function NavAccounts({ accounts }) {
                       </SidebarMenuButton>
                     </DropdownMenuItem>
                   ))}
+                  <div className="relative flex items-center py-2">
+                    <span className="absolute inset-x-0 mt-4 flex justify-center bg-background px-1 text-[12px] text-muted-foreground">
+                      Books
+                    </span>
+                    <hr className="w-full border-border" />
+                  </div>
+                  {/* Additional Links for Account Books */}
+                  <DropdownMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a
+                        href={`${account.url}/cashbook`}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <BookOpen className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">Cashbook</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a
+                        href={`${account.url}/ledger`}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <BookOpen className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">Ledger</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a
+                        href={`${account.url}/trial-balance`}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <BookOpen className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium">
+                          Trial Balance
+                        </span>
+                      </a>
+                    </SidebarMenuButton>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </SidebarMenuItem>

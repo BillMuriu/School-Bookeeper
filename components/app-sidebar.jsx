@@ -38,7 +38,7 @@ const data = {
   accounts: [
     {
       title: "Operations",
-      url: "/operations/money-received/view-receipt",
+      url: "/operations",
       icon: ClipboardIcon,
       items: [
         { title: "Add Receipt", url: "/operations/money-received/add-receipt" },
