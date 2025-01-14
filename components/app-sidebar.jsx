@@ -58,7 +58,7 @@ const data = {
     },
     {
       title: "RMI",
-      url: "/rmi",
+      url: "/RMI",
       icon: CardStackIcon,
       items: [
         { title: "Add Receipt", url: "/RMI/money-received/add-receipt" },

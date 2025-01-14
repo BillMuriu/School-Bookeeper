@@ -2,7 +2,7 @@ import React from "react";
 import FilesCard from "../../components/files-card";
 import SeparatorWithText from "../../components/sperator-with-text";
 
-const MoneySpentOperations = () => {
+const MoneySpentRmi = () => {
   return (
     <>
       <span className="font-bold mb-6 w-full text-center text-xl">
@@ -16,7 +16,7 @@ const MoneySpentOperations = () => {
           buttonVariant="outline"
           viewAllText="View all"
           viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          addNewLink="/RMI/money-received/add-receipt"
         />
         <FilesCard
           title="Petty Cash"
@@ -25,7 +25,7 @@ const MoneySpentOperations = () => {
           buttonVariant="outline"
           viewAllText="View all"
           viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          addNewLink="/RMI/money-received/add-receipt"
         />
         <FilesCard
           title="Bank Charges"
@@ -34,11 +34,11 @@ const MoneySpentOperations = () => {
           buttonVariant="outline"
           viewAllText="View all"
           viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          addNewLink="/RMI/money-received/add-receipt"
         />
       </div>
     </>
   );
 };
 
-export default MoneySpentOperations;
+export default MoneySpentRmi;

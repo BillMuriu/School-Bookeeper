@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:8000/api/operations-bankcharges/";
+const BASE_URL =
+  "https://6508-105-160-13-116.ngrok-free.app/api/operations-bankcharges/";
 
 export function useOperationsBankCharge(id) {
   return useQuery({

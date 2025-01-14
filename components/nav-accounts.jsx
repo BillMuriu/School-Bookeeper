@@ -92,7 +92,7 @@ export function NavAccounts({ accounts }) {
                       <SidebarMenuButton asChild>
                         <a
                           href={item.url}
-                          className="flex items-center gap-2 px-3 py-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                          className="flex items-center gap-2 h-2 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
                         >
                           <PlusCircle className="h-4 w-4 text-primary" />
                           <span className="text-sm font-medium">

@@ -1,8 +1,8 @@
-import React from 'react';
-import BooksCard from '../../components/books-card';
-import SeparatorWithText from '../../components/sperator-with-text';
+import React from "react";
+import BooksCard from "../../components/books-card";
+import SeparatorWithText from "../../components/sperator-with-text";
 
-const BooksOperations = () => {
+const BooksRmi = () => {
   return (
     <>
       <span className="font-bold mb-6 w-full text-center text-xl">Books</span>
@@ -30,4 +30,4 @@ const BooksOperations = () => {
   );
 };
 
-export default BooksOperations;
+export default BooksRmi;

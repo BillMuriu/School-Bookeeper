@@ -1,55 +1,16 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-
-const OperationAccount = () => {
+import React from "react";
+import MoneyReceivedRmi from "./(money-received)/money-received/page";
+import MoneySpentRmi from "./(money-spent)/money-spent/page";
+import BooksRmi from "./(Books)/books/page";
+import { Separator } from "@/components/ui/separator";
+const AllFiles = () => {
   return (
-    <>
-      <span className="font-bold mb-9 w-full text-center text-xl">Operations Account Files</span>
-      <div>
-        <Link
-          href="operations/money-received"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Money Received
-          </Button>
-        </Link>
-        <Link
-          href="operations/money-spent"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Money Spent
-          </Button>
-        </Link>
-        <Link
-          href="operations/balances"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Balances
-          </Button>
-        </Link>
-        <Link
-          href="operations/books"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Books
-          </Button>
-        </Link>
-      </div>
-    </>
+    <div>
+      <MoneyReceivedRmi />
+      <MoneySpentRmi />
+      <BooksRmi />
+    </div>
   );
 };
 
-export default OperationAccount;
+export default AllFiles;

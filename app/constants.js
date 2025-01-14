@@ -1,2 +1,2 @@
 // apiConstants.js
-export const BASE_URL = "http://127.0.0.1:8000/api";
+export const BASE_URL = "https://5a2e-105-160-13-116.ngrok-free.app/api";
