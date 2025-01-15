@@ -1,12 +1,13 @@
 import React from "react";
 import FilesCard from "../../components/files-card";
+import { Badge } from "@/components/ui/badge";
 
 const MoneySpentTuition = () => {
   return (
-    <>
-      <span className="font-bold mb-6 w-full text-center text-xl">
+    <div className="flex flex-col items-center mb-10 bg-card p-6 rounded-lg shadow-sm space-y-4">
+      <Badge className="px-4 py-1 text-md w-fit text-background bg-foreground border border-border">
         Money Spent
-      </span>
+      </Badge>
       <div className="w-full h-full rounded-lg lg:flex flex-row gap-2">
         <FilesCard
           title="Payment Vouchers"
@@ -14,8 +15,8 @@ const MoneySpentTuition = () => {
           buttonText="Add new"
           buttonVariant="outline"
           viewAllText="View all"
-          viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          viewAllLink="/school-fund/money-received/"
+          addNewLink="/school-fund/money-received/add-receipt"
         />
         <FilesCard
           title="Petty Cash"
@@ -23,8 +24,8 @@ const MoneySpentTuition = () => {
           buttonText="Add new"
           buttonVariant="outline"
           viewAllText="View all"
-          viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          viewAllLink="/school-fund/money-received/"
+          addNewLink="/school-fund/money-received/add-receipt"
         />
         <FilesCard
           title="Bank Charges"
@@ -32,11 +33,11 @@ const MoneySpentTuition = () => {
           buttonText="Add new"
           buttonVariant="outline"
           viewAllText="View all"
-          viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          viewAllLink="/school-fund/money-received/"
+          addNewLink="/school-fund/money-received/add-receipt"
         />
       </div>
-    </>
+    </div>
   );
 };
 

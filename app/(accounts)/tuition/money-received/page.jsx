@@ -1,25 +1,25 @@
 import React from "react";
 import FilesCard from "../components/files-card";
-
-const MoneyReceivedOperations = () => {
+import { Badge } from "@/components/ui/badge";
+const MoneyReceivedTuition = () => {
   return (
-    <>
-      <span className="font-bold mb-6 w-full text-center text-xl">
+    <div className="flex flex-col items-center mb-10 bg-card p-6 rounded-lg shadow-sm space-y-4">
+      <Badge className="px-4 py-1 text-md w-fit text-background bg-foreground border border-border">
         Money Received
-      </span>
-      <div className="w-full h-full rounded-lg lg:flex flex-row gap-2">
+      </Badge>
+      <div className="w-full h-full rounded-lg lg:flex flex-row gap-4">
         <FilesCard
           title="Receipts"
           description="Receipts that can be filtered by month"
           buttonText="Add new"
           buttonVariant="outline"
           viewAllText="View all"
-          viewAllLink=""
-          addNewLink="/operations/money-received/add-receipt"
+          viewAllLink="/RMI/money-received/view-receipt"
+          addNewLink="/RMI/money-received/add-receipt"
         />
       </div>
-    </>
+    </div>
   );
 };
 
-export default MoneyReceivedOperations;
+export default MoneyReceivedTuition;
