@@ -1,55 +1,15 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-
-const OperationAccount = () => {
+import React from "react";
+import MoneyReceivedSchoolFund from "./(money-received)/money-received/page";
+import MoneySpentSchoolFund from "./(money-spent)/money-spent/page";
+import BooksSchoolFund from "./books/page";
+const AllFiles = () => {
   return (
-    <>
-      <span className="font-bold mb-9 w-full text-center text-xl">Operations Account Files</span>
-      <div>
-        <Link
-          href="operations/money-received"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Money Received
-          </Button>
-        </Link>
-        <Link
-          href="operations/money-spent"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Money Spent
-          </Button>
-        </Link>
-        <Link
-          href="operations/balances"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Balances
-          </Button>
-        </Link>
-        <Link
-          href="operations/books"
-        >
-          <Button
-            variant="outline"
-            className="w-full mt-3"
-          >
-            Books
-          </Button>
-        </Link>
-      </div>
-    </>
+    <div>
+      <MoneyReceivedSchoolFund />
+      <MoneySpentSchoolFund />
+      <BooksSchoolFund />
+    </div>
   );
 };
 
-export default OperationAccount;
+export default AllFiles;
