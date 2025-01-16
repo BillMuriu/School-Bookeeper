@@ -46,11 +46,6 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "description",
-    header: () => <div className="text-left">Description</div>,
-    cell: ({ getValue }) => <div className="text-left">{getValue()}</div>,
-  },
-  {
     accessorKey: "date_issued",
     header: () => <div className="text-center">Date Issued</div>,
     cell: ({ getValue }) => (
@@ -58,5 +53,19 @@ export const columns = [
         {format(new Date(getValue()), "MM/dd/yyyy")} {/* Format date */}
       </div>
     ),
+  },
+  {
+    accessorKey: "description",
+    header: () => <div className="text-left">Description</div>,
+    cell: ({ getValue }) => {
+      const description = getValue();
+      const words = description.split(" ").slice(0, 2).join(" ");
+      return (
+        <div className="text-left">
+          {words}
+          {description.split(" ").length > 2 ? "..." : ""}
+        </div>
+      );
+    },
   },
 ];
