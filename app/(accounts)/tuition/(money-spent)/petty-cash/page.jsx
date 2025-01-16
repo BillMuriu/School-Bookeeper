@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PettyCashTable } from "@/components/tables/operations-pettycash-table";
+import { TuitionPettyCashDataTable } from "@/components/tables/pettycash/tuition-pettycash/advanced-tuition-pettycash";
 import { columns } from "./_components/tuition-pettycash-columns";
 import { useTuitionPettyCashs } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
@@ -17,8 +17,8 @@ const PettyCashPage = () => {
 
   return (
     <div>
-      <h1>All Petty Cash Records</h1>
-      <PettyCashTable columns={columns} data={pettyCash} />
+      <h1>Tuition Petty Cash Records</h1>
+      <TuitionPettyCashDataTable columns={columns} data={pettyCash} />
     </div>
   );
 };

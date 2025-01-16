@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { DataTable } from "@/components/tables/payments/advanced-operations-payment-voucher";
+// import { DataTable } from "@/components/tables/payments/advanced-operations-payment-voucher";
+import { RmiPaymentsDataTable } from "@/components/tables/payments/rmi-payments/advanced-rmi-payment-voucher";
 import { columns } from "./_components/payment-voucher-columns";
 import { useRmiPaymentVouchers } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
@@ -18,7 +19,7 @@ const PaymentVouchersPage = () => {
   return (
     <div>
       <h1>All Payment Vouchers</h1>
-      <DataTable columns={columns} data={paymentVouchers} />
+      <RmiPaymentsDataTable columns={columns} data={paymentVouchers} />
     </div>
   );
 };

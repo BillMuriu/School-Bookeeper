@@ -22,10 +22,10 @@ import {
 } from "@/components/ui/table";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { DataTablePagination } from "./pagination"; // Outsourced Pagination
+import { DataTablePagination } from "../pagination"; // Outsourced Pagination
 import { DataTableToolbar } from "./tool-bar"; // Outsourced Toolbar
 
-export function BankChargesTable({ columns, data, onSelectionChange }) {
+export function TuitionBankChargesTable({ columns, data, onSelectionChange }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});

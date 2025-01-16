@@ -17,10 +17,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { DataTablePagination } from "./pagination";
+import { DataTablePagination } from "../pagination";
 import { DataTableToolbar } from "./tool-bar";
 
-export function DataTable({ columns, data }) {
+export function RmiPaymentsDataTable({ columns, data }) {
   const [columnFilters, setColumnFilters] = useState([]);
 
   const table = useReactTable({

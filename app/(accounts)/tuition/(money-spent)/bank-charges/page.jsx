@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { BankChargesTable } from "@/components/tables/operations-bankcharges-table"; // Update table to handle tuition bank charges
+// import { BankChargesTable } from "@/components/tables/operations-bankcharges-table";
+import { TuitionBankChargesTable } from "@/components/tables/bank-charges/tuition-bank-charges/advanced-operations-bank-charges";
 import { columns } from "./_components/tuition-bankcharges-columns"; // Ensure columns are for tuition bank charges
 import { useAllTuitionBankCharges } from "./_services/queries"; // Update the hook for tuition bank charges
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
@@ -19,7 +20,7 @@ const BankChargesPage = () => {
     <div>
       <h1>All Tuition Bank Charges Records</h1>{" "}
       {/* Adjusted title to reflect tuition context */}
-      <BankChargesTable columns={columns} data={bankCharges} />{" "}
+      <TuitionBankChargesTable columns={columns} data={bankCharges} />{" "}
       {/* Pass tuition-specific columns and data */}
     </div>
   );
