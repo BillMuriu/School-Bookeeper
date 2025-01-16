@@ -1,38 +1,21 @@
-"use client";
+import React from "react";
 
-import React, { useState, useEffect } from "react";
-import { RhfProvider } from "@/contexts/rhf-provider";
-import CashBookForm from "./_components/cash-book-form";
-import {
-  cashbookQuerySchema,
-  defaultCashbookQuery,
-} from "./cashbook-form-schema";
-import SkeletonLoader from "@/components/skeleton-loader";
-
-const CashBooks = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Simulate loading state
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return <SkeletonLoader />;
-  }
-
-  // Wrap CashBookForm with RhfProvider to handle form context globally
+const Cashbooks = () => {
   return (
-    <RhfProvider
-      schema={cashbookQuerySchema}
-      defaultValues={defaultCashbookQuery}
-    >
-      <CashBookForm />
-    </RhfProvider>
+    <div className="w-full h-full flex items-center justify-center">
+      <iframe
+        src="https://billmuriu.github.io/trial-balace-check/#/operations-cashbook-pdfs"
+        className="w-full h-[720px] border-none"
+        style={{
+          display: "block",
+          margin: 0,
+          padding: 0,
+          overflow: "hidden",
+        }}
+        title="Cashbooks"
+      ></iframe>
+    </div>
   );
 };
 
-export default CashBooks;
+export default Cashbooks;

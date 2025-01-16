@@ -1,10 +1,10 @@
 import React from "react";
 
-const Cashbooks = () => {
+const Ledger = () => {
   return (
     <div className="w-full h-full flex items-center justify-center">
       <iframe
-        src="https://billmuriu.github.io/trial-balace-check/#/operations-cashbook-pdfs"
+        src="https://billmuriu.github.io/trial-balace-check/#/operations-ledger" // Replace with the actual URL of your ledger page
         className="w-full h-[720px] border-none"
         style={{
           display: "block",
@@ -12,10 +12,10 @@ const Cashbooks = () => {
           padding: 0,
           overflow: "hidden",
         }}
-        title="Cashbooks"
+        title="Ledger"
       ></iframe>
     </div>
   );
 };
 
-export default Cashbooks;
+export default Ledger;
