@@ -5,22 +5,22 @@ import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
-  useEditOperationsPettyCash,
-  useDeleteOperationsPettyCash,
-} from "../_services/mutations";
+  useEditSchoolFundPettyCash,
+  useDeleteSchoolFundPettyCash,
+} from "../_services/mutations"; // Import School Fund Petty Cash mutations
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 
-const EditDeletePettyCashForm = ({ pettyCashId }) => {
+const EditDeleteSchoolFundPettyCashForm = ({ pettyCashId }) => {
   const {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
   const router = useRouter();
-  const editPettyCashMutation = useEditOperationsPettyCash();
-  const deletePettyCashMutation = useDeleteOperationsPettyCash();
+  const editPettyCashMutation = useEditSchoolFundPettyCash();
+  const deletePettyCashMutation = useDeleteSchoolFundPettyCash();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
@@ -42,7 +42,7 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
     deletePettyCashMutation.mutate(pettyCashId, {
       onSettled: () => {
         setIsLoading(false);
-        router.push("/petty-cash");
+        router.push("/school-fund-petty-cash"); // Adjusted path
       },
     });
   };
@@ -89,4 +89,4 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
   );
 };
 
-export default EditDeletePettyCashForm;
+export default EditDeleteSchoolFundPettyCashForm;

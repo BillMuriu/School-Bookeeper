@@ -1,23 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { BASE_URL } from "@/app/constants"; // BASE_URL = "http://127.0.0.1:8000/api/"
 
-const BASE_URL = "http://127.0.0.1:8000/api/operations-pettycash/";
-
-export function useOperationsPettyCash(id) {
+export function useSchoolFundPettyCash(id) {
   return useQuery({
-    queryKey: ["pettyCash", { id }],
+    queryKey: ["schoolFundPettyCash", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(
+        `${BASE_URL}/school-fund-petty-cash/${id}/`
+      );
       return response.data;
     },
   });
 }
 
-export function useOperationsPettyCashs() {
+export function useSchoolFundPettyCashs() {
   return useQuery({
-    queryKey: ["pettyCash"],
+    queryKey: ["schoolFundPettyCash"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(`${BASE_URL}/school-fund-petty-cash/`);
       return response.data;
     },
   });

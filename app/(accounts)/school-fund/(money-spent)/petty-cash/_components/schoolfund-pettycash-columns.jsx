@@ -2,7 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import OperationsPettyCashActionsCell from "./operations-pettycash-action-cell";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -59,13 +58,5 @@ export const columns = [
     accessorKey: "dateIssued",
     header: "Date Issued",
     cell: ({ getValue }) => format(new Date(getValue()), "MM/dd/yyyy"), // Format date
-  },
-  {
-    header: "Actions",
-    id: "actions",
-    cell: ({ row }) => {
-      const pettyCash = row.original;
-      return <OperationsPettyCashActionsCell pettyCash={pettyCash} />; // Adjust based on your actual actions
-    },
   },
 ];

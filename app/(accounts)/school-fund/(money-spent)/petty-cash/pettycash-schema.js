@@ -2,38 +2,28 @@ import { z } from "zod";
 
 // Define the Petty Cash schema
 export const pettyCashSchema = z.object({
-  account: z
+  account: z.string().nonempty({ message: "Account field is required." }), // Backend expects a non-empty string
+
+  payee_name: z.string().nonempty({ message: "Payee name is required." }), // Field name matches backend
+
+  cheque_number: z
     .string()
-    .min(1, { message: "Account field is required." })
-    .default(""), // Default value for account
+    .nonempty({ message: "Cheque number is required." })
+    .max(20, { message: "Cheque number must not exceed 20 characters." }),
 
-  payeeName: z
-    .string()
-    .min(2, { message: "Payee name must be at least 2 letters." }), // Minimum length for payee name
+  amount: z.number().nullable(), // Backend allows null for amount
 
-  chequeNumber: z
-    .string()
-    .min(1, { message: "Cheque number is required." })
-    .max(20, { message: "Cheque number must not exceed 20 characters." }), // Length constraints for cheque number
+  description: z.string().optional().default(""), // Optional with default as an empty string
 
-  amount: z
-    .number()
-    .positive({ message: "Amount must be a positive number." }) // Ensure amount is positive
-    .refine((value) => /^\d+(\.\d{1,2})?$/.test(value.toString()), {
-      message: "Amount must be a valid decimal with up to two decimal places.",
-    }),
-
-  description: z.string().optional(), // Optional description
-
-  dateIssued: z.date({ required_error: "Date issued is required." }), // Date field
+  date_issued: z.date().nullable(), // Backend allows null for the date
 });
 
 // Default values for Petty Cash
 export const defaultPettyCash = {
-  account: "operations_account",
-  payeeName: "",
-  chequeNumber: "",
-  amount: 0,
+  account: "school_fund",
+  payee_name: "",
+  cheque_number: "",
+  amount: null,
   description: "",
-  dateIssued: new Date(""),
+  date_issued: null,
 };

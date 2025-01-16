@@ -20,7 +20,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { DataTablePagination } from "../pagination";
 import { DataTableToolbar } from "./tool-bar";
 
-export function RmiPettyCashDataTable({ columns, data }) {
+export function TuitionPettyCashDataTable({ columns, data }) {
   const [columnFilters, setColumnFilters] = useState([]);
 
   const table = useReactTable({

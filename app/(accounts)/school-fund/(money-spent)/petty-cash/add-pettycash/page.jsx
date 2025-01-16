@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { pettyCashSchema, defaultPettyCash } from "../pettycash-schema";
-import AddPettyCashForm from "../_components/add-pettycash-form";
+import AddSchoolFundPettyCashForm from "../_components/add-pettycash-form";
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const TestPettyCashFormWrapper = () => {
@@ -22,7 +22,7 @@ const TestPettyCashFormWrapper = () => {
 
   return (
     <RhfProvider schema={pettyCashSchema} defaultValues={defaultPettyCash}>
-      <AddPettyCashForm />
+      <AddSchoolFundPettyCashForm />
     </RhfProvider>
   );
 };

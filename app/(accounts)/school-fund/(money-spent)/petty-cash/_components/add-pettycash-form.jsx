@@ -3,26 +3,26 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useCreateOperationsPettyCash } from "../_services/mutations"; // Corrected import for petty cash mutation
+import { useCreateSchoolFundPettyCash } from "../_services/mutations"; // Import school fund petty cash mutation
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 import SkeletonLoader from "@/components/skeleton-loader";
 
-// AddPettyCashForm component
-const AddPettyCashForm = () => {
+// AddSchoolFundPettyCashForm component
+const AddSchoolFundPettyCashForm = () => {
   const {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
 
-  const createPettyCashMutation = useCreateOperationsPettyCash(); // Hook for creating petty cash
+  const createSchoolFundPettyCashMutation = useCreateSchoolFundPettyCash(); // Hook for creating school fund petty cash
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
     console.log("Data submitted:", JSON.stringify(data, null, 2));
     setIsLoading(true);
-    createPettyCashMutation.mutate(data, {
+    createSchoolFundPettyCashMutation.mutate(data, {
       onSettled: () => {
         setIsLoading(false);
       },
@@ -67,4 +67,4 @@ const AddPettyCashForm = () => {
   );
 };
 
-export default AddPettyCashForm;
+export default AddSchoolFundPettyCashForm;

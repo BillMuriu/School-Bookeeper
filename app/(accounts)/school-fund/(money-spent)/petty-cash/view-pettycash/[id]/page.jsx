@@ -2,8 +2,8 @@
 
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { pettyCashSchema } from "../../pettycash-schema";
-import EditDeletePettyCashForm from "../../_components/edit-delete-operations-pettycash";
-import { useOperationsPettyCash } from "../../_services/queries";
+import EditDeleteSchoolFundPettyCashForm from "../../_components/edit-delete-schoolfund-pettycash";
+import { useSchoolFundPettyCash } from "../../_services/queries";
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const PettyCashFormWrapper = ({ params }) => {
@@ -14,7 +14,7 @@ const PettyCashFormWrapper = ({ params }) => {
     data: pettyCash,
     isLoading,
     error,
-  } = useOperationsPettyCash(pettyCashId); // Query to fetch the petty cash data
+  } = useSchoolFundPettyCash(pettyCashId); // Query to fetch the petty cash data
 
   if (isLoading) return <SkeletonLoader />;
   if (error) return <p>Error: {error.message}</p>;
@@ -25,16 +25,16 @@ const PettyCashFormWrapper = ({ params }) => {
       schema={pettyCashSchema} // Petty cash schema for validation
       defaultValues={{
         account: pettyCash.account || "operations_account",
-        payeeName: pettyCash.payeeName || "",
-        chequeNumber: pettyCash.chequeNumber || "",
+        payeeName: pettyCash.payee_name || "",
+        chequeNumber: pettyCash.cheque_number || "",
         amount: pettyCash.amount ? parseFloat(pettyCash.amount) : null,
         description: pettyCash.description || "",
-        dateIssued: pettyCash.dateIssued
-          ? new Date(pettyCash.dateIssued)
+        dateIssued: pettyCash.date_issued
+          ? new Date(pettyCash.date_issued)
           : new Date(),
       }}
     >
-      <EditDeletePettyCashForm pettyCashId={pettyCashId} />{" "}
+      <EditDeleteSchoolFundPettyCashForm pettyCashId={pettyCashId} />{" "}
       {/* Pass the petty cash ID to the form */}
     </RhfProvider>
   );

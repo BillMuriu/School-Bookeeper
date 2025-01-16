@@ -13,9 +13,9 @@ export function DataTableToolbar({ table }) {
       <div className="flex flex-wrap items-center gap-2 flex-1">
         <Input
           placeholder="Search by cheque number..."
-          value={table.getColumn("chequeNumber")?.getFilterValue() || ""}
+          value={table.getColumn("cheque_number")?.getFilterValue() || ""}
           onChange={(event) =>
-            table.getColumn("chequeNumber")?.setFilterValue(event.target.value)
+            table.getColumn("cheque_number")?.setFilterValue(event.target.value)
           }
           className="h-8 w-full sm:w-[150px] lg:w-[250px]"
         />
