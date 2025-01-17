@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import {
   useEditSchoolFundPettyCash,
   useDeleteSchoolFundPettyCash,
-} from "../_services/mutations"; // Import School Fund Petty Cash mutations
+} from "../_services/mutations";
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
@@ -42,7 +42,7 @@ const EditDeleteSchoolFundPettyCashForm = ({ pettyCashId }) => {
     deletePettyCashMutation.mutate(pettyCashId, {
       onSettled: () => {
         setIsLoading(false);
-        router.push("/school-fund-petty-cash"); // Adjusted path
+        router.push("/school-fund-petty-cash");
       },
     });
   };
@@ -61,23 +61,60 @@ const EditDeleteSchoolFundPettyCashForm = ({ pettyCashId }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Stack sx={{ gap: 2 }}>
+        {/* Account - Pre-filled, non-editable */}
         <RHFTextField
           name="account"
-          label="Account Name"
-          defaultValue=""
+          label="Account"
+          defaultValue="school_fund"
           disabled
         />
-        <RHFTextField name="payeeName" label="Payee Name" />
-        <RHFTextField name="chequeNumber" label="Cheque Number" />
-        <RHFNumberInput name="amount" label="Amount" min={0} />
+
+        {/* Payee Name - Required */}
+        <RHFTextField
+          name="payee_name"
+          label="Payee Name"
+          required
+          error={!!errors.payee_name}
+          helperText={errors.payee_name?.message}
+        />
+
+        {/* Cheque Number - Required with max length validation */}
+        <RHFTextField
+          name="cheque_number"
+          label="Cheque Number"
+          required
+          error={!!errors.cheque_number}
+          helperText={errors.cheque_number?.message}
+        />
+
+        {/* Amount - Nullable, positive number */}
+        <RHFNumberInput
+          name="amount"
+          label="Amount"
+          min={0}
+          error={!!errors.amount}
+          helperText={errors.amount?.message}
+        />
+
+        {/* Description - Optional */}
         <RHFTextField
           name="description"
           label="Description"
           multiline
           rows={4}
+          error={!!errors.description}
+          helperText={errors.description?.message}
         />
-        <RHFDatePicker name="dateIssued" label="Date Issued" />
 
+        {/* Date Issued - Nullable */}
+        <RHFDatePicker
+          name="date_issued"
+          label="Date Issued"
+          error={!!errors.date_issued}
+          helperText={errors.date_issued?.message}
+        />
+
+        {/* Buttons */}
         <Button variant="secondary" type="submit">
           Edit
         </Button>

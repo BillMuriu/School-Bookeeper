@@ -25,5 +25,5 @@ export const defaultPettyCash = {
   cheque_number: "",
   amount: null,
   description: "",
-  date_issued: null,
+  date_issued: new Date(),
 };
