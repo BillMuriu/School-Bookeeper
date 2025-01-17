@@ -1,46 +1,31 @@
 "use client";
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import {
-  useEditOperationsBankCharges,
-  useDeleteOperationsBankCharges,
-} from "../_services/mutations";
-import SkeletonLoader from "@/components/skeleton-loader";
+import { useCreateSchoolFundBankCharge } from "../_services/mutations";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
 import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
+import SkeletonLoader from "@/components/skeleton-loader";
 
-const EditDeleteOperationsBankChargesForm = ({ bankChargeId }) => {
+// AddSchoolFundBankChargeForm component
+const AddSchoolFundBankChargeForm = () => {
   const {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
-  const router = useRouter();
-  const editBankChargesMutation = useEditOperationsBankCharges();
-  const deleteBankChargesMutation = useDeleteOperationsBankCharges();
+
+  const createSchoolFundBankChargeMutation = useCreateSchoolFundBankCharge(); // Use the correct mutation
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
+    console.log("Data submitted:", JSON.stringify(data, null, 2));
     setIsLoading(true);
-    editBankChargesMutation.mutate(
-      { id: bankChargeId, data },
-      {
-        onSettled: () => {
-          setIsLoading(false);
-        },
-      }
-    );
-  };
-
-  const onDelete = () => {
-    setIsLoading(true);
-    deleteBankChargesMutation.mutate(bankChargeId, {
+    createSchoolFundBankChargeMutation.mutate(data, {
       onSettled: () => {
         setIsLoading(false);
-        router.push("/bank-charges");
       },
     });
   };
@@ -59,28 +44,23 @@ const EditDeleteOperationsBankChargesForm = ({ bankChargeId }) => {
       <Stack sx={{ gap: 2 }}>
         <RHFTextField
           name="account"
-          label="Account Name"
-          defaultValue="operations_account"
-          disabled
-        />
+          label="Account"
+          disabled={true}
+          defaultValue="school_fund_account"
+        />{" "}
+        {/* Default to school fund */}
         <RHFNumberInput name="amount" label="Amount" min={0} />
+        <RHFDatePicker name="charge_date" label="Charge Date" />
         <RHFTextField
           name="description"
           label="Description"
           multiline
           rows={4}
         />
-        <RHFDatePicker name="chargeDate" label="Charge Date" />
-
-        <Button variant="secondary" type="submit">
-          Edit
-        </Button>
-        <Button type="button" onClick={onDelete}>
-          Delete
-        </Button>
+        <Button type="submit">Submit</Button>
       </Stack>
     </Container>
   );
 };
 
-export default EditDeleteOperationsBankChargesForm;
+export default AddSchoolFundBankChargeForm;

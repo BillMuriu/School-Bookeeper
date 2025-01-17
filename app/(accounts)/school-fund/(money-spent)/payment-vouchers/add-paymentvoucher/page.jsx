@@ -6,7 +6,7 @@ import {
   paymentVoucherSchema,
   defaultPaymentVoucher,
 } from "../paymentvoucher_schema";
-import AddPaymentVoucherForm from "../_components/add-paymentvoucher-form";
+import AddSchoolFundPaymentVoucherForm from "../_components/add-paymentvoucher-form";
 import SkeletonLoader from "@/components/skeleton-loader";
 const TestFormWrapper = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +27,7 @@ const TestFormWrapper = () => {
       schema={paymentVoucherSchema}
       defaultValues={defaultPaymentVoucher}
     >
-      <AddPaymentVoucherForm />
+      <AddSchoolFundPaymentVoucherForm />
     </RhfProvider>
   );
 };

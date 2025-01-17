@@ -5,8 +5,8 @@ import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import {
-  useEditOperationsPaymentVoucher,
-  useDeleteOperationsPaymentVoucher,
+  useEditSchoolFundPaymentVoucher, // Adjusted for School Fund
+  useDeleteSchoolFundPaymentVoucher, // Adjusted for School Fund
 } from "../_services/mutations";
 import SkeletonLoader from "@/components/skeleton-loader";
 import { RHFTextField } from "@/components/form-components/RHFTextField";
@@ -14,20 +14,19 @@ import { RHFNumberInput } from "@/components/form-components/RHFNumberInput";
 import { RHFRadioGroup } from "@/components/form-components/RHFRadioGroup";
 import { RHFDatePicker } from "@/components/form-components/RHFDatePicker";
 
-const EditDeletePaymentVoucherForm = ({ voucherId }) => {
+const EditDeleteSchoolFundPaymentVoucherForm = ({ voucherId }) => {
   const {
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useFormContext();
   const router = useRouter();
-  const editPaymentVoucherMutation = useEditOperationsPaymentVoucher();
-  const deletePaymentVoucherMutation = useDeleteOperationsPaymentVoucher();
+  const editPaymentVoucherMutation = useEditSchoolFundPaymentVoucher(); // Adjusted for School Fund
+  const deletePaymentVoucherMutation = useDeleteSchoolFundPaymentVoucher(); // Adjusted for School Fund
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
     console.log("Raw submitted data:", data);
-
-    console.log("Processed submit data:", data);
     setIsLoading(true);
     editPaymentVoucherMutation.mutate(
       { id: voucherId, data },
@@ -44,7 +43,7 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
     deletePaymentVoucherMutation.mutate(voucherId, {
       onSettled: () => {
         setIsLoading(false);
-        // router.push("/payment-vouchers");
+        // router.push("/school-fund-payment-vouchers"); // You can redirect after deletion
       },
     });
   };
@@ -63,35 +62,33 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Stack sx={{ gap: 2 }}>
-        <RHFTextField
-          name="account"
-          label="Account Name"
-          defaultValue="default_account"
-          disabled
-        />
-        <RHFNumberInput name="voucherNo" label="Voucher Number" min={1} />
-        <RHFTextField name="payeeName" label="Payee Name" />
+        <RHFTextField name="account" label="Account Name" disabled />
+        <RHFNumberInput name="voucher_no" label="Voucher Number" min={1} />
+        <RHFTextField name="payee_name" label="Payee Name" />
         <RHFTextField
           name="particulars"
           label="Particulars"
           multiline
           rows={4}
         />
-        <RHFNumberInput name="amountShs" label="Amount in Shillings" min={0} />
+        <RHFNumberInput name="amount_shs" label="Amount in Shillings" min={0} />
         <RHFRadioGroup
-          name="paymentMode"
+          name="payment_mode"
           label="Payment Mode"
           options={[
             { value: "cash", label: "Cash" },
-            { value: "cheque", label: "Cheque" },
+            { value: "bank", label: "Bank" }, // Adjusted payment mode for School Fund
           ]}
         />
-        <RHFTextField name="totalAmountInWords" label="Total Amount in Words" />
-        <RHFTextField name="preparedBy" label="Prepared By" />
-        <RHFTextField name="authorisedBy" label="Authorised By" />
-        <RHFTextField name="voteHead" label="Vote Head" />
         <RHFTextField
-          name="voteDetails"
+          name="total_amount_in_words"
+          label="Total Amount in Words"
+        />
+        <RHFTextField name="prepared_by" label="Prepared By" />
+        <RHFTextField name="authorised_by" label="Authorised By" />
+        <RHFTextField name="vote_head" label="Vote Head" />
+        <RHFTextField
+          name="vote_details"
           label="Vote Details"
           multiline
           rows={4}
@@ -109,4 +106,4 @@ const EditDeletePaymentVoucherForm = ({ voucherId }) => {
   );
 };
 
-export default EditDeletePaymentVoucherForm;
+export default EditDeleteSchoolFundPaymentVoucherForm;

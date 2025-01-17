@@ -2,14 +2,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/constants";
 
-export function useCreateOperationsBankCharge() {
+// Create School Fund Bank Charge Mutation
+export function useCreateSchoolFundBankCharge() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/bank-charges/",
+        `${BASE_URL}/school-fund-bank-charges/`,
         data,
         {
           headers: {
@@ -21,31 +23,32 @@ export function useCreateOperationsBankCharge() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["bankCharges"]); // Update the query key as needed
+      await queryClient.invalidateQueries(["schoolFundBankCharges"]);
 
-      toast.success("Bank charge created!", {
+      toast.success("School fund bank charge created!", {
         description:
-          "The new bank charge record has been successfully created.",
+          "The new school fund bank charge record has been successfully created.",
         duration: 3000,
       });
     },
 
     onError: (error) => {
-      toast.error(`Error creating bank charge: ${error.message}`, {
+      toast.error(`Error creating school fund bank charge: ${error.message}`, {
         description: "Please try again later.",
       });
     },
   });
 }
 
-export function useEditOperationsBankCharges() {
+// Edit School Fund Bank Charge Mutation
+export function useEditSchoolFundBankCharge() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/bank-charges/${id}/`,
+        `${BASE_URL}/school-fund-bank-charges/${id}/`,
         data,
         {
           headers: {
@@ -57,30 +60,32 @@ export function useEditOperationsBankCharges() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["operationsBankCharges"]);
+      await queryClient.invalidateQueries(["schoolFundBankCharges"]);
 
-      toast.success("Bank charge updated!", {
-        description: "The bank charge has been successfully updated.",
+      toast.success("School fund bank charge updated!", {
+        description:
+          "The school fund bank charge has been successfully updated.",
         duration: 3000,
       });
     },
 
     onError: (error) => {
-      toast.error(`Error updating bank charge: ${error.message}`, {
+      toast.error(`Error updating school fund bank charge: ${error.message}`, {
         description: "Please try again later.",
       });
     },
   });
 }
 
-export function useDeleteOperationsBankCharges() {
+// Delete School Fund Bank Charge Mutation
+export function useDeleteSchoolFundBankCharge() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `http://127.0.0.1:8000/api/bank-charges/${id}/`,
+        `${BASE_URL}/school-fund-bank-charges/${id}/`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -91,19 +96,20 @@ export function useDeleteOperationsBankCharges() {
     },
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries(["operationsBankCharges"]);
+      await queryClient.invalidateQueries(["schoolFundBankCharges"]);
 
-      toast.success("Bank charge deleted!", {
-        description: "The bank charge has been successfully deleted.",
+      toast.success("School fund bank charge deleted!", {
+        description:
+          "The school fund bank charge has been successfully deleted.",
         duration: 3000,
       });
 
-      // Redirect to the bank charges list page after deletion
-      router.push("/bank-charges");
+      // Redirect to the school fund bank charges list page after deletion
+      router.push("/school-fund-bank-charges");
     },
 
     onError: (error) => {
-      toast.error(`Error deleting bank charge: ${error.message}`, {
+      toast.error(`Error deleting school fund bank charge: ${error.message}`, {
         description: "Please try again later.",
       });
     },

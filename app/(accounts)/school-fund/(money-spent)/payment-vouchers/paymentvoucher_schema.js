@@ -1,67 +1,45 @@
 import { z } from "zod";
 
 export const paymentVoucherSchema = z.object({
-  account: z
-    .string()
-    .min(2, { message: "Account name must be at least 2 letters." })
-    .default("default_account"),
-
-  voucherNo: z
-    .number()
-    .positive({ message: "Voucher number must be a positive number." }),
-
-  payeeName: z
-    .string()
-    .min(2, { message: "Payee name must be at least 2 letters." }),
-
+  account: z.string().default(""),
+  voucher_no: z.number().nullable(),
+  payee_name: z.string().min(1, { message: "Payee name is required." }),
   particulars: z.string().min(1, { message: "Particulars are required." }),
-
-  amountShs: z
+  amount_shs: z
     .number()
-    .positive({ message: "Amount in Shillings must be a positive number." })
-    .refine((value) => /^\d+(\.\d{1,2})?$/.test(value.toString()), {
-      message:
-        "Amount in Shillings must be a valid decimal with up to two decimal places.",
-    }),
-
-  paymentMode: z.enum(["cash", "cheque"], {
-    message: "Payment mode is required.",
-  }),
-
-  paymentMode: z.enum(["cash", "bank"], {
-    message: "Payment mode is required.",
-  }),
-
-  totalAmountInWords: z
+    .nullable() // Allows null, matching the backend's schema
+    .refine((value) => value === null || value > 0, {
+      message: "Amount must be a positive number.",
+    })
+    .refine(
+      (value) =>
+        value === null || /^\d+(\.\d{1,2})?$/.test(value?.toString() || ""),
+      { message: "Amount must be a valid decimal with up to two places." }
+    ),
+  payment_mode: z.enum(["cash", "bank"]).nullable().optional(),
+  total_amount_in_words: z
     .string()
     .min(1, { message: "Total amount in words is required." }),
-
-  preparedBy: z
+  prepared_by: z.string().min(1, { message: "Preparer's name is required." }),
+  authorised_by: z
     .string()
-    .min(2, { message: "Preparer name must be at least 2 letters." }),
-
-  authorisedBy: z
-    .string()
-    .min(2, { message: "Authoriser name must be at least 2 letters." }),
-
-  voteHead: z.string().min(1, { message: "Vote Head is required." }),
-
-  voteDetails: z.string().min(1, { message: "Vote Details are required." }),
-
-  date: z.date({ required_error: "Date is required." }),
+    .min(1, { message: "Authoriser's name is required." }),
+  vote_head: z.string().nullable(),
+  vote_details: z.string().min(1, { message: "Vote details are required." }),
+  date: z.date().nullable(),
 });
 
 export const defaultPaymentVoucher = {
-  account: "operations_account",
-  voucherNo: null,
-  payeeName: "",
+  account: "school_fund_account",
+  voucher_no: null,
+  payee_name: "",
   particulars: "",
-  amountShs: null,
-  paymentMode: "cash",
-  totalAmountInWords: "",
-  preparedBy: "",
-  authorisedBy: "",
-  voteHead: "",
-  voteDetails: "",
+  amount_shs: null,
+  payment_mode: "cash",
+  total_amount_in_words: "",
+  prepared_by: "",
+  authorised_by: "",
+  vote_head: null,
+  vote_details: "",
   date: new Date(),
 };

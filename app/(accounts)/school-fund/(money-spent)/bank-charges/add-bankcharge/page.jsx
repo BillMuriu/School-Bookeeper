@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { bankChargesSchema, defaultBankCharges } from "../bankcharges-schema";
-import AddBankChargeForm from "../_components/add-operations-bankcharge";
+import AddSchoolFundBankChargeForm from "../_components/add-schoolfund-bankcharge";
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const BankChargeFormWrapper = () => {
@@ -22,7 +22,7 @@ const BankChargeFormWrapper = () => {
 
   return (
     <RhfProvider schema={bankChargesSchema} defaultValues={defaultBankCharges}>
-      <AddBankChargeForm />
+      <AddSchoolFundBankChargeForm />
     </RhfProvider>
   );
 };

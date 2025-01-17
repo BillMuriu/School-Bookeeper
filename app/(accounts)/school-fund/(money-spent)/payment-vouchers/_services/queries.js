@@ -1,27 +1,33 @@
+// queries.js
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { BASE_URL } from "@/app/constants";
 
-const BASE_URL = "http://127.0.0.1:8000/api/operations-paymentvouchers/";
-
-export function useOperationsPaymentVoucher(id) {
+// Fetch a single school fund payment voucher by ID
+export function useSchoolFundPaymentVoucher(id) {
   return useQuery({
-    queryKey: ["paymentVoucher", { id }],
+    queryKey: ["schoolFundPaymentVoucher", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(
+        `${BASE_URL}/school-fund-payment-vouchers/${id}/`
+      );
       return response.data;
     },
   });
 }
 
-export function useOperationsPaymentVouchers() {
+// Fetch all school fund payment vouchers
+export function useSchoolFundPaymentVouchers() {
   return useQuery({
-    queryKey: ["paymentVouchers"],
+    queryKey: ["schoolFundPaymentVouchers"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(
+        `${BASE_URL}/school-fund-payment-vouchers/`
+      );
       return response.data;
     },
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
-    refetchOnWindowFocus: true,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    cacheTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: true, // Refetch on focus
   });
 }

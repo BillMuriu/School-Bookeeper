@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { DataTable } from "@/components/tables/payments/advanced-operations-payment-voucher";
+import { SchoolFundPaymentsDataTable } from "@/components/tables/payments/schoolfund-payments/advanced-schoolfund-payment-voucher";
 import { columns } from "./_components/payment-voucher-columns";
-import { useOperationsPaymentVouchers } from "./_services/queries";
+import { useSchoolFundPaymentVouchers } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
 
 const PaymentVouchersPage = () => {
@@ -11,7 +11,7 @@ const PaymentVouchersPage = () => {
     data: paymentVouchers,
     isLoading,
     error,
-  } = useOperationsPaymentVouchers();
+  } = useSchoolFundPaymentVouchers();
 
   if (isLoading) return <DataTableSkeleton />;
   if (error) return <p>Error: {error.message}</p>;
@@ -21,8 +21,8 @@ const PaymentVouchersPage = () => {
 
   return (
     <div>
-      <h1>All Payment Vouchers</h1>
-      <DataTable columns={columns} data={paymentVouchers} />
+      <h1>School Fund Payment Vouchers</h1>
+      <SchoolFundPaymentsDataTable columns={columns} data={paymentVouchers} />
     </div>
   );
 };

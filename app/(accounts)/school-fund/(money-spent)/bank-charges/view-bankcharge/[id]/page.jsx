@@ -2,8 +2,8 @@
 
 import { RhfProvider } from "@/contexts/rhf-provider";
 import { bankChargesSchema } from "../../bankcharges-schema";
-import EditDeleteOperationsBankChargesForm from "../../_components/edit-delete-operations-bankcharges";
-import { useOperationsBankCharge } from "../../_services/queries";
+import EditDeleteSchoolFundBankChargeForm from "../../_components/edit-delete-schoolfund-bankcharges";
+import { useSchoolFundBankCharge } from "../../_services/queries";
 import SkeletonLoader from "@/components/skeleton-loader";
 
 const OperationsBankChargesFormWrapper = ({ params }) => {
@@ -14,7 +14,7 @@ const OperationsBankChargesFormWrapper = ({ params }) => {
     data: bankCharge,
     isLoading,
     error,
-  } = useOperationsBankCharge(bankChargeId);
+  } = useSchoolFundBankCharge(bankChargeId);
 
   if (isLoading) return <SkeletonLoader />;
   if (error) return <p>Error: {error.message}</p>;
@@ -32,7 +32,7 @@ const OperationsBankChargesFormWrapper = ({ params }) => {
         description: bankCharge.description || "",
       }}
     >
-      <EditDeleteOperationsBankChargesForm bankChargeId={bankChargeId} />
+      <EditDeleteSchoolFundBankChargeForm bankChargeId={bankChargeId} />
     </RhfProvider>
   );
 };

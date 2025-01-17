@@ -2,14 +2,14 @@ import { z } from "zod";
 
 export const bankChargesSchema = z.object({
   account: z.string(),
-  amount: z.number().positive(),
-  chargeDate: z.date(),
-  description: z.string().optional(),
+  amount: z.number().nullable(),
+  charge_date: z.date().nullable(),
+  description: z.string().default(""),
 });
 
 export const defaultBankCharges = {
-  account: "operations_account",
-  amount: 0,
-  chargeDate: new Date(),
+  account: "school fund",
+  amount: null,
+  charge_date: null,
   description: "",
 };
