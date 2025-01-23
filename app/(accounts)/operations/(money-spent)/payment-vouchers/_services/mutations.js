@@ -6,7 +6,7 @@ import { BASE_URL } from "@/app/constants"; // Make sure to define the BASE_URL
 
 export function useCreateOperationsPaymentVoucher() {
   const queryClient = useQueryClient();
-  const router = useRouter();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
@@ -28,6 +28,9 @@ export function useCreateOperationsPaymentVoucher() {
         description: "The new payment voucher has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect the user after the payment voucher is created
+      router.push("/operations/payment-vouchers"); // Replace with the desired URL
     },
 
     onError: (error) => {
@@ -95,7 +98,7 @@ export function useDeleteOperationsPaymentVoucher() {
         description: "The payment voucher has been successfully deleted.",
         duration: 3000,
       });
-      router.push("/payment-vouchers");
+      router.push("/operations/payment-vouchers");
     },
 
     onError: (error) => {

@@ -6,11 +6,12 @@ import { BASE_URL } from "@/app/constants"; // Make sure to define BASE_URL
 
 export function useCreateOperationsPettyCash() {
   const queryClient = useQueryClient();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        `${BASE_URL}/operations-pettycash/`, // Using the BASE_URL here
+        `${BASE_URL}/operations-pettycash/`,
         data,
         {
           headers: {
@@ -22,11 +23,14 @@ export function useCreateOperationsPettyCash() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["pettyCash"]); // Update the query key as needed
+      await queryClient.invalidateQueries(["pettyCash"]);
       toast.success("Petty cash created!", {
         description: "The new petty cash record has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect the user after the petty cash is created
+      router.push("/operations/petty-cash"); // Replace with the desired URL
     },
 
     onError: (error) => {
@@ -96,7 +100,7 @@ export function useDeleteOperationsPettyCash() {
       });
 
       // Redirect to the petty cash list page after deletion
-      router.push("/petty-cash");
+      router.push("/operations/petty-cash");
     },
 
     onError: (error) => {

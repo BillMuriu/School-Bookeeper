@@ -6,6 +6,7 @@ import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 
 export function useCreateOperationsBankCharge() {
   const queryClient = useQueryClient();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
@@ -25,6 +26,9 @@ export function useCreateOperationsBankCharge() {
           "The new bank charge record has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect the user after the bank charge is created
+      router.push("/operations/bank-charges"); // Replace with the desired URL
     },
 
     onError: (error) => {
@@ -92,7 +96,7 @@ export function useDeleteOperationsBankCharges() {
         duration: 3000,
       });
 
-      router.push("/bank-charges");
+      router.push("/operations/bank-charges");
     },
 
     onError: (error) => {
