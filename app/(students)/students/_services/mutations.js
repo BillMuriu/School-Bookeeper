@@ -7,6 +7,7 @@ import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 // Mutation to create a student
 export function useCreateStudent() {
   const queryClient = useQueryClient();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
@@ -28,6 +29,9 @@ export function useCreateStudent() {
         description: "The new student record has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect to the new student's detail page
+      router.push("/students");
     },
 
     onError: (error) => {

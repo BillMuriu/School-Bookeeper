@@ -7,6 +7,7 @@ import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 // Mutation to create a student opening balance
 export function useCreateStudentOpeningBalance() {
   const queryClient = useQueryClient();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
@@ -29,6 +30,9 @@ export function useCreateStudentOpeningBalance() {
           "The student opening balance has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect to the new opening balance detail page
+      router.push("/students-opening-balance");
     },
 
     onError: (error) => {
@@ -38,7 +42,6 @@ export function useCreateStudentOpeningBalance() {
     },
   });
 }
-
 // Mutation to edit a student opening balance
 export function useEditStudentOpeningBalance() {
   const queryClient = useQueryClient();
@@ -102,7 +105,7 @@ export function useDeleteStudentOpeningBalance() {
       });
 
       // Redirect to the opening balance list page after deletion
-      router.push("/student-opening-balance");
+      router.push("/students-opening-balance");
     },
 
     onError: (error) => {
