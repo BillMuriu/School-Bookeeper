@@ -25,8 +25,7 @@ export function useCreateSchoolFundReceipt() {
 
     onSuccess: async (data) => {
       await queryClient.invalidateQueries(["schoolFundReceipts"]);
-      const receiptId = data.id;
-      router.push(`/school-fund/money-received/view-receipt/${receiptId}`);
+      router.push("/school-fund/money-received/view-receipt/");
 
       toast.success("Receipt created!", {
         description: "The new receipt has been successfully created.",
@@ -89,7 +88,7 @@ export function useDeleteSchoolFundReceipts() {
         duration: 3000,
       });
       // Redirect after deletion
-      router.push("/school-fund/money-received/view-receipt");
+      router.push("/school-fund/money-received/view-receipt/");
     },
     onError: (error) => {
       toast.error(`Error deleting receipts: ${error.message}`, {

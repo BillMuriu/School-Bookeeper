@@ -6,6 +6,7 @@ import { BASE_URL } from "@/app/constants"; // BASE_URL = "http://127.0.0.1:8000
 
 export function useCreateSchoolFundPettyCash() {
   const queryClient = useQueryClient();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
@@ -27,6 +28,9 @@ export function useCreateSchoolFundPettyCash() {
         description: "The new petty cash record has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect to a new URL (e.g., details page for the created petty cash)
+      router.push("/school-fund/petty-cash");
     },
 
     onError: (error) => {
@@ -95,7 +99,7 @@ export function useDeleteSchoolFundPettyCash() {
       });
 
       // Redirect to the petty cash list page after deletion
-      router.push("/school-fund-petty-cash");
+      router.push("/school-fund/petty-cash");
     },
 
     onError: (error) => {

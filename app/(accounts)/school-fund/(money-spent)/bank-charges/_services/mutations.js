@@ -4,9 +4,9 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/app/constants";
 
-// Create School Fund Bank Charge Mutation
 export function useCreateSchoolFundBankCharge() {
   const queryClient = useQueryClient();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
@@ -30,6 +30,9 @@ export function useCreateSchoolFundBankCharge() {
           "The new school fund bank charge record has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect to a new URL (e.g., details page for the created charge)
+      router.push("/school-fund/bank-charges");
     },
 
     onError: (error) => {
@@ -39,7 +42,6 @@ export function useCreateSchoolFundBankCharge() {
     },
   });
 }
-
 // Edit School Fund Bank Charge Mutation
 export function useEditSchoolFundBankCharge() {
   const queryClient = useQueryClient();
@@ -105,7 +107,7 @@ export function useDeleteSchoolFundBankCharge() {
       });
 
       // Redirect to the school fund bank charges list page after deletion
-      router.push("/school-fund-bank-charges");
+      router.push("/school-fund/bank-charges");
     },
 
     onError: (error) => {

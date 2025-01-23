@@ -8,6 +8,7 @@ import { BASE_URL } from "@/app/constants";
 // Create Mutation
 export function useCreateSchoolFundPaymentVoucher() {
   const queryClient = useQueryClient();
+  const router = useRouter(); // Initialize the router
 
   return useMutation({
     mutationFn: async (data) => {
@@ -23,7 +24,7 @@ export function useCreateSchoolFundPaymentVoucher() {
       return response.data;
     },
 
-    onSuccess: async () => {
+    onSuccess: async (data) => {
       await queryClient.invalidateQueries(["schoolFundPaymentVouchers"]);
 
       toast.success("Payment voucher created!", {
@@ -31,6 +32,9 @@ export function useCreateSchoolFundPaymentVoucher() {
           "The new school fund payment voucher has been successfully created.",
         duration: 3000,
       });
+
+      // Redirect to a new URL (e.g., details page for the created voucher)
+      router.push("/school-fund/payment-vouchers");
     },
 
     onError: (error) => {
