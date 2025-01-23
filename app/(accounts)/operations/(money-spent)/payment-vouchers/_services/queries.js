@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-const BASE_URL = "http://127.0.0.1:8000/api/operations-paymentvouchers/";
+import { BASE_URL } from "@/app/constants"; // Make sure to define the BASE_URL
 
 export function useOperationsPaymentVoucher(id) {
   return useQuery({
     queryKey: ["paymentVoucher", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(
+        `${BASE_URL}/operations-paymentvouchers/${id}/`
+      );
       return response.data;
     },
   });
@@ -17,7 +18,9 @@ export function useOperationsPaymentVouchers() {
   return useQuery({
     queryKey: ["paymentVouchers"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(
+        `${BASE_URL}/operations-paymentvouchers/`
+      );
       return response.data;
     },
     staleTime: 1000 * 60 * 5,

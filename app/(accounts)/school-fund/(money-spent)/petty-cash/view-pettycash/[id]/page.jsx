@@ -25,11 +25,11 @@ const PettyCashFormWrapper = ({ params }) => {
       schema={pettyCashSchema} // Petty cash schema for validation
       defaultValues={{
         account: pettyCash.account || "operations_account",
-        payeeName: pettyCash.payee_name || "",
-        chequeNumber: pettyCash.cheque_number || "",
+        payee_name: pettyCash.payee_name || "",
+        cheque_number: pettyCash.cheque_number || "",
         amount: pettyCash.amount ? parseFloat(pettyCash.amount) : null,
         description: pettyCash.description || "",
-        dateIssued: pettyCash.date_issued
+        date_issued: pettyCash.date_issued
           ? new Date(pettyCash.date_issued)
           : new Date(),
       }}

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner"; // Assuming you're using Sonner for toast notifications
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/constants"; // Make sure to define BASE_URL
 
 export function useCreateOperationsPettyCash() {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ export function useCreateOperationsPettyCash() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/operations-pettycash/", // Update the endpoint as necessary
+        `${BASE_URL}/operations-pettycash/`, // Using the BASE_URL here
         data,
         {
           headers: {
@@ -22,9 +23,6 @@ export function useCreateOperationsPettyCash() {
 
     onSuccess: async (data) => {
       await queryClient.invalidateQueries(["pettyCash"]); // Update the query key as needed
-      //   const pettyCashId = data.id;
-      //   router.push(`/petty-cash/view/${pettyCashId}`);
-
       toast.success("Petty cash created!", {
         description: "The new petty cash record has been successfully created.",
         duration: 3000,
@@ -46,7 +44,7 @@ export function useEditOperationsPettyCash() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/operations-pettycash/${id}/`,
+        `${BASE_URL}/operations-pettycash/${id}/`, // Using the BASE_URL here
         data,
         {
           headers: {
@@ -80,7 +78,7 @@ export function useDeleteOperationsPettyCash() {
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `http://127.0.0.1:8000/api/operations-pettycash/${id}/`,
+        `${BASE_URL}/operations-pettycash/${id}/`, // Using the BASE_URL here
         {
           headers: {
             "Content-Type": "application/json",

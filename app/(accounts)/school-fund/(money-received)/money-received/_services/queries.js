@@ -1,13 +1,15 @@
+// queries.js
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-const BASE_URL = "http://127.0.0.1:8000/api/school_fund_receipts/";
+import { BASE_URL } from "@/app/constants"; // Importing BASE_URL from constants
 
 export function useSchoolFundReceipt(id) {
   return useQuery({
     queryKey: ["schoolFundReceipt", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(
+        `${BASE_URL}/school_fund_receipts/${id}/`
+      ); // Using BASE_URL
       return response.data;
     },
   });
@@ -17,7 +19,7 @@ export function useSchoolFundReceipts({ minAmount, maxAmount } = {}) {
   return useQuery({
     queryKey: ["schoolFundReceipts", { minAmount, maxAmount }],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL, {
+      const response = await axios.get(`${BASE_URL}/school_fund_receipts/`, {
         params: {
           ...(minAmount !== undefined && { minAmount }),
           ...(maxAmount !== undefined && { maxAmount }),

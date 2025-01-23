@@ -5,20 +5,19 @@ import { BankChargesTable } from "@/components/tables/bank-charges/advanced-oper
 import { columns } from "./_components/operations-bankcharges-columns";
 import { useAllOperationsBankCharges } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
-import { dummyBankCharges } from "@/data/dummy-bankcharge";
 const BankChargesPage = () => {
-  // const { data: bankCharges, isLoading, error } = useAllOperationsBankCharges();
+  const { data: bankCharges, isLoading, error } = useAllOperationsBankCharges();
 
-  // if (isLoading) return <DataTableSkeleton />;
-  // if (error) return <p>Error: {error.message}</p>;
-  // if (!bankCharges) return <p>No bank charges records found</p>;
+  if (isLoading) return <DataTableSkeleton />;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!bankCharges) return <p>No bank charges records found</p>;
 
-  // console.log(bankCharges);
+  console.log(bankCharges);
 
   return (
     <div>
       <h1>All Bank Charges Records</h1>
-      <BankChargesTable columns={columns} data={dummyBankCharges} />
+      <BankChargesTable columns={columns} data={bankCharges} />
     </div>
   );
 };

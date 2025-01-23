@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/constants"; // Importing BASE_URL from constants
 
 export function useCreateSchoolFundReceipt() {
   const queryClient = useQueryClient();
@@ -11,7 +12,7 @@ export function useCreateSchoolFundReceipt() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/school_fund_receipts/", // Updated URL
+        `${BASE_URL}/school_fund_receipts/`, // Using BASE_URL
         data,
         {
           headers: {
@@ -47,7 +48,7 @@ export function useEditSchoolFundReceipt() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       await axios.put(
-        `http://127.0.0.1:8000/api/school_fund_receipts/${id}/`, // Updated URL
+        `${BASE_URL}/school_fund_receipts/${id}/`, // Using BASE_URL
         data
       );
     },
@@ -76,7 +77,7 @@ export function useDeleteSchoolFundReceipts() {
       await Promise.all(
         ids.map((id) =>
           axios.delete(
-            `http://127.0.0.1:8000/api/school_fund_receipts/${id}/` // Updated URL
+            `${BASE_URL}/school_fund_receipts/${id}/` // Using BASE_URL
           )
         )
       );

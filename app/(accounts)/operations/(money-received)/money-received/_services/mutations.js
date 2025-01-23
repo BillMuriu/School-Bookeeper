@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 
 export function useCreateOperationReceipt() {
   const queryClient = useQueryClient();
@@ -11,7 +12,7 @@ export function useCreateOperationReceipt() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/operations-receipts/create/", // Updated URL
+        `${BASE_URL}/operations-receipts/create/`,
         data,
         {
           headers: {
@@ -46,10 +47,11 @@ export function useEditOperationReceipt() {
 
   return useMutation({
     mutationFn: async ({ id, data }) => {
-      await axios.put(
-        `http://localhost:8000/api/operation-receipts/${id}/update/`,
-        data
-      );
+      await axios.put(`${BASE_URL}/operation-receipts/${id}/update/`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["receipts"] });
@@ -75,9 +77,11 @@ export function useDeleteOperationReceipts() {
       // Delete receipts in parallel
       await Promise.all(
         ids.map((id) =>
-          axios.delete(
-            `http://localhost:8000/api/operation-receipts/${id}/delete/`
-          )
+          axios.delete(`${BASE_URL}/operation-receipts/${id}/delete/`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
         )
       );
     },

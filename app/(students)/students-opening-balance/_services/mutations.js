@@ -2,8 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-
-const BASE_URL = "http://127.0.0.1:8000/api/students_opening_balances/";
+import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 
 // Mutation to create a student opening balance
 export function useCreateStudentOpeningBalance() {
@@ -11,11 +10,15 @@ export function useCreateStudentOpeningBalance() {
 
   return useMutation({
     mutationFn: async (data) => {
-      const response = await axios.post(BASE_URL, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        `${BASE_URL}/students_opening_balances/`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data;
     },
 
@@ -44,7 +47,7 @@ export function useEditStudentOpeningBalance() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `${BASE_URL}${id}/`, // Adjust URL with ID
+        `${BASE_URL}/students_opening_balances/${id}/`,
         data,
         {
           headers: {
@@ -80,7 +83,7 @@ export function useDeleteStudentOpeningBalance() {
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `${BASE_URL}${id}/`, // Adjust URL with ID
+        `${BASE_URL}/students_opening_balances/${id}/`,
         {
           headers: {
             "Content-Type": "application/json",

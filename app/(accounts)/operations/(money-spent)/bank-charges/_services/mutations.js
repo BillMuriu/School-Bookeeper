@@ -2,26 +2,23 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 
 export function useCreateOperationsBankCharge() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (data) => {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/bank-charges/",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/bank-charges/`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["bankCharges"]); // Update the query key as needed
+      await queryClient.invalidateQueries(["bankCharges"]);
 
       toast.success("Bank charge created!", {
         description:
@@ -45,7 +42,7 @@ export function useEditOperationsBankCharges() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/bank-charges/${id}/`,
+        `${BASE_URL}/bank-charges/${id}/`,
         data,
         {
           headers: {
@@ -79,14 +76,11 @@ export function useDeleteOperationsBankCharges() {
 
   return useMutation({
     mutationFn: async (id) => {
-      const response = await axios.delete(
-        `http://127.0.0.1:8000/api/bank-charges/${id}/`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.delete(`${BASE_URL}/bank-charges/${id}/`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     },
 
@@ -98,7 +92,6 @@ export function useDeleteOperationsBankCharges() {
         duration: 3000,
       });
 
-      // Redirect to the bank charges list page after deletion
       router.push("/bank-charges");
     },
 

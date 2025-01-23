@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 
 // Mutation to create a student
 export function useCreateStudent() {
@@ -10,7 +11,7 @@ export function useCreateStudent() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/students/", // Adjust the URL to your API endpoint
+        `${BASE_URL}/students/`, // Use BASE_URL constant
         data,
         {
           headers: {
@@ -45,7 +46,7 @@ export function useEditStudent() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/students/${id}/`, // Adjust URL with student ID
+        `${BASE_URL}/students/${id}/`, // Use BASE_URL constant
         data,
         {
           headers: {
@@ -80,7 +81,7 @@ export function useDeleteStudent() {
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `http://127.0.0.1:8000/api/students/${id}/`, // Adjust URL with student ID
+        `${BASE_URL}/students/${id}/`, // Use BASE_URL constant
         {
           headers: {
             "Content-Type": "application/json",

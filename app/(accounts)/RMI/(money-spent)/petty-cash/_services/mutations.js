@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner"; // Assuming you're using Sonner for toast notifications
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/constants"; // Importing BASE_URL from constants
 
 export function useCreateRmiPettyCash() {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ export function useCreateRmiPettyCash() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/rmi-petty-cash/", // Updated to RMI Petty Cash endpoint
+        `${BASE_URL}/rmi-petty-cash/`, // Using BASE_URL
         data,
         {
           headers: {
@@ -21,7 +22,7 @@ export function useCreateRmiPettyCash() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["rmiPettyCash"]); // Updated query key to match RMI Petty Cash
+      await queryClient.invalidateQueries(["rmiPettyCash"]); // Updated query key
       toast.success("RMI petty cash created!", {
         description:
           "The new RMI petty cash record has been successfully created.",
@@ -44,7 +45,7 @@ export function useEditRmiPettyCash() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/rmi-petty-cash/${id}/`, // Updated endpoint to RMI Petty Cash
+        `${BASE_URL}/rmi-petty-cash/${id}/`, // Using BASE_URL
         data,
         {
           headers: {
@@ -56,7 +57,7 @@ export function useEditRmiPettyCash() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["rmiPettyCash"]); // Updated query key for RMI Petty Cash
+      await queryClient.invalidateQueries(["rmiPettyCash"]); // Updated query key
       toast.success("RMI petty cash entry updated!", {
         description: "The RMI petty cash entry has been successfully updated.",
         duration: 3000,
@@ -78,7 +79,7 @@ export function useDeleteRmiPettyCash() {
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `http://127.0.0.1:8000/api/rmi-petty-cash/${id}/`, // Updated endpoint for RMI Petty Cash
+        `${BASE_URL}/rmi-petty-cash/${id}/`, // Using BASE_URL
         {
           headers: {
             "Content-Type": "application/json",

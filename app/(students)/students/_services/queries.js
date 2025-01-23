@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-const BASE_URL = "http://127.0.0.1:8000/api/students/"; // Adjust the URL to your API endpoint
+import { BASE_URL } from "@/app/constants"; // http://127.0.0.1:8000/api
 
 // Query to fetch a single student by ID
 export function useStudent(id) {
   return useQuery({
     queryKey: ["student", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(`${BASE_URL}/students/${id}/`); // Include /students/ in the URL
       return response.data;
     },
   });
@@ -19,7 +18,7 @@ export function useStudents() {
   return useQuery({
     queryKey: ["students"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(`${BASE_URL}/students/`); // Include /students/ in the URL
       return response.data;
     },
     staleTime: 1000 * 60 * 5, // 5 minutes

@@ -1,26 +1,25 @@
+// queries.js
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { BASE_URL } from "@/app/constants"; // Importing BASE_URL from constants
 
-// Base URL for Tuition petty cash API
-const BASE_URL = "http://127.0.0.1:8000/api/tuition-pettycash/"; // Adjusted URL
-
-// Query for a single Tuition petty cash record by ID
+// Query for a single Tuition Petty Cash record by ID
 export function useTuitionPettyCash(id) {
   return useQuery({
-    queryKey: ["tuitionPettyCash", { id }], // Adjusted query key
+    queryKey: ["tuitionPettyCash", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(`${BASE_URL}/tuition-pettycash/${id}/`); // Using BASE_URL
       return response.data;
     },
   });
 }
 
-// Query for all Tuition petty cash records
+// Query for all Tuition Petty Cash records
 export function useTuitionPettyCashs() {
   return useQuery({
-    queryKey: ["tuitionPettyCashs"], // Adjusted query key
+    queryKey: ["tuitionPettyCashs"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(`${BASE_URL}/tuition-pettycash/`); // Using BASE_URL
       return response.data;
     },
   });

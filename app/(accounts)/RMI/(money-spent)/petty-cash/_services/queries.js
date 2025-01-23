@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-// Base URL for RMI petty cash API
-const BASE_URL = "http://127.0.0.1:8000/api/rmi-petty-cash/";
+import { BASE_URL } from "@/app/constants"; // Importing BASE_URL from constants
 
 // Query for a single RMI petty cash record by ID
 export function useRmiPettyCash(id) {
   return useQuery({
     queryKey: ["rmiPettyCash", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(`${BASE_URL}/rmi-petty-cash/${id}/`); // Using BASE_URL
       return response.data;
     },
   });
@@ -20,7 +18,7 @@ export function useRmiPettyCashs() {
   return useQuery({
     queryKey: ["rmiPettyCashs"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(`${BASE_URL}/rmi-petty-cash/`); // Using BASE_URL
       return response.data;
     },
   });

@@ -1,17 +1,16 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+// queries.js
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner"; // Assuming you're using Sonner for toast notifications
 import { useRouter } from "next/navigation";
-
-// Base URL for Tuition Petty Cash API
-const BASE_URL = "http://127.0.0.1:8000/api/tuition-pettycash/";
+import { BASE_URL } from "@/app/constants"; // Importing BASE_URL from constants
 
 // Query for a single Tuition Petty Cash record by ID
 export function useTuitionPettyCash(id) {
   return useQuery({
     queryKey: ["tuitionPettyCash", { id }],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}${id}/`);
+      const response = await axios.get(`${BASE_URL}/tuition-pettycash/${id}/`); // Using BASE_URL
       return response.data;
     },
   });
@@ -22,7 +21,7 @@ export function useTuitionPettyCashs() {
   return useQuery({
     queryKey: ["tuitionPettyCashs"],
     queryFn: async () => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(`${BASE_URL}/tuition-pettycash/`); // Using BASE_URL
       return response.data;
     },
   });
@@ -35,7 +34,7 @@ export function useCreateTuitionPettyCash() {
   return useMutation({
     mutationFn: async (data) => {
       const response = await axios.post(
-        BASE_URL, // Updated to Tuition Petty Cash endpoint
+        `${BASE_URL}/tuition-pettycash/`, // Using BASE_URL
         data,
         {
           headers: {
@@ -46,8 +45,8 @@ export function useCreateTuitionPettyCash() {
       return response.data;
     },
 
-    onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["tuitionPettyCash"]); // Updated query key to match Tuition Petty Cash
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["tuitionPettyCash"]); // Using updated query key
       toast.success("Tuition petty cash created!", {
         description:
           "The new Tuition petty cash record has been successfully created.",
@@ -71,7 +70,7 @@ export function useEditTuitionPettyCash() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `${BASE_URL}${id}/`, // Updated endpoint to Tuition Petty Cash
+        `${BASE_URL}/tuition-pettycash/${id}/`, // Using BASE_URL
         data,
         {
           headers: {
@@ -82,8 +81,8 @@ export function useEditTuitionPettyCash() {
       return response.data;
     },
 
-    onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["tuitionPettyCash"]); // Updated query key for Tuition Petty Cash
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["tuitionPettyCash"]); // Using updated query key
       toast.success("Tuition petty cash entry updated!", {
         description:
           "The Tuition petty cash entry has been successfully updated.",
@@ -107,7 +106,7 @@ export function useDeleteTuitionPettyCash() {
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `${BASE_URL}${id}/`, // Updated endpoint for Tuition Petty Cash
+        `${BASE_URL}/tuition-pettycash/${id}/`, // Using BASE_URL
         {
           headers: {
             "Content-Type": "application/json",
@@ -118,7 +117,7 @@ export function useDeleteTuitionPettyCash() {
     },
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries(["tuitionPettyCash"]); // Updated query key
+      await queryClient.invalidateQueries(["tuitionPettyCash"]); // Using updated query key
       toast.success("Tuition petty cash entry deleted!", {
         description:
           "The Tuition petty cash entry has been successfully deleted.",
