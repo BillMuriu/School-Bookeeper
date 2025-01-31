@@ -29,6 +29,17 @@ export const pageTitles = {
   "/RMI/petty-cash/add-pettycash": "RMI - Add PettyCash",
   "/RMI/bank-charges": "RMI Bank Charges",
   "/RMI/bank-charges/add-bankcharge": "RMI - Add BankCharge",
+
+  // Tuition Account Pages
+  "/tuition": "Tuition Account",
+  "/tuition/money-received": "Tuition Money Received",
+  "/tuition/money-received/add-receipt": "Tuition - Add Receipt",
+  "/tuition/payment-vouchers": "Tuition Payment Vouchers",
+  "/tuition/payment-vouchers/add-paymentvoucher": "Tuition - Add Payment",
+  "/tuition/petty-cash": "Tuition Petty Cash",
+  "/tuition/petty-cash/add-pettycash": "Tuition - Add PettyCash",
+  "/tuition/bank-charges": "Tuition Bank Charges",
+  "/tuition/bank-charges/add-bankcharge": "Tuition - Add BankCharge",
 };
 
 export const dynamicRoutes = [
@@ -57,5 +68,19 @@ export const dynamicRoutes = [
   {
     pattern: /^\/RMI\/petty-cash\/view-pettycash\/(\d+)$/,
     getTitle: (id) => `RMI - PettyCash #${id}`,
+  },
+
+  // Tuition Dynamic Routes
+  {
+    pattern: /^\/tuition\/money-received\/view-receipt\/(\d+)$/,
+    getTitle: (id) => `Tuition - Receipt #${id}`,
+  },
+  {
+    pattern: /^\/tuition\/payment-vouchers\/view-paymentvoucher\/(\d+)$/,
+    getTitle: (id) => `Tuition - PaymentVoucher #${id}`,
+  },
+  {
+    pattern: /^\/tuition\/petty-cash\/view-pettycash\/(\d+)$/,
+    getTitle: (id) => `Tuition - PettyCash #${id}`,
   },
 ];
