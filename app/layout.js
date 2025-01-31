@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
       >
         <ThemeProviderNext
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
