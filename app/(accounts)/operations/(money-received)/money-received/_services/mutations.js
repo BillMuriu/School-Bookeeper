@@ -47,7 +47,7 @@ export function useEditOperationReceipt() {
 
   return useMutation({
     mutationFn: async ({ id, data }) => {
-      await axios.put(`${BASE_URL}/operation-receipts/${id}/update/`, data, {
+      await axios.put(`${BASE_URL}/operations-receipts/${id}/update/`, data, {
         headers: {
           "Content-Type": "application/json",
         },

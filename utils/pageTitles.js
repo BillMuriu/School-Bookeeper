@@ -4,7 +4,7 @@ export const pageTitles = {
   "/": "Dashboard",
   "/operations": "All Operations Files",
   "/operations/books": "Books",
-  "/operations/receipts": "Receipts",
+  "/operations/money-received/view-receipt": "Operations - All Receipts",
   "/operations/money-received/add-receipt": "Operations - Add Receipt",
 
   "/operations/payment-vouchers": "Operations All Payments",

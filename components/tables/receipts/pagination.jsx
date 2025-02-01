@@ -15,32 +15,8 @@ export function DataTablePagination({ table }) {
   return (
     <div className="flex flex-col items-center gap-2 px-2 py-2 sm:flex-row sm:justify-between">
       {/* Conditionally render row selection info for non-small screens */}
-      {!isSmallScreen && (
-        <div className="text-xs sm:text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-      )}
-
       <div className="flex flex-wrap items-center justify-center gap-2">
         {/* Conditionally render rows per page select for non-small screens */}
-        {!isSmallScreen && (
-          <div className="flex items-center gap-1 text-xs sm:text-sm">
-            <span>Rows per page</span>
-            <select
-              className="h-8 border rounded-md text-xs sm:text-sm"
-              value={table.getState().pagination.pageSize}
-              onChange={(e) => table.setPageSize(Number(e.target.value))}
-            >
-              {[7, 10, 20, 30, 40, 50].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  {pageSize}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
         {/* Pagination Controls */}
         <div className="flex items-center gap-1">
           <Button

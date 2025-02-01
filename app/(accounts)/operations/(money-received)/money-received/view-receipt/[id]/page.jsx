@@ -23,9 +23,11 @@ const TestFormWrapper = ({ params }) => {
         account: receipt.account || "",
         receivedFrom: receipt.receivedFrom || "",
         cashBank: receipt.cashBank || "bank",
-        totalAmount: receipt.totalAmount ?? null,
-        rmiFund: receipt.rmiFund ?? null,
-        otherVotheads: receipt.otherVotheads ?? null,
+        totalAmount: receipt.totalAmount ? Number(receipt.totalAmount) : null,
+        rmiFund: receipt.rmiFund ? Number(receipt.rmiFund) : null,
+        otherVoteheads: receipt.otherVoteheads
+          ? Number(receipt.otherVoteheads)
+          : null,
         date: receipt.date ? new Date(receipt.date) : new Date("2024-08-01"),
       }}
     >

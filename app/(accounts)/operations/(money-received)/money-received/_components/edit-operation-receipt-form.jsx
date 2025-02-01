@@ -101,7 +101,7 @@ const EditReceiptForm = ({ receiptId }) => {
         />
         <RHFNumberInput
           type="number"
-          name="otherVotheads"
+          name="otherVoteheads"
           label="Funds for Other Voteheads"
           min={0}
         />
