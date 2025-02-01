@@ -26,7 +26,7 @@ export const columns = [
         <div className="flex items-center justify-start gap-2">
           <div className="text-left">{value}</div> {/* Left align value */}
           <Link
-            href={`/petty-cash/view/${pettyCashId}`}
+            href={`/operations/petty-cash/view-pettycash/${pettyCashId}`}
             className="text-blue-500 hover:text-blue-700"
             aria-label="View Cheque Details"
           >
@@ -46,11 +46,6 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "description",
-    header: () => <div className="text-left">Description</div>, // Left align header
-    cell: ({ getValue }) => <div className="text-left">{getValue()}</div>,
-  },
-  {
     accessorKey: "dateIssued",
     header: () => <div className="text-center">Date Issued</div>, // Center align header
     cell: ({ getValue }) => (
@@ -58,5 +53,16 @@ export const columns = [
         {format(new Date(getValue()), "MM/dd/yyyy")} {/* Format date */}
       </div>
     ),
+  },
+  {
+    accessorKey: "description",
+    header: () => <div className="text-left">Description</div>,
+    cell: ({ getValue }) => {
+      const text = getValue();
+      const shortText =
+        text.split(" ").slice(0, 2).join(" ") +
+        (text.split(" ").length > 2 ? "..." : "");
+      return <div className="text-left">{shortText}</div>;
+    },
   },
 ];

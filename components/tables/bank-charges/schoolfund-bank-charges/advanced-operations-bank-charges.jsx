@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -34,6 +34,18 @@ export function SchoolFundBankChargesTable({
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  // Update screen size on load and resize
+  useEffect(() => {
+    const updateScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    updateScreenSize(); // Initialize the screen size on first render
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, []);
 
   const table = useReactTable({
     data,
@@ -65,148 +77,79 @@ export function SchoolFundBankChargesTable({
     },
   });
 
-  // Check for small screen size
-  const isSmallScreen = window.innerWidth < 640;
-
   return (
     <div>
       {/* Data Table Toolbar */}
       <DataTableToolbar table={table} />
 
       {/* Conditionally render ScrollArea width based on screen size */}
-      {isSmallScreen ? (
-        <ScrollArea className="w-[350px] rounded-md border overflow-x-auto">
-          <Table className="text-xs sm:text-sm">
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
+      <ScrollArea
+        className={`${
+          isSmallScreen ? "w-[350px]" : "w-full"
+        } rounded-md border overflow-x-auto`}
+      >
+        <Table className="text-xs sm:text-sm">
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  const isLeftAligned =
+                    header.column.columnDef.header === "Account";
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className={isLeftAligned ? "text-left" : "text-center"}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => {
                     const isLeftAligned =
-                      header.column.columnDef.header === "Account";
+                      cell.column.columnDef.header === "Account";
                     return (
-                      <TableHead
-                        key={header.id}
+                      <TableCell
+                        key={cell.id}
                         className={isLeftAligned ? "text-left" : "text-center"}
                       >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
                     );
                   })}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => {
-                      const isLeftAligned =
-                        cell.column.columnDef.header === "Account";
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={
-                            isLeftAligned ? "text-left" : "text-center"
-                          }
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      ) : (
-        <ScrollArea className="w-full rounded-md border overflow-x-auto">
-          <Table className="text-xs sm:text-sm">
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    const isLeftAligned =
-                      header.column.columnDef.header === "Account";
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className={isLeftAligned ? "text-left" : "text-center"}
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => {
-                      const isLeftAligned =
-                        cell.column.columnDef.header === "Account";
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={
-                            isLeftAligned ? "text-left" : "text-center"
-                          }
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      )}
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
 
       {/* Pagination */}
       <DataTablePagination table={table} />

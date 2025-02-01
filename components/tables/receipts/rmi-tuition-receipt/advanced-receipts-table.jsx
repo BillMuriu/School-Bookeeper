@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   flexRender,
@@ -24,6 +24,7 @@ import { DataTableToolbar } from "./tool-bar";
 
 export function DataTable({ columns, data }) {
   const [columnFilters, setColumnFilters] = useState([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -31,14 +32,29 @@ export function DataTable({ columns, data }) {
     state: {
       columnFilters,
     },
-    onColumnFiltersChange: setColumnFilters, // Update columnFilters state when it changes
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(), // Include filtering
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
-  // Check for small screen size
-  const isSmallScreen = window.innerWidth < 640;
+  // Detect screen size changes
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    // Initialize screen size on component mount
+    handleResize();
+
+    // Set up event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div>

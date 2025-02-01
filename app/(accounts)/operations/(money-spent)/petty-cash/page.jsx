@@ -6,8 +6,11 @@ import { PettyCashDataTable } from "@/components/tables/pettycash/advanced-opera
 import { columns } from "./_components/operations-pettycash-columns";
 import { useOperationsPettyCashs } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
-import { dummyPettyCash } from "@/data/dummy-pettycash";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, CirclePlus } from "lucide-react";
+import { useRouter } from "next/navigation";
 const PettyCashPage = () => {
+  const router = useRouter();
   const { data: pettyCash, isLoading, error } = useOperationsPettyCashs(); // Adjust the query hook if necessary
 
   if (isLoading) return <DataTableSkeleton />;
@@ -18,7 +21,17 @@ const PettyCashPage = () => {
 
   return (
     <div>
-      <h1>All Petty Cash Records</h1>
+      <div className="flex justify-between mb-4">
+        <Button variant="outline" onClick={() => router.back()}>
+          <ArrowLeft /> Back
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/operations/petty-cash/add-pettycash")}
+        >
+          <CirclePlus /> Add PettyCash
+        </Button>
+      </div>
       <PettyCashDataTable columns={columns} data={pettyCash} />
     </div>
   );

@@ -42,7 +42,6 @@ const EditDeletePettyCashForm = ({ pettyCashId }) => {
     deletePettyCashMutation.mutate(pettyCashId, {
       onSettled: () => {
         setIsLoading(false);
-        router.push("/petty-cash");
       },
     });
   };

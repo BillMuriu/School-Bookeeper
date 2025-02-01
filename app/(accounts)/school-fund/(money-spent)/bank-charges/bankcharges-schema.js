@@ -10,6 +10,6 @@ export const bankChargesSchema = z.object({
 export const defaultBankCharges = {
   account: "school fund",
   amount: null,
-  charge_date: null,
+  charge_date: new Date(),
   description: "",
 };

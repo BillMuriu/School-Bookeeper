@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -22,21 +22,82 @@ import { DataTableToolbar } from "./tool-bar";
 
 export function TuitionPettyCashDataTable({ columns, data }) {
   const [columnFilters, setColumnFilters] = useState([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const table = useReactTable({
     data,
     columns,
-    state: {
-      columnFilters,
-    },
+    state: { columnFilters },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
   });
 
-  // Check for small screen size
-  const isSmallScreen = window.innerWidth < 640;
+  // Detect screen size changes
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    // Initialize screen size on component mount
+    handleResize();
+
+    // Set up event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const renderTableHeader = (headerGroup) => (
+    <TableRow key={headerGroup.id}>
+      {headerGroup.headers.map((header) => {
+        const isLeftAligned = header.column.columnDef.header === "Voucher No";
+        return (
+          <TableHead
+            key={header.id}
+            className={isLeftAligned ? "text-left" : "text-center"}
+          >
+            {header.isPlaceholder
+              ? null
+              : flexRender(header.column.columnDef.header, header.getContext())}
+          </TableHead>
+        );
+      })}
+    </TableRow>
+  );
+
+  const renderTableBody = () => (
+    <TableBody>
+      {table.getRowModel().rows.length ? (
+        table.getRowModel().rows.map((row) => (
+          <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+            {row.getVisibleCells().map((cell) => {
+              const isLeftAligned =
+                cell.column.columnDef.header === "Voucher No";
+              return (
+                <TableCell
+                  key={cell.id}
+                  className={isLeftAligned ? "text-left" : "text-center"}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={columns.length} className="h-24 text-center">
+            No results.
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
+  );
 
   return (
     <div>
@@ -44,139 +105,19 @@ export function TuitionPettyCashDataTable({ columns, data }) {
       <DataTableToolbar table={table} />
 
       {/* Conditionally render ScrollArea width based on screen size */}
-      {isSmallScreen ? (
-        <ScrollArea className="w-[350px] rounded-md border overflow-x-auto">
-          <Table className="text-xs sm:text-sm">
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    const isLeftAligned =
-                      header.column.columnDef.header === "Voucher No";
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className={isLeftAligned ? "text-left" : "text-center"}
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => {
-                      const isLeftAligned =
-                        cell.column.columnDef.header === "Voucher No";
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={
-                            isLeftAligned ? "text-left" : "text-center"
-                          }
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      ) : (
-        <ScrollArea className="w-full rounded-md border overflow-x-auto">
-          <Table className="text-xs sm:text-sm">
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    const isLeftAligned =
-                      header.column.columnDef.header === "Voucher No";
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className={isLeftAligned ? "text-left" : "text-center"}
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => {
-                      const isLeftAligned =
-                        cell.column.columnDef.header === "Voucher No";
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={
-                            isLeftAligned ? "text-left" : "text-center"
-                          }
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      )}
+      <ScrollArea
+        className={`w-${
+          isSmallScreen ? "[350px]" : "full"
+        } rounded-md border overflow-x-auto`}
+      >
+        <Table className="text-xs sm:text-sm">
+          <TableHeader>
+            {table.getHeaderGroups().map(renderTableHeader)}
+          </TableHeader>
+          {renderTableBody()}
+        </Table>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
 
       {/* Pagination */}
       <DataTablePagination table={table} />

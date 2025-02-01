@@ -7,13 +7,13 @@ export const pageTitles = {
   "/operations/money-received/view-receipt": "Operations - All Receipts",
   "/operations/money-received/add-receipt": "Operations - Add Receipt",
 
-  "/operations/payment-vouchers": "Operations All Payments",
+  "/operations/payment-vouchers": "Operations - All Payments",
   "/operations/payment-vouchers/add-paymentvoucher": "Operations - Add Payment",
 
-  "/operations/petty-cash": "Operations All PettyCashs",
+  "/operations/petty-cash": "Operations - All PettyCashs",
   "/operations/petty-cash/add-pettycash": "Operations - Add PettyCash",
 
-  "/operations/bank-charges": "Operations All BankCharges",
+  "/operations/bank-charges": "Operations - All BankCharges",
   "/operations/bank-charges/add-bankcharge": "Operations - Add BankCharge",
 
   "/operations/ledgers": "Ledgers",
@@ -21,7 +21,7 @@ export const pageTitles = {
 
   // RMI Account Pages
   "/RMI": "RMI Account",
-  "/RMI/money-received": "RMI Money Received",
+  "/RMI/money-received/view-receipt": "RMI - All Receipts",
   "/RMI/money-received/add-receipt": "RMI - Add Receipt",
   "/RMI/payment-vouchers": "RMI Payment Vouchers",
   "/RMI/payment-vouchers/add-paymentvoucher": "RMI - Add Payment",

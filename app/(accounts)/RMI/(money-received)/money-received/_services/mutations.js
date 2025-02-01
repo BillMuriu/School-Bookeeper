@@ -22,7 +22,7 @@ export function useCreateRmiReceipt() {
     onSuccess: async (data) => {
       await queryClient.invalidateQueries(["rmiReceipts"]);
       const receiptId = data.id;
-      router.push(`/rmi/money-received/view-receipt/${receiptId}`);
+      router.push(`/RMI/money-received/view-receipt`);
 
       toast.success("Receipt created!", {
         description: "The new RMI receipt has been successfully created.",
