@@ -77,7 +77,7 @@ export function useDeleteOperationReceipts() {
       // Delete receipts in parallel
       await Promise.all(
         ids.map((id) =>
-          axios.delete(`${BASE_URL}/operation-receipts/${id}/delete/`, {
+          axios.delete(`${BASE_URL}/operations-receipts/${id}/delete/`, {
             headers: {
               "Content-Type": "application/json",
             },
