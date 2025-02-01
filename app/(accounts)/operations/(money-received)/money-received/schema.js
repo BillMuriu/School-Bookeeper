@@ -20,7 +20,7 @@ export const operationReceiptSchema = z.object({
     .positive()
     .min(0, { message: "RMI Fund must be a positive number." }),
 
-  otherVotheads: z
+  otherVoteheads: z
     .number()
     .positive()
     .min(0, { message: "Other Votheads must be a positive number." }),
