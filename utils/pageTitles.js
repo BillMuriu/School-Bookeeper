@@ -55,6 +55,10 @@ export const dynamicRoutes = [
     pattern: /^\/operations\/petty-cash\/view-pettycash\/(\d+)$/,
     getTitle: (id) => `Operations - PettyCash #${id}`,
   },
+  {
+    pattern: /^\/operations\/bank-charges\/view-bankcharge\/(\d+)$/,
+    getTitle: (id) => `Operations - BankCharge #${id}`,
+  },
 
   // RMI Dynamic Routes
   {
@@ -69,6 +73,10 @@ export const dynamicRoutes = [
     pattern: /^\/RMI\/petty-cash\/view-pettycash\/(\d+)$/,
     getTitle: (id) => `RMI - PettyCash #${id}`,
   },
+  {
+    pattern: /^\/RMI\/bank-charges\/view-bankcharge\/(\d+)$/,
+    getTitle: (id) => `RMI - BankCharge #${id}`,
+  },
 
   // Tuition Dynamic Routes
   {
@@ -82,5 +90,9 @@ export const dynamicRoutes = [
   {
     pattern: /^\/tuition\/petty-cash\/view-pettycash\/(\d+)$/,
     getTitle: (id) => `Tuition - PettyCash #${id}`,
+  },
+  {
+    pattern: /^\/tuition\/bank-charges\/view-bankcharge\/(\d+)$/,
+    getTitle: (id) => `Tuition - BankCharge #${id}`,
   },
 ];

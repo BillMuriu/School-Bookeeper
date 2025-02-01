@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Stack, Container } from "@mui/material";
 import { useFormContext } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import {
   useEditOperationsBankCharges,
   useDeleteOperationsBankCharges,
@@ -18,7 +17,6 @@ const EditDeleteOperationsBankChargesForm = ({ bankChargeId }) => {
     formState: { errors },
     handleSubmit,
   } = useFormContext();
-  const router = useRouter();
   const editBankChargesMutation = useEditOperationsBankCharges();
   const deleteBankChargesMutation = useDeleteOperationsBankCharges();
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +38,6 @@ const EditDeleteOperationsBankChargesForm = ({ bankChargeId }) => {
     deleteBankChargesMutation.mutate(bankChargeId, {
       onSettled: () => {
         setIsLoading(false);
-        router.push("/bank-charges");
       },
     });
   };

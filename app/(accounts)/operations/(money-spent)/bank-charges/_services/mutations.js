@@ -62,7 +62,7 @@ export function useEditOperationsBankCharges() {
     },
 
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries(["operationsBankCharges"]);
+      await queryClient.invalidateQueries(["bankCharges"]);
 
       toast.success("Bank charge updated!", {
         description: "The bank charge has been successfully updated.",
@@ -96,17 +96,19 @@ export function useDeleteOperationsBankCharges() {
     },
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries(["operationsBankCharges"]);
+      await queryClient.invalidateQueries(["bankCharges"]); // Ensure it matches the query key used in fetching
 
       toast.success("Bank charge deleted!", {
         description: "The bank charge has been successfully deleted.",
         duration: 3000,
       });
 
+      console.log("Redirecting to /operations/bank-charges"); // Debug log
       router.push("/operations/bank-charges");
     },
 
     onError: (error) => {
+      console.error("Delete bank charge error:", error); // Debug error log
       toast.error(`Error deleting bank charge: ${error.message}`, {
         description: "Please try again later.",
       });
