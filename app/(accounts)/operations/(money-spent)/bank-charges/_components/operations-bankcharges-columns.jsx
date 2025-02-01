@@ -15,7 +15,7 @@ export const columns = [
         <div className="flex items-center justify-start gap-2">
           <div className="text-left">{value}</div> {/* Left align value */}
           <Link
-            href={`/bank-charges/view/${bankChargeId}`}
+            href={`/operations/bank-charges/view-bankcharge/${bankChargeId}`}
             className="text-blue-500 hover:text-blue-700"
             aria-label="View Bank Charge Details"
           >
@@ -25,11 +25,7 @@ export const columns = [
       );
     },
   },
-  {
-    accessorKey: "description",
-    header: () => <div className="text-left">Description</div>, // Left align header
-    cell: ({ getValue }) => <div className="text-left">{getValue()}</div>,
-  },
+
   {
     accessorKey: "amount",
     header: () => <div className="text-right">Amount (Shs)</div>, // Right align header
@@ -47,5 +43,22 @@ export const columns = [
         {format(new Date(getValue()), "MM/dd/yyyy")} {/* Format date */}
       </div>
     ),
+  },
+  {
+    accessorKey: "description",
+    header: () => <div className="text-left">Description</div>, // Left align header
+    cell: ({ getValue }) => {
+      const value = getValue();
+      const maxWords = 2; // Maximum number of words before truncation
+      const words = value.split(" ");
+
+      // Truncate and add ellipsis if the description exceeds the max words
+      const truncatedDescription =
+        words.length > maxWords
+          ? words.slice(0, maxWords).join(" ") + "..."
+          : value;
+
+      return <div className="text-left">{truncatedDescription}</div>;
+    },
   },
 ];

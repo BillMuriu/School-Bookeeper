@@ -10,11 +10,15 @@ export function useCreateOperationsBankCharge() {
 
   return useMutation({
     mutationFn: async (data) => {
-      const response = await axios.post(`${BASE_URL}/bank-charges/`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        `${BASE_URL}/operations-bankcharges/`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data;
     },
 
@@ -46,7 +50,7 @@ export function useEditOperationsBankCharges() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `${BASE_URL}/bank-charges/${id}/`,
+        `${BASE_URL}/operations-bankcharges/${id}/`,
         data,
         {
           headers: {
@@ -80,11 +84,14 @@ export function useDeleteOperationsBankCharges() {
 
   return useMutation({
     mutationFn: async (id) => {
-      const response = await axios.delete(`${BASE_URL}/bank-charges/${id}/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.delete(
+        `${BASE_URL}/operations-bankcharges/${id}/`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data;
     },
 

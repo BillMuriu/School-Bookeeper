@@ -5,7 +5,11 @@ import { BankChargesTable } from "@/components/tables/bank-charges/advanced-oper
 import { columns } from "./_components/operations-bankcharges-columns";
 import { useAllOperationsBankCharges } from "./_services/queries";
 import DataTableSkeleton from "@/components/datatable-seleton-loader";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, CirclePlus } from "lucide-react";
+import { useRouter } from "next/navigation";
 const BankChargesPage = () => {
+  const router = useRouter();
   const { data: bankCharges, isLoading, error } = useAllOperationsBankCharges();
 
   if (isLoading) return <DataTableSkeleton />;
@@ -16,7 +20,17 @@ const BankChargesPage = () => {
 
   return (
     <div>
-      <h1>All Bank Charges Records</h1>
+      <div className="flex justify-between mb-4">
+        <Button variant="outline" onClick={() => router.back()}>
+          <ArrowLeft /> Back
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/operations/bank-charges/add-bankcharge")}
+        >
+          <CirclePlus /> Add Bank-Charge
+        </Button>
+      </div>
       <BankChargesTable columns={columns} data={bankCharges} />
     </div>
   );

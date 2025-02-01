@@ -48,7 +48,7 @@ export function useEditOperationsPaymentVoucher() {
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await axios.put(
-        `${BASE_URL}/operations-paymentvouchers/${id}/update/`,
+        `${BASE_URL}/operations-paymentvouchers/${id}/`,
         data,
         {
           headers: {
@@ -82,7 +82,7 @@ export function useDeleteOperationsPaymentVoucher() {
   return useMutation({
     mutationFn: async (id) => {
       const response = await axios.delete(
-        `${BASE_URL}/operations-paymentvouchers/${id}/delete/`,
+        `${BASE_URL}/operations-paymentvouchers/${id}/`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -25,14 +25,6 @@ export function DataTableToolbar({ table }) {
           }
           className="h-8 w-full sm:w-[150px] lg:w-[250px]"
         />
-
-        <DataTableFacetedFilter
-          column={table.getColumn("paymentMode")}
-          title="Cash/Bank"
-          options={cashBankOptions}
-          className="h-8"
-        />
-
         {isFiltered && (
           <Button
             variant="ghost"

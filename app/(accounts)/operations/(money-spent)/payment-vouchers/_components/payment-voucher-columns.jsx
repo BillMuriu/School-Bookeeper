@@ -16,7 +16,7 @@ export const columns = [
         <div className="flex items-center justify-start gap-2">
           <div className="text-left">{value}</div> {/* Left align value */}
           <Link
-            href={`/payment-vouchers/view/${voucherId}`}
+            href={`/operations/payment-vouchers/view-paymentvoucher/${voucherId}`}
             className="text-blue-500 hover:text-blue-700"
             aria-label="View Payment Voucher"
           >
